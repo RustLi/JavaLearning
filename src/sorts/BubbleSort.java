@@ -1,3 +1,5 @@
+package sorts;
+
 public class BubbleSort {
 
     //增加一个flag值，最好的情况下，o(n)，最坏的情况下o(n*n)
