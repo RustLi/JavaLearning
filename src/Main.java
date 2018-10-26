@@ -1,3 +1,4 @@
+import data_structure.BinTree;
 import data_structure.ListNode;
 import data_structure.SingleLinkedList;
 import sorts.BubbleSort;
@@ -14,7 +15,8 @@ public class Main {
         System.out.println("Hello World!");
 //        sortTest();
 //        strucTest();
-        singleLinkedTest();
+//        singleLinkedTest();
+        binTreeTest();
     }
 
     private static void sortTest(){
@@ -73,5 +75,22 @@ public class Main {
         singleLinkedList.display();
 
         System.out.println(singleLinkedList.findNode("D"));
+    }
+
+    private static void binTreeTest(){
+        BinTree binTree = new BinTree();
+        int[] array = {3,5,1,6,7,9,2,3};
+        BinTree.Node root = binTree.createBinTree(array);
+
+        System.out.println("先序遍历：");
+        binTree.preOrderReaverse(root);
+        System.out.println();
+
+        System.out.println("中序遍历：");
+        binTree.inOrderTraverse(root);
+        System.out.println();
+
+        System.out.println("后序遍历：");
+        binTree.postOrderTraverse(root);
     }
 }
