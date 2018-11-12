@@ -47,4 +47,29 @@ public class ListNode<T> {
         head.next = null;
         return pre;
     }
+
+    //反转链表
+    private static void strucTest(){
+        ListNode<Integer> head = new ListNode<>(1);
+        head.next= new ListNode<>(2);
+        head.next.next = new ListNode<>(3);
+
+        ListNode<Integer> h = head;
+        while (null != h){
+            System.out.println(h.data);
+            h = h.next;
+        }
+//        head = reverseList(head);
+        head = reverseList2(head);
+
+        System.out.println("反转以后的：：：：");
+        while (null != head){
+            System.out.println(head.data);
+            head = head.next;
+        }
+    }
+
+    public static void main(String[] args){
+        strucTest();
+    }
 }

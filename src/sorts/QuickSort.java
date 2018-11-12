@@ -65,4 +65,10 @@ public class QuickSort {
         input[a] = input[b];
         input[b] = temp;
     }
+
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        QuickSort quickSort = new QuickSort();
+        quickSort.quickSort(intput);
+    }
 }

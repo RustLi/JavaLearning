@@ -109,4 +109,23 @@ public class SingleLinkedList {
         }
     }
 
+    private static void singleLinkedTest(){
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.addHead("A");
+        singleLinkedList.addHead("B");
+        singleLinkedList.addHead("C");
+        singleLinkedList.addHead("D");
+
+        singleLinkedList.display();
+
+        singleLinkedList.delete("B");
+        singleLinkedList.display();
+
+        System.out.println(singleLinkedList.findNode("D"));
+    }
+
+    public static void main(String[] args){
+        singleLinkedTest();
+    }
+
 }

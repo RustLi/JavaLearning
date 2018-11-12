@@ -26,4 +26,10 @@ public class SelectSort {
         }
         System.out.println(Arrays.toString(input));
     }
+
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        SelectSort selectSort = new SelectSort();
+        selectSort.selectSort(intput);
+    }
 }

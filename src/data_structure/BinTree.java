@@ -83,4 +83,25 @@ public class BinTree {
         postOrderTraverse(node.rightChild);
     }
 
+    private static void binTreeTest(){
+        BinTree binTree = new BinTree();
+        int[] array = {3,5,1,6,7,9,2,3};
+        BinTree.Node root = binTree.createBinTree(array);
+
+        System.out.println("先序遍历：");
+        binTree.preOrderReaverse(root);
+        System.out.println();
+
+        System.out.println("中序遍历：");
+        binTree.inOrderTraverse(root);
+        System.out.println();
+
+        System.out.println("后序遍历：");
+        binTree.postOrderTraverse(root);
+    }
+
+    public static void main(String[] args){
+        binTreeTest();
+    }
+
 }

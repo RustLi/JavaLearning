@@ -28,4 +28,10 @@ public class BubbleSort {
         input[a] = input[b];
         input[b] = temp;
     }
+
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        BubbleSort bubbleSort = new BubbleSort();
+        bubbleSort.sort(intput);
+    }
 }

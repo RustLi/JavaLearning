@@ -1,15 +1,19 @@
-package Strings;
+package strings;
 
-public class Replace {
-    public static void main(String[] args){
+public class ReplaceBlank {
+
+    /**
+     * 题目要求：
+     * 实现一个函数，把字符串中的每个空格都替换成“%20”，已知原位置后面有足够的空余位置，要求改替换过程发生在原来的位置上。
+     */
+    public static void main(String[] args) {
         String str = "we are happy. lala la";
-        Replace replace = new Replace();
-        String output = replace.replaceBlank(str);
+        ReplaceBlank replaceBlank = new ReplaceBlank();
+        String output = replaceBlank.replaceBlank(str);
         System.out.println(output);
     }
-
     private String replaceBlank(String intput){
-        if (intput == null || intput.length() == 0){
+        if (intput == null || intput.length() == 0) {
             return null;
         }
         int originLength = intput.length();
