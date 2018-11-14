@@ -1,4 +1,4 @@
-package design_patterns.Combination;
+package design_patterns.combination;
 
 /**
  * @program: javaProjects
