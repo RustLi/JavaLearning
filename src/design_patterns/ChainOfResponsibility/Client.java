@@ -12,6 +12,7 @@ public class Client {
         Request request = new Request.Builder().setName("RustLi")
                 .setDays(7).setReason("事假").build();
         ChainManagerClient chainManagerClient = new ChainManagerClient();
+        chainManagerClient.addRatifys(new CustomInterceptor());
         Result result = chainManagerClient.execute(request);
         System.out.println("结果：" + result.toString());
     }
