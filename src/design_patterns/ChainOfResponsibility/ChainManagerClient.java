@@ -30,7 +30,7 @@ public class ChainManagerClient {
         arrayList.add(new Manager());
         arrayList.add(new DepartmentHeader());
 
-        RealChain realChain = new RealChain( arrayList, request, 0);
+        RealChain realChain = new RealChain(arrayList, request, 0);
         return realChain.proceed(request);
     }
 
