@@ -15,6 +15,19 @@ public class LambdaTest {
         GreetingService greetingService = message ->
                 System.out.println("hello" + message);
         greetingService.sayMessage("world llalal");
+
+        repeat(10, i -> System.out.println("countdown :: " + (9 - i)));
+
+    }
+
+    private static void repeat(int n,IntConsumer intConsumer){
+        for (int i = 0; i < n ; i++) {
+            intConsumer.accept(i);
+        }
+    }
+
+    interface IntConsumer{
+        void accept(int value);
     }
 
     interface MathOperation{

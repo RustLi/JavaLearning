@@ -3,13 +3,13 @@ package sorts;
 public class BubbleSort {
 
     //增加一个flag值，最好的情况下，o(n)，最坏的情况下o(n*n)
-    public void sort(int[] input){
+    private void sort(int[] input){
         int length = input.length;
         if (length == 0){
             return;
         }
-        boolean isFlag = true;
-        for (int i = 0; i < length && isFlag; i++){
+        boolean isFlag = true;//如果没有交换，表示数据已经排好序，直接退出
+        for (int i = 0; i < length-1 && isFlag; i++){//比较length-1趟
             isFlag = false;
             for (int j = length -1; j > i; j--){
                 if (input[j] < input[j-1]){

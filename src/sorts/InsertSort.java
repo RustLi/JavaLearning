@@ -1,5 +1,7 @@
 package sorts;
 
+import sorts.base.Utils;
+
 import java.util.Arrays;
 
 public class InsertSort {
@@ -28,9 +30,22 @@ public class InsertSort {
         System.out.println(Arrays.toString(input));
     }
 
+
+    private void insertSort1(int[] inputArr){
+        int length = inputArr.length;
+        for(int i = 0; i < length -1; i++){
+            for(int j = i+1; j > 0; j--){
+                if(inputArr[j] < inputArr[j-1]){
+                    Utils.swap(inputArr, j, j-1);
+                }
+            }
+        }
+        System.out.println(Arrays.toString(inputArr));
+    }
+
     public  static void main(String[] args){
         int[] intput = {9,2,3,5,1,6,7};
         InsertSort insertSort = new InsertSort();
-        insertSort.insertSort(intput);
+        insertSort.insertSort1(intput);
     }
 }
