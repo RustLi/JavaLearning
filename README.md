@@ -35,3 +35,11 @@
 9. 外观
 10. 责任链
 
+### producer_consumer
+
+生产者消费者的四种实现方式
+
+1. Wait notify
+2. ReentrantLock lock()和unlock()
+3. BlockingQueue poll() take()
+4. Semaphore 信号量  acquire() release()
