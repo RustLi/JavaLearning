@@ -1,7 +1,3 @@
-import enums.EnumTest;
-import org.omg.PortableServer.THREAD_POLICY_ID;
-
-import javax.xml.soap.Text;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
