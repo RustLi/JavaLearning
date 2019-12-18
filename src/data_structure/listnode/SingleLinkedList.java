@@ -1,4 +1,6 @@
-package data_structure;
+package data_structure.listnode;
+
+import java.util.LinkedList;
 
 public class SingleLinkedList {
     private int size;//单链表的大小
@@ -16,6 +18,25 @@ public class SingleLinkedList {
         public Node(Object data){
             this.data = data;
         }
+    }
+
+    public static void main(String[] args){
+        singleLinkedTest();
+    }
+
+    private static void singleLinkedTest(){
+        SingleLinkedList singleLinkedList = new SingleLinkedList();
+        singleLinkedList.addHead("A");
+        singleLinkedList.addHead("B");
+        singleLinkedList.addHead("C");
+        singleLinkedList.addHead("D");
+
+        singleLinkedList.display();
+
+        singleLinkedList.delete("B");
+        singleLinkedList.display();
+
+        System.out.println(singleLinkedList.findNode("D"));
     }
 
     //头部添加数据
@@ -108,24 +129,4 @@ public class SingleLinkedList {
             System.out.println("[]");
         }
     }
-
-    private static void singleLinkedTest(){
-        SingleLinkedList singleLinkedList = new SingleLinkedList();
-        singleLinkedList.addHead("A");
-        singleLinkedList.addHead("B");
-        singleLinkedList.addHead("C");
-        singleLinkedList.addHead("D");
-
-        singleLinkedList.display();
-
-        singleLinkedList.delete("B");
-        singleLinkedList.display();
-
-        System.out.println(singleLinkedList.findNode("D"));
-    }
-
-    public static void main(String[] args){
-        singleLinkedTest();
-    }
-
 }

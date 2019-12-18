@@ -1,0 +1,18 @@
+package data_structure.listnode;
+/**
+ * @date: 2019/12/17
+ * @author: lwl
+ * @description: 链表定义
+ */
+public class ListNode<T> {
+    //定义数据域和指针域
+    public T data;
+    public ListNode next;
+
+    public ListNode(T data) {
+        this.data = data;
+    }
+
+    public ListNode() {
+    }
+}

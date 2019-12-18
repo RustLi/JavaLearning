@@ -4,14 +4,26 @@ import java.io.ObjectInputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
+//    Main b = new Main();
+
+    private String c = "aaa";
+
+    static class A {
+        final A b = this;
+    }
+
     public static void main(String[] args) {
+
+        String a = "111";
+        String[] b = a.split(",");
+        for (String c: b) {
+            System.out.println(c);
+        }
+
 //        System.out.println("Hello World!");
 
 //        getDbPassWord();
@@ -60,7 +72,21 @@ public class Main {
 //        new Main().testThread();
 
 //        new Main().testThread1();
+
+//        new Main().testMap();
     }
+
+    private void testMap(){
+        System.out.println("testMap");
+        int a = 10;
+//        System.out.println(a);
+//        Map map = new HashMap();
+//        map.put(a,"c");
+//        map.put(10,5);
+//        System.out.println(map.get(a));
+//        System.out.println(map.get(10));
+    }
+
 
     private final Object lock = new Object();
     private void testThread1(){
