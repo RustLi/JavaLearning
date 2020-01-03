@@ -17,17 +17,40 @@ public class Main {
     }
 
     public static void main(String[] args) {
+//        Thread thread1 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println(Thread.currentThread().getId());
+//                    }
+//                }).start();
+//            }
+//        });
+//        System.out.println(thread1.getId());
+//        thread1.start();
+//        int b = -1;
+//        int a = b & 2;
+//        System.out.println(a);
+//        System.out.println(b);
 
-        String a = "111";
-        String[] b = a.split(",");
-        for (String c: b) {
-            System.out.println(c);
-        }
+//        String a = "111";
+//        String[] b = a.split(",");
+//        for (String c: b) {
+//            System.out.println(c);
+//        }
 
 //        System.out.println("Hello World!");
 
 //        getDbPassWord();
 
+//        imei:
+//        869423033134168
+//        869423033134176
+//        uin 1007966035
+        System.out.println(getMD5("8694230331341681007966035"));
+//        System.out.println(getMD5("8694230331341761007966035"));
 //        test1111();
 
 //        String a = "a:2:223";
@@ -76,7 +99,7 @@ public class Main {
 //        new Main().testMap();
     }
 
-    private void testMap(){
+    private void testMap() {
         System.out.println("testMap");
         int a = 10;
 //        System.out.println(a);
@@ -89,31 +112,33 @@ public class Main {
 
 
     private final Object lock = new Object();
-    private void testThread1(){
+
+    private void testThread1() {
         System.out.println("start --");
         long time = System.currentTimeMillis();
-       synchronized (lock){
+        synchronized (lock) {
             try {
                 lock.wait(5 * 1000);
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-       }
+        }
         System.out.println("continue---");
-        if (System.currentTimeMillis() - time < 5 * 1000){
+        if (System.currentTimeMillis() - time < 5 * 1000) {
             System.out.println("aaaaa");
-       }
+        }
     }
 
     private Thread guardThread;
-    private void testThread(){
+
+    private void testThread() {
         for (int i = 0; i < 2; i++) {
             guardThread = new Thread(new GuardRunnable(), "GuardRunnable");
             guardThread.start();
         }
     }
 
-    public class  GuardRunnable implements Runnable {
+    public class GuardRunnable implements Runnable {
         public void run() {
             String name = Thread.currentThread().getName();
             System.out.println(name);
@@ -131,9 +156,10 @@ public class Main {
 
     /**
      * des: 获取数据库密码
+     *
      * @param
      */
-    private static void getDbPassWord(){
+    private static void getDbPassWord() {
         String cInfoPath = "/Users/lwl/work/resource/wechat_db/CompatibleInfo.cfg";
         String sInfoPath = "/Users/lwl/work/resource/wechat_db/systemInfo.cfg";
         File cInfoFile = new File(cInfoPath);
@@ -141,27 +167,27 @@ public class Main {
         Map<Integer, Object> cMaps = getMapInfoFromFile(cInfoFile);
         Map<Integer, Object> sMaps = getMapInfoFromFile(sInfoFile);
         String imei = "";
-        if (cMaps != null){
+        if (cMaps != null) {
             for (Integer key : cMaps.keySet()) {
-                System.out.println("key:" + key + " ,value:" + cMaps.get(key));
-                if (key == 258){
+                System.out.println("imei key:" + key + " ,value:" + cMaps.get(key));
+                if (key == 258) {
                     imei = (String) cMaps.get(key);
                 }
             }
         }
         Object uin = "";
-        if (sMaps != null){
+        if (sMaps != null) {
             for (Integer key : sMaps.keySet()) {
-                System.out.println("key:" + key + " ,value:" + sMaps.get(key));
-                if (key == 1){
+                System.out.println("uin key:" + key + " ,value:" + sMaps.get(key));
+                if (key == 1) {
                     uin = sMaps.get(key);
                 }
             }
         }
-        if (!"".equals(imei) && !"".equals(uin)){
+        if (!"".equals(imei) && !"".equals(uin)) {
             String md5 = getMD5(imei + uin);
             System.out.println(md5);
-            System.out.println(md5.substring(0,7));
+            System.out.println(md5.substring(0, 7));
         }
     }
 
@@ -214,10 +240,11 @@ public class Main {
 
     /**
      * des: 读取文件到Map中
+     *
      * @param
      */
-    private static Map<Integer,Object> getMapInfoFromFile(File cfgFile) {
-        if (cfgFile == null || !cfgFile.exists()){
+    private static Map<Integer, Object> getMapInfoFromFile(File cfgFile) {
+        if (cfgFile == null || !cfgFile.exists()) {
             System.out.println("cfgFile is error");
             return null;
         }
@@ -230,6 +257,20 @@ public class Main {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void getCfgFile(File cfgFile) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(cfgFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Map<Integer, Object> maps = (Map<Integer, Object>) ois.readObject();
+            for (Integer key : maps.keySet()) {
+                System.out.println("key:" + key + " ,value:" + maps.get(key));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
