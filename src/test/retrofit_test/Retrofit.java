@@ -27,10 +27,10 @@ public enum Retrofit {
                     @Override public Object invoke(Object proxy, Method method, Object... args)
                             throws Throwable {
                         // If the method is a method from Object then defer to normal invocation.
-                        if (method.getDeclaringClass() != Object.class) {
-                            throw new IllegalArgumentException();
-                        }
-                        return method.invoke(this, args);
+//                        if (method.getDeclaringClass() != Object.class) {
+//                            throw new IllegalArgumentException();
+//                        }
+                        return method.invoke(service, args);
                     }
                 });
     }
