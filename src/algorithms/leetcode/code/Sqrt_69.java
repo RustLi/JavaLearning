@@ -9,6 +9,33 @@ public class Sqrt_69 {
     public static void main(String[] args) {
         int input1 = 9;
         System.out.println("input: " +input1+ " mySqrtWithMid: " + sqrtWithMid(input1));
+        System.out.println(sqrtWithMid1(input1));
+    }
+
+    /**
+     * des:  二分法
+     * @param
+     */
+    private static int sqrtWithMid1(int x){
+        if (x < 1){
+            return 0;
+        }
+        int left = 0;
+        int right = x;
+        int result = 0;
+        while (left <= right){
+            int mid = left + ((right - left) >> 1);
+            if (mid < 1){
+                return 1;
+            }
+            if (mid > x/mid){
+                right = mid - 1;
+            }else {
+                left = mid + 1;
+                result = mid;
+            }
+        }
+        return result;
     }
 
     /**
@@ -48,4 +75,7 @@ public class Sqrt_69 {
         }
         return (int) n;
     }
+
+
+
 }

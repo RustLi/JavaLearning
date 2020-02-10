@@ -49,7 +49,7 @@ public class Main {
 //        869423033134168
 //        869423033134176
 //        uin 1007966035
-        System.out.println(getMD5("8694230331341681007966035"));
+//        System.out.println(getMD5("8694230331341681007966035"));
 //        System.out.println(getMD5("8694230331341761007966035"));
 //        test1111();
 
@@ -97,6 +97,43 @@ public class Main {
 //        new Main().testThread1();
 
 //        new Main().testMap();
+
+        System.out.println(mmm);
+        try {
+            test222(-1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(mmm);
+        System.out.println("llll");
+
+//        System.out.println(test333());
+
+
+//        String words = "大家好，欢迎入群";
+//        System.out.println(words.substring(0,words.length()-2));
+    }
+
+
+    private static int test333(){
+        int m = 0;
+        try {
+            m--;
+            test222(m);
+            m++;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("exception");
+        }
+        return m;
+    }
+
+    private static int mmm = 0;
+    private static void test222(int i) throws Exception {
+        if (i < 0){
+            throw new Exception("llll");
+        }
+        mmm++;
     }
 
     private void testMap() {

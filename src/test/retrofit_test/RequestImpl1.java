@@ -7,4 +7,9 @@ public enum  RequestImpl1 implements IRequest{
     public void testRetrofit() {
         System.out.println("111");
     }
+
+    @Override
+    public void test() {
+
+    }
 }

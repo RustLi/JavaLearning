@@ -4,16 +4,14 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public enum Retrofit {
-
-    INSTANCE;
-
+public class Retrofit {
     @SuppressWarnings("unchecked")
-    public <T> T create(final Object service) {
+    public static  <T> T create(final Object service) {
         return (T) Proxy.newProxyInstance(service.getClass().getClassLoader(), service.getClass().getInterfaces(),
                 new InvocationHandler() {
                     @Override public Object invoke(Object proxy, Method method, Object... args)
                             throws Throwable {
+                        System.out.println(method.getDeclaringClass());
                         return method.invoke(service, args);
                     }
                 });
@@ -30,7 +28,9 @@ public enum Retrofit {
 //                        if (method.getDeclaringClass() != Object.class) {
 //                            throw new IllegalArgumentException();
 //                        }
-                        return method.invoke(service, args);
+                        System.out.println(method.getDeclaringClass());
+//                        return method.invoke(service, args);
+                        return null;
                     }
                 });
     }
