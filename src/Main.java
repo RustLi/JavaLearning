@@ -35,11 +35,11 @@ public class Main {
 //        System.out.println(a);
 //        System.out.println(b);
 
-//        String a = "111";
-//        String[] b = a.split(",");
-//        for (String c: b) {
-//            System.out.println(c);
-//        }
+        String a = "111";
+        String[] b = a.split(",");
+        for (String c: b) {
+            System.out.println(c);
+        }
 
 //        System.out.println("Hello World!");
 
@@ -98,20 +98,64 @@ public class Main {
 
 //        new Main().testMap();
 
-        System.out.println(mmm);
-        try {
-            test222(-1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(mmm);
-        System.out.println("llll");
+//        try {
+//            test222(-1);
+//        } catch (Exception e) {
+////            e.printStackTrace();
+//            System.out.println(e.toString());
+//        }
 
+//        ArrayList<String> lists = new ArrayList<>();
+//        lists.add("a");
+//        lists.add("b");
+//        lists.add("c");
+//
+//        System.out.println(lists);
+//        testList(lists);
+//
+//        System.out.println(lists);
+//        String a = "aa";
+//        testStr(a);
+//        System.out.println(a);
 //        System.out.println(test333());
 
 
 //        String words = "大家好，欢迎入群";
 //        System.out.println(words.substring(0,words.length()-2));
+
+//        List<String> akList = new ArrayList<>();
+//        akList.add("aa");
+//        akList.add("bb");
+//        akList.add("cc");
+//        System.out.println(akList);
+//
+//        List<String> test1 = new ArrayList<>();
+//        test1.add("1");
+//        test1.add("2");
+//        test1.add("aa");
+//        System.out.println(test1);
+//
+//        akList.addAll(test1);
+//
+//        System.out.println(akList+ "lllll");
+//
+//        //去重
+//        HashSet set = new HashSet(akList);
+//        akList.clear();
+//        akList.addAll(set);
+//        System.out.println(akList);
+    }
+
+    private static void testStr(String s){
+        if (s != null){
+            s = s + "new";
+        }
+    }
+
+    private static void testList(ArrayList<String> list){
+        if (list != null){
+            list.add("aaaa");
+        }
     }
 
 
@@ -134,6 +178,8 @@ public class Main {
             throw new Exception("llll");
         }
         mmm++;
+        System.out.println("after llllll");
+        System.out.println("dadadad");
     }
 
     private void testMap() {

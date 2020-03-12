@@ -1,5 +1,5 @@
 package test.retrofit_test;
 
-public interface IRequest extends IRequest1 {
-    void testRetrofit();
+public interface IRequest {
+    void testRetrofit(String str);
 }

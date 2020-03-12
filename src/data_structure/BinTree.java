@@ -17,26 +17,27 @@ public class BinTree {
     }
 
     public static void main(String[] args){
-//        binTreeTest();
+        binTreeTest();
 
-        BinTree binTree = new BinTree();
-        int[] array = {3,5,1,6,7,9,2,4};
-        BinTree.TreeNode root = binTree.createBinTree(array);
-        System.out.println("层序遍历-----");
-        binTree.breadthFirstTraverse(root);
-        System.out.println("前序遍历-----");
-        binTree.preOrderTraverseNoRecursion(root);
-        System.out.println("中序遍历-----");
-        binTree.inOrderTraverseNoRecursion(root);
-        System.out.println("后序遍历-----");
-        binTree.postOrderTraverseNoRecursion(root);
-        System.out.println("深度优先----");
-        binTree.depthFirstTraverse(root);
+//        BinTree binTree = new BinTree();
+//        int[] array = {3,5,1,6,7,9,2,4};
+//        BinTree.TreeNode root = binTree.createBinTree(array);
+//        System.out.println("层序遍历-----");
+//        binTree.breadthFirstTraverse(root);
+//        System.out.println("前序遍历-----");
+//        binTree.preOrderTraverseNoRecursion(root);
+//        System.out.println("中序遍历-----");
+//        binTree.inOrderTraverseNoRecursion(root);
+//        System.out.println("后序遍历-----");
+//        binTree.postOrderTraverseNoRecursion(root);
+//        System.out.println("深度优先----");
+//        binTree.depthFirstTraverse(root);
     }
 
     private static void binTreeTest(){
         BinTree binTree = new BinTree();
-        int[] array = {3,5,1,6,7,9,2,3};
+//        int[] array = {3,5,1,6,7,9,2,3};
+        int[] array = {3,5,1};
         BinTree.TreeNode root = binTree.createBinTree(array);
 
         System.out.println("先序遍历：");
@@ -115,8 +116,8 @@ public class BinTree {
             return;
         }
         postOrderTraverse(node.leftChild);
-        System.out.println(node.data);
         postOrderTraverse(node.rightChild);
+        System.out.println(node.data);
     }
 
 
