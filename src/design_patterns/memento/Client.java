@@ -12,10 +12,14 @@ public class Client {
     public static void main(String[] args) {
         Originator originator  = new Originator();
         CareTaker careTaker = new CareTaker();
-
+        //执行第一步
+        originator.setState("step1");
+        //保存第一步
         careTaker.addMemento(originator.saveStateToMemento("step1"));
+        //继续执行第二步第三步
         originator.setState("step2");
         originator.setState("step3");
+        //恢复第一步
         originator.restoreStateFromMemento(careTaker.getMemento(0));
         System.out.println(originator.getState());
     }
