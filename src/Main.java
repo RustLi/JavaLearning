@@ -16,7 +16,19 @@ public class Main {
         final A b = this;
     }
 
+    public enum Status{
+        NO,
+        RUN,
+        OUTOFDATE
+    }
+
     public static void main(String[] args) {
+//        System.out.println(2 & 32);
+//        boolean cm = (2 & 32) > 0;
+//        System.out.println(cm);
+
+        System.out.println(Status.NO);
+
 //        Thread thread1 = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -35,11 +47,11 @@ public class Main {
 //        System.out.println(a);
 //        System.out.println(b);
 
-        String a = "111";
-        String[] b = a.split(",");
-        for (String c: b) {
-            System.out.println(c);
-        }
+//        String a = "111";
+//        String[] b = a.split(",");
+//        for (String c: b) {
+//            System.out.println(c);
+//        }
 
 //        System.out.println("Hello World!");
 

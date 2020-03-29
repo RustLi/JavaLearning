@@ -1,11 +1,11 @@
-package algorithms.leetcode.code;
+package algorithms.leetcode.code.easy._69;
 
 /**
  * @date: 2019/12/20
  * @author: lwl
  * @description: 求平方根
  */
-public class Sqrt_69 {
+public class Solution {
     public static void main(String[] args) {
         int input1 = 9;
         System.out.println("input: " +input1+ " mySqrtWithMid: " + sqrtWithMid(input1));
@@ -75,7 +75,4 @@ public class Sqrt_69 {
         }
         return (int) n;
     }
-
-
-
 }
