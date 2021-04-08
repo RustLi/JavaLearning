@@ -10,5 +10,9 @@ public class Client {
     public static void main(String[] args) {
         ContextImpl context = new ContextImpl(new ConcreteStrategyA());
         context.executeStrategy();
+
+        Deal deal = new Deal();
+        deal.shareOptions("Sina");
     }
+
 }
