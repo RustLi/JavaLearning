@@ -1,125 +1,268 @@
-import com.sun.tools.javac.util.StringUtils;
-import data_structure.array.Array;
-import design_patterns.strategy.Deal;
-import sun.lwawt.macosx.CImage;
-import test.InnerClassTest;
-import test.Test;
-import test.Test1;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import test.FriendFissionRestBonus;
+import test.LambdaTest;
+import test.User;
+import test.enumTest.EnumTest1;
 import utils.FixedCapacityMap;
 import utils.XmlUtil;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) {
-//        getDbPassWord();
+        Main main = new Main();
+//        main.sortList();
 
-//        List<Test111> list = new ArrayList<>();
-//        Test111 test111 = new Test111();
-//
-//        list.add(test111);
-//
-//        Test111 test222 = new Test111();
-//        list.add(test222);
+    }
 
+    private void testSet(){
+        Set<Integer> set1 = new HashSet<>();
+        set1.add(1);
+        set1.add(2);
+        set1.add(3);
 
-//        System.out.println(list);
-//        System.out.println(list.size());
-//
-//        for (Test111 tt : list) {
-//            System.out.println("tt" + tt);
+        Set<Integer> set2 = new HashSet<>();
+        set2.add(4);
+        set2.add(2);
+        set2.add(3);
+        set2.add(null);
+
+        Set<Integer> set3 = Sets.intersection(set1,set2);
+        Set<Integer> set4 = Sets.difference(set1,set2);
+        Set<Integer> set5 = Sets.difference(set2,set1);
+
+        System.out.println(set1);
+        System.out.println(set2);
+        System.out.println(set3);
+        System.out.println(set4);
+        System.out.println(set5);
+
+        System.out.println("-----");
+        System.out.println(set1);
+        System.out.println(set2);
+    }
+
+    private void testGuava(){
+        List<String> mList = new ArrayList();
+        System.out.println(111);
+        Lists.partition(mList,50).forEach(nList -> {
+            for (String aaa: nList) {
+                System.out.println(aaa);
+            }
+        });
+        System.out.println(222);
+    }
+
+    private void testMap111(String format){
+        Map<Integer, Integer> stageRewardCountMap = new HashMap<>();
+        stageRewardCountMap.put(1,999);
+        stageRewardCountMap.put(2,2);
+        Map<Integer, Integer> receiveStageRewardCountMap = new HashMap<>();
+        receiveStageRewardCountMap.put(1,3);
+
+        Map<String, String> model = new HashMap<>();
+
+        Map<Integer, String> restBonusMap = FriendFissionRestBonus.getCache();
+        Set<Map.Entry<Integer, String>> entries = restBonusMap.entrySet();
+        for (Map.Entry<Integer, String> e : entries) {
+            Integer key = e.getKey();
+            String value = e.getValue();
+
+            if (format.contains(value)) {
+                int rewardCount = stageRewardCountMap.get(key) == null ? 0 : stageRewardCountMap.get(key);
+                int receiveCount = receiveStageRewardCountMap == null ? 0 : receiveStageRewardCountMap.get(key) == null ? 0 : receiveStageRewardCountMap.get(key);
+                int resetCount = Math.max(rewardCount - receiveCount, 0);
+                model.put(value, String.valueOf(resetCount));
+            }
+        }
+
+//        for (Map.Entry<String,String> a: model.entrySet()) {
+//            System.out.println("lwl: key  = " + a.getKey() + ", value = " + a.getValue());
 //        }
 
-//
-//        String path = "/Users/lwl/temp/banben/v1.0.6.apk";
-//        File file = new File(path);
-//        if (file.exists()){
-//            System.out.println("file is exist");
-//            String fileMd5 = getFileMD5(file);
-//            System.out.println(fileMd5);
+        String text = render(format, model);
+        System.out.println("lwl test: " + text);
+    }
+
+    public static String render(String template, Map<String, String> model) {
+        String comment = template;
+
+        Set<Map.Entry<String, String>> entries = model.entrySet();
+        for (Map.Entry<String, String> e : entries) {
+            String k = e.getKey();
+            String v = e.getValue();
+
+            String value = v == null ? "" : v;
+            comment = replace(comment, k, value);
+        }
+
+        return comment;
+    }
+
+    public static String replace(String source, String placeHolder, String target) {
+        // 若原串为空，则不处理。
+        if (source == null) {
+            return source;
+        }
+
+        // 若占位符为空，也不处理。
+        if (placeHolder == null) {
+            return source;
+        }
+
+        // 占位符和目标串相同，也不处理。
+        if (placeHolder.equals(target)) {
+            return source;
+        }
+
+        // 用目标串替换原串中所有的占位符
+        // 这里不使用正则表达式，避免占位符字符串中有特殊字符。
+        while (source.contains(placeHolder)) {
+            source = source.replace(placeHolder, target);
+        }
+        return source;
+    }
+
+
+    /**
+     * 测试汉字字节数
+     **/
+    private void testChByteNum(){
+        String aaa = "aa";
+        byte[] ccc = aaa.getBytes(StandardCharsets.UTF_8);
+        System.out.println("aaa = " + aaa.length());
+        System.out.println("ccc = " + ccc.length);
+
+        String bb = "我的";
+        System.out.println("bb = " + bb.length());
+        byte[] ddd = new byte[0];
+        try {
+            ddd = bb.getBytes("GBK");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ddd = " + ddd.length);
+    }
+
+    /**
+     * List排序
+     **/
+    private void sortList(){
+        List<Integer> mlist = new ArrayList<>();
+        mlist.add(555);
+        mlist.add(1);
+        mlist.add(2);
+        mlist.add(3);
+        mlist.add(4);
+        mlist.add(5);
+
+        Integer targetId = 4;
+        //            System.out.println("o1 = " + o1 + ", o2 = " + o2);
+        //            if (o1.equals(targetId)) {
+        //                return -1;
+        //            }
+        //            return 1;
+
+        //按照升序排序
+//        mlist.sort(Integer::compareTo);
+
+        mlist.stream().sorted().forEach(System.out::println);
+
+//        sortListByMainDept(mlist,targetId);
+
+//        for (Integer m1: mlist) {
+//            System.out.println("m1 = " + m1);
 //        }
 
-
-//        String url = "wxwork://wxhandlefriendapply?appid=wwkaa3f93de1bf64287&profilecode=wcdeaa19b553ed4a997b306b1d29675b6d50";
-//        if (url.contains("profilecode=")){
-//            String profileCode = url.substring(url.lastIndexOf("=") + 1,url.length());
-//            System.out.println(profileCode);
+//        Map<Integer,Integer> deptNames = new LinkedHashMap<>();
+//        deptNames.put(2,2);
+//        deptNames.put(1,1);
+//        deptNames.put(3,3);
+//        for (Map.Entry<Integer, Integer> entry : deptNames.entrySet()) {
+//            System.out.println(entry.getValue());
 //        }
 
+    }
 
-//        List<String> mList = new ArrayList<>();
-//        mList.add("111");
-//        mList.add("222");
-//        mList.add("333");
-//        mList.add("444");
+    private static void sortListByMainDept(List<Integer> deptIds, Integer targetId){
+//        log.info("sortListByMainDept: targetId:{}",targetId);
+        deptIds.sort((o1, o2) -> {
+            if (o1.equals(targetId)) {
+                return -1;
+            }
+            return 1;
+        });
+    }
+
+
+//    private List<Integer> sortDeptsByOrder(List<Integer> deptIds, List<Integer> orderIds){
 //
-//        boolean isContain = mList.contains("111");
-//        System.out.println(isContain);
-
-//        emojiTest();
-
-//        int aaa = 1610862967;
+//        if (Objects.isNull(deptIds) || Objects.isNull(orderIds) || deptIds.size() != orderIds.size()){
+//            log.error("sortDeptsByOrder, input is error. deptIds:{},orderIds:{}",deptIds,orderIds);
+//            return Lists.newArrayList();
+//        }
 //
+//        List<Integer> retDeptIds = Lists.newArrayList();
+//        List<Integer> sortedOrderIds = orderIds.stream().sorted().collect(Collectors.toList());
 //
-//        int lTime = (int) (System.currentTimeMillis() / 1000);
-//        System.out.println(lTime);
-
-//        long eee = aaa;
-//        System.out.println(eee);
+//        int length = orderIds.size();
+//        for (int i = 0 ; i < length; i++) {
+//            for (int j = 0; j < length; j++) {
+//                if (Objects.equals(orderIds.get(i),sortedOrderIds.get(j))){
+//                    retDeptIds.set(j, deptIds.get(i));
+//                }
+//            }
+//        }
+//        return retDeptIds;
+//    }
 //
-//        Long bbb = Long.valueOf("122");
-//        System.out.println(bbb);
+//    private Integer[] sortDeptsByOrder(Integer[] deptIds, Integer[] orderIds){
 //
-//        System.out.println(bbb > aaa);
-
-
-//        String path = "/storage/emulated/0/wechat/222";
-//        String newLocalPath = path.substring(0,path.lastIndexOf("/")) + "/888";
-//        System.out.println(newLocalPath);
-
-//        testMap();
-
-//        printTest();
-
-//        emojiTest();
-
-//        patternTest();
-
-//        long currentTime = System.currentTimeMillis();
-//        System.out.println("currentTime = " + currentTime);
+//        Integer[] retDeptIds = new Integer[deptIds.length];
+//        Integer[] sortedOrderIds = Arrays.stream(orderIds).sorted(Comparator.naturalOrder()).collect(Collectors.toList()).toArray(new Integer[orderIds.length]);
 //
-//        int delayMs = 1000;
-//        long time2 = currentTime + delayMs;
-//        System.out.println("time2 = " + time2);
+//        for (int i = 0, length = orderIds.length ; i < length; i++) {
+//            for (int j = 0, sortLength = sortedOrderIds.length; j < sortLength; j++) {
+//                if (Objects.equals(orderIds[i],sortedOrderIds[j])){
+//                    retDeptIds[j] = deptIds[i];
+//                }
+//            }
+//        }
+//
+//        return retDeptIds;
+//    }
 
-//        StringBuilder stringBuilder = new StringBuilder();
-//        long currentTimeMillis = System.currentTimeMillis();
-//        System.out.println(currentTimeMillis);
-//        stringBuilder.append(new SimpleDateFormat("yyMMddHHmmss", Locale.ENGLISH).format(new Date(currentTimeMillis)));
-//        System.out.println(stringBuilder.toString());
+    public static boolean equals(Object a, Object b) {
+        return (a == b) || (a != null && a.equals(b));
+    }
 
-        //test222();
-//        test12345();
-
-//        String a = "9";
-//        int b = Integer.parseInt(a);
-//        System.out.println(b);
-
-        String version = "1.0.4";
-        String a = version.substring(0, version.indexOf("."));
-        System.out.println(a);
-
-        int b = Integer.parseInt(a);
-        System.out.println(b);
+    public static boolean equals(CharSequence a, CharSequence b) {
+        if (a == b) return true;
+        int length;
+        if (a != null && b != null && (length = a.length()) == b.length()) {
+            if (a instanceof String && b instanceof String) {
+                return a.equals(b);
+            } else {
+                for (int i = 0; i < length; i++) {
+                    if (a.charAt(i) != b.charAt(i)) return false;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void test12345(){

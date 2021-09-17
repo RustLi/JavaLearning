@@ -1,4 +1,4 @@
-package test;
+package test.enumTest;
 
 public enum EnumTest {
     ONE(1,"a"),

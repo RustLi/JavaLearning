@@ -5,10 +5,10 @@ import java.util.*;
 public class BinTree {
 
     //定义二叉树节点
-    public class TreeNode{
-        private TreeNode leftChild;
-        private TreeNode rightChild;
-        private Object data;
+    public static class TreeNode{
+        public TreeNode leftChild;
+        public TreeNode rightChild;
+        public Object data;
         public TreeNode(Object data){
             this.data = data;
         }
@@ -51,7 +51,7 @@ public class BinTree {
     }
     
     //构建二叉树，返回根节点
-    public TreeNode createBinTree(int[] arr){
+    public static TreeNode createBinTree(int[] arr){
         if (arr == null){
             return null;
         }
@@ -188,7 +188,7 @@ public class BinTree {
     /**
      * 广度优先遍历二叉树，又称层次遍历二叉树，采用队列，先进先出
      */
-    public void breadthFirstTraverse(TreeNode root) {
+    public static void breadthFirstTraverse(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode currentNode;
         queue.offer(root);
