@@ -5,6 +5,9 @@ import com.google.common.collect.Maps;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -12,13 +15,54 @@ import java.util.stream.Stream;
 public class LambdaTest {
     public static void main(String[] args) {
         LambdaTest lambdaTest= new LambdaTest();
+
 //        lambdaTest.lambdaTest();
 
 //        lambdaTest.sqList();
 
 //        lambdaTest.flatMap();
 
-        lambdaTest.test();
+//        lambdaTest.test();
+
+//        test111(5);
+
+//        lambdaTest.groupByTest();
+
+        List<Integer> aa = new ArrayList<>();
+        aa.add(1);
+        aa.add(2);
+        aa.add(3);
+//        List<Integer> dataList = aa.stream().distinct().collect(Collectors.toList());
+//        System.out.println(dataList);
+
+//        List<Integer> bb = aa.stream().filter(it ->{
+//                    return it > 2 ? true : false;
+//                }
+//                ).collect(Collectors.toList());
+//        System.out.println("aa = " + aa);
+//        System.out.println("bb = " + bb);
+
+
+        String bbb = "123";
+        String ccc = null;
+        System.out.println("isEqual = " + bbb.equals(ccc));
+    }
+
+    private static void test111(int i){
+        System.out.println(111);
+        for (int j = 0; j < 10; j++) {
+            if (j == i){
+                break;
+            }
+        }
+        System.out.println(222);
+    }
+
+    public static Date getDateAddMin(Date date, int minutes) {
+        Calendar no = Calendar.getInstance();
+        no.setTime(date);
+        no.add(Calendar.MINUTE, minutes);
+        return no.getTime();
     }
 
     private void test(){
@@ -119,18 +163,79 @@ public class LambdaTest {
         repeat(10, i -> System.out.println("countdown :: " + (9 - i)));
     }
 
+    private void groupByTest(){
+        List<Apple> appleList = new ArrayList<>();//存放apple对象集合
+        Apple apple7 =  new Apple(8,"A",Collections.singletonList("3"),"A");
+        Apple apple8 = new Apple(8,"A",Collections.singletonList("A"),"A");
+        Apple apple9 = new Apple(8,"a2",Collections.singletonList("B"),"A");
+        Apple apple10 = new Apple(8,"B",Collections.singletonList("A"),"B");
+        Apple apple11 = new Apple(8,"b1",Collections.singletonList("A"),"B");
+
+//        Apple apple9 =  new Apple(9,"香蕉",Collections.singletonList("5"));
+        appleList.add(apple7);
+        appleList.add(apple8);
+        appleList.add(apple9);
+        appleList.add(apple10);
+        appleList.add(apple11);
+
+        Map<String,List<Apple>> mMap = appleList.stream().collect(Collectors.groupingBy(Apple::getbName));
+        mMap.forEach((k, v) -> System.out.println(k + "------" + v));
+
+        Map<String,List<Apple>> nMap = appleList.stream().collect(Collectors.groupingBy(it -> buildKey(it.id,it.name)));
+        nMap.forEach((k, v) -> System.out.println("nMap = " + k + "------" + v));
+
+//        List<Apple> targetList = mMap.getOrDefault("aaaa",new ArrayList<>());
+//        Set<Integer> dateSet = targetList.stream().map(Apple::getId).collect(Collectors.toSet());
+//        System.out.println(dateSet.size());
+
+//        mMap.forEach((k, v) -> System.out.println(k + "------" + v));
+
+//        List<String> aaaList = new ArrayList<>();
+//        aaaList.add("222");
+//        aaaList.add("222");
+//        aaaList.add("333");
+//        Map<String, Long> map = aaaList.stream().collect(Collectors.groupingBy(p -> p,Collectors.counting()));
+//        map.forEach((k, v) -> System.out.println(k + ":" + v));
+
+        Map<String,String> aMap = new HashMap<>();
+        List<String> aList = new ArrayList<>();
+        String A = "A";
+        String a1 = "a1";
+        String a2 = "a2";
+        aMap.put(A,A);
+        aMap.put(a1,A);
+        aMap.put(a2,A);
+        aList.add(A);
+        aList.add(a1);
+        aList.add(a2);
+
+        String B = "B";
+        String b1 = "b1";
+        aMap.put(B,B);
+        aMap.put(b1,B);
+        aList.add(B);
+        aList.add(b1);
+
+        String C = "C";
+        String c1 = "c1";
+        aMap.put(C,C);
+        aMap.put(c1,C);
+        aList.add(C);
+        aList.add(c1);
+
+    }
 
     private void lambdaTest(){
 
         List<Apple> appleList = new ArrayList<>();//存放apple对象集合
 
-        Apple apple1 =  new Apple(1,null,new BigDecimal("3.25"),10);
-        Apple apple12 = new Apple(2,"aaa",new BigDecimal("1.35"),20);
-        Apple apple2 =  new Apple(2,"香蕉",new BigDecimal("2.89"),30);
+        Apple apple1 =  new Apple(1,null,new BigDecimal("3.25"),10,false);
+        Apple apple12 = new Apple(2,"aaa",new BigDecimal("1.35"),20,false);
+        Apple apple2 =  new Apple(2,"香蕉",new BigDecimal("2.89"),30,true);
 
-        Apple apple3 =  new Apple(3,"荔枝",new BigDecimal("9.99"),40);
+        Apple apple3 =  new Apple(3,"荔枝",new BigDecimal("9.99"),40,false);
 //        Apple apple5 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30);
-        Apple apple6 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30);
+        Apple apple6 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30,true);
 
         appleList.add(apple1);
         appleList.add(apple12);
@@ -139,14 +244,36 @@ public class LambdaTest {
 //        appleList.add(apple5);
         appleList.add(apple6);
 
-        Map<Integer,String> result = appleList.stream().filter(p -> p.getName() != null).collect(Collectors.toMap(Apple::getId, Apple::getName));
-        System.out.println("lwl::: " + result);
 
-        List<Apple> joinDetailList = appleList.stream().filter(a -> Objects.nonNull(a.getId()) && a.getId() == 1).collect(Collectors.toList());
+        List<Orange> orangeList = appleList.stream().filter(Objects::nonNull).map(it -> {
+            Orange orange = new Orange();
+            orange.id = it.id;
+            orange.name = it.name;
+            return orange;
+        }).collect(Collectors.toList());
+
+        orangeList.forEach( e->{
+            System.out.println("orange = " + e);
+        });
+
+        List<Apple> aList = appleList.stream().filter(a -> a.getName() != null && !a.getName().equals("香蕉")).collect(Collectors.toList());
+
+        System.out.println("lwl:  size = " + aList.size());
+
+        List<Apple> bList = appleList.stream().filter(a -> !a.isDraft).collect(Collectors.toList());
+
+        System.out.println("lwl:  bList.size = " + bList.size());
+
+//        Map<Integer,String> result = appleList.stream().filter(p -> p.getName() != null).collect(Collectors.toMap(Apple::getId, Apple::getName));
+//        System.out.println("lwl::: " + result);
+
+        List<Apple> joinDetailList = appleList.stream().filter(a -> Objects.nonNull(a.getId()) && a.getId() == 1)
+                .collect(Collectors.toList());
 //        System.out.println("lwl .... joinDetailList = " + joinDetailList);
 
-        Map<Integer, Apple> dMap = appleList.stream().filter(a -> Objects.nonNull(a.getId()) && a.getId() == 1)
+        Map<Integer, Apple> dMap = appleList.stream().filter(a -> Objects.nonNull(a.getId()) && a.getId() == 10)
                 .collect(Collectors.toMap(Apple::getId, a->a,(k, v)->v));
+        System.out.println("lwl000 = " + dMap + ", size = " + dMap.size());
         for (Map.Entry entry: dMap.entrySet()) {
 //            System.out.println("111 key = " + entry.getKey() + ", value = " + entry.getValue());
         }
@@ -164,7 +291,6 @@ public class LambdaTest {
             String key = buildKey(apple.getId(),apple.getName());
             if (keySet.contains(key)){
                 //比较num，如何更新newList
-
             }
             keySet.add(key);
             newList.add(apple);
@@ -175,6 +301,7 @@ public class LambdaTest {
         List<String> stringList = appleList.stream().map(item -> buildKey(item.getId(), item.getName()))
                 .collect(Collectors.toList());
 
+        System.out.println("555 = " + stringList);
 
         long count = stringList.stream().distinct().count();
 //        System.out.println(count);
@@ -186,9 +313,17 @@ public class LambdaTest {
         }
         meetingIds.sort(Integer::compareTo);
 
-        System.out.println("lwl ... " + meetingIds);
+//        System.out.println("lwl ... " + meetingIds);
 
         Map<Integer, List<Apple>> stageReasonMap = appleList.stream().collect(Collectors.groupingBy(Apple::getId));
+
+        Map<Integer, List<Integer>> bbbMap = appleList.stream().collect(
+                Collectors.groupingBy(Apple::getId, Collectors.mapping(Apple::getNum, Collectors.toList())));
+
+//        System.out.println("bbbMap = " + bbbMap);
+
+        List<Apple> cccList = appleList.stream().filter(distinctByKey(Apple::getName))
+                .collect(Collectors.toList());
 
 //        Map<Integer, String> appleMap = appleList.stream().collect(Collectors.toMap(Apple::getId, Apple::getName, (u,v)->v));
 
@@ -234,9 +369,6 @@ public class LambdaTest {
         List<Integer> inputList = Arrays.asList(10,1,8,6,3);
         List<Integer> list = Arrays.asList(5, 8, 4, 9, 3);
         List<Integer> sortedlist = list.stream().sorted().collect(Collectors.toList());
-
-
-
 
         System.out.println(list);
         System.out.println(sortedlist);
@@ -313,11 +445,57 @@ public class LambdaTest {
         private String name;
         private BigDecimal money;
         private Integer num;
+        private boolean isDraft;
+        private List<String> mList;
+        private String bName;
+
+
+
+        public Apple(Integer id, String name, List<String> mList, String bName) {
+            this.id = id;
+            this.name = name;
+            this.mList = mList;
+            this.bName = bName;
+        }
+
+        public Apple(Integer id, String name, BigDecimal money, Integer num, boolean isDraft) {
+            this.id = id;
+            this.name = name;
+            this.money = money;
+            this.num = num;
+            this.isDraft = isDraft;
+        }
+
+        public Apple(Integer id, String name,List<String> mList) {
+            this.id = id;
+            this.name = name;
+            this.money = this.money;
+            this.num = this.num;
+            this.isDraft = isDraft;
+            this.mList = mList;
+        }
+
         public Apple(Integer id, String name, BigDecimal money, Integer num) {
             this.id = id;
             this.name = name;
             this.money = money;
             this.num = num;
+        }
+
+        public String getbName() {
+            return bName;
+        }
+
+        public void setbName(String bName) {
+            this.bName = bName;
+        }
+
+        public boolean isDraft() {
+            return isDraft;
+        }
+
+        public void setDraft(boolean draft) {
+            isDraft = draft;
         }
 
         public Integer getId() {
@@ -390,4 +568,26 @@ public class LambdaTest {
         return stageId + "_" + reason;
     }
 
+    public static class Orange {
+        public Integer id;
+        public String name;
+
+        @Override
+        public String toString() {
+            return "Orange{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+    }
+
+    /**
+     * 自定义重复key 规则
+     * @param keyExtractor
+     * @return
+     */
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
+    }
 }

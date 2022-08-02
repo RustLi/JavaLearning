@@ -2,7 +2,9 @@ package utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Md5Util {
 
@@ -42,5 +44,28 @@ public class Md5Util {
             stringBuilder.append(hv);
         }
         return stringBuilder.toString();
+    }
+
+    public static String getStringMD5For16(String input) {
+        if(input == null || input.length() == 0) {
+            return "";
+        }
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(input.getBytes());
+            byte[] byteArray = md5.digest();
+
+            BigInteger bigInt = new BigInteger(1, byteArray);
+            // 参数16表示16进制
+            String result = bigInt.toString(16);
+            // 不足32位高位补零
+            while(result.length() < 32) {
+                result = "0" + result;
+            }
+            return result.substring(8,24);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

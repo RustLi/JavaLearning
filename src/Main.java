@@ -5,14 +5,15 @@ import test.LambdaTest;
 import test.User;
 import test.enumTest.EnumTest1;
 import utils.FixedCapacityMap;
+import utils.Md5Util;
 import utils.XmlUtil;
-
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Function;
@@ -22,15 +23,67 @@ import java.util.stream.Collectors;
 
 public class Main {
 
+    public static T1 aaa = new T1();
+
     public static void main(String[] args) {
         Main main = new Main();
 //        main.sortList();
 
+        main.testSet();
+//        main.testStr();
+
+
+        //public static final int FLAG_ACTIVITY_NO_HISTORY = 0x40000000;
+        //    /**
+        //     * If set, the activity will not be launched if it is already running
+        //     * at the top of the history stack.
+        //     */
+        //    public static final int FLAG_ACTIVITY_SINGLE_TOP = 0x20000000;
+
+//        int a = 0x04000000 | 0x20000000;
+//        System.out.println(a);
+
+//        T1 bbb = aaa;
+//        bbb.name = "111";
+//        bbb.age = 2;
+//
+//        System.out.println("bbb = " + bbb);
+//        System.out.println("aaa = " + aaa);
+
+//        String url = "https://kuaike-dev.oss-cn-beijing.aliyuncs.com/skynet-app/19f7d11fc0b840c291a01814c585cf0f-7f7e2c21-3232-4f43-8af6-9c1b034311f3.mp4";
+
+//        String url = "https://yunxi-dev-cn.kuaikeguanjia.com/skynet-app/d31276a0e9b7471a8d809a33d3762b40-a15f56cd-c9e5-42fb-8fa2-58b37561e422.mp4";
+//
+//        if (url.contains(".aliyuncs.com") || url.contains("yunxi-cdn.kuaikeguanjia.com") || url.contains("yunxi-dev-cn.kuaikeguanjia.com")) {
+//            System.out.println(111);
+//        }else{
+//            System.out.println(222);
+//        }
+
+
+    }
+
+    public static class T1{
+        public String name;
+        public int age;
+
+        @Override
+        public String toString() {
+            return "T1{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
+    private void testStr(){
+        String format = "你好: {0},{1}";
+        System.out.println(MessageFormat.format(format,"1111",222));
     }
 
     private void testSet(){
         Set<Integer> set1 = new HashSet<>();
-        set1.add(1);
+//        set1.add(1);
         set1.add(2);
         set1.add(3);
 
@@ -169,7 +222,34 @@ public class Main {
         mlist.add(4);
         mlist.add(5);
 
-        Integer targetId = 4;
+        mlist.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
+
+        List<Apple> appleList = Lists.newArrayList();
+        appleList.add(new Apple(4));
+        appleList.add(new Apple(1));
+        appleList.add(new Apple(3));
+
+        appleList.sort(new Comparator<Apple>() {
+            @Override
+            public int compare(Apple o1, Apple o2) {
+                if (o1 == null || o2 == null){
+                    return 0;
+                }
+                return o1.getSize() - o2.getSize();
+            }
+        });
+
+        for (Apple m1: appleList) {
+            System.out.println("m1 = " + m1);
+        }
+
+
+//        Integer targetId = 4;
         //            System.out.println("o1 = " + o1 + ", o2 = " + o2);
         //            if (o1.equals(targetId)) {
         //                return -1;
@@ -179,7 +259,7 @@ public class Main {
         //按照升序排序
 //        mlist.sort(Integer::compareTo);
 
-        mlist.stream().sorted().forEach(System.out::println);
+//        mlist.stream().sorted().forEach(System.out::println);
 
 //        sortListByMainDept(mlist,targetId);
 
@@ -195,6 +275,25 @@ public class Main {
 //            System.out.println(entry.getValue());
 //        }
 
+    }
+
+    public static class Apple{
+        public Integer size;
+
+        public Integer getSize() {
+            return size;
+        }
+
+        public Apple(Integer size) {
+            this.size = size;
+        }
+
+        @Override
+        public String toString() {
+            return "Apple{" +
+                    "size=" + size +
+                    '}';
+        }
     }
 
     private static void sortListByMainDept(List<Integer> deptIds, Integer targetId){
@@ -459,9 +558,6 @@ public class Main {
 //            L.e("SleepUtil", e, e.getStackTrace());
         }
     }
-
-
-    private static Long aaa = new Long("1111");
 
     public static String getStr(String text){
         return text != null ? text.split("\\[")[0] : "";
