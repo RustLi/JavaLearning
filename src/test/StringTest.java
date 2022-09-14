@@ -18,8 +18,8 @@ public class StringTest {
 
         String ff = "abcd123";
         System.out.println(ff.charAt(1));
+
+        String buff = ff.substring(0, ff.length() - 1);
+        System.out.println("buff = " + buff);
     }
-
-
-
 }

@@ -23,15 +23,11 @@ public class Client {
 
         //第三种，枚举
         Object obj = Type2Obj.getObjByType(MsgAttachType.IMAGE.getValue());
-        if (obj == null){
-            return;
-        }
-        try {
+        if(obj != null){
             ISyncAttachMsg iSyncAttachMsg = (ISyncAttachMsg) obj;
             iSyncAttachMsg.handleAttachFile(new Object());
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
     }
 
 }
