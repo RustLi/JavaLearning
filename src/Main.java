@@ -29,7 +29,7 @@ public class Main {
         Main main = new Main();
 //        main.sortList();
 
-        main.testSet();
+//        main.testSet();
 //        main.testStr();
 
 
@@ -60,7 +60,65 @@ public class Main {
 //            System.out.println(222);
 //        }
 
+        String aaa = "1.8万";
+        System.out.println("aaa = " + extractDigit(aaa));
 
+        String bbb = "3万";
+        System.out.println("bbb = " + extractDigit(bbb));
+
+        String ccc = "1.8亿";
+        System.out.println("ccc = " + extractDigit(ccc));
+
+        String ddd = "dsadasda";
+        System.out.println("ddd = " + extractDigit(ddd));
+
+        String eee = "4千";
+        System.out.println("eee = " + extractDigit(eee));
+
+    }
+
+    /**
+     * 正则表达式提取数字（包括小数点）
+     **/
+    public static String getNumber(String str){
+        // 控制正则表达式的匹配行为的参数(小数)
+        Pattern p = Pattern.compile("(\\d+\\.\\d+)");
+        //Matcher类的构造方法也是私有的,不能随意创建,只能通过Pattern.matcher(CharSequence input)方法得到该类的实例.
+        Matcher m = p.matcher(str);
+        //m.find用来判断该字符串中是否含有与"(\\d+\\.\\d+)"相匹配的子串
+        if (m.find()) {
+            //如果有相匹配的,则判断是否为null操作
+            //group()中的参数：0表示匹配整个正则，1表示匹配第一个括号的正则,2表示匹配第二个正则,在这只有一个括号,即1和0是一样的
+            str = m.group(1) == null ? "" : m.group(1);
+        } else {
+            //如果匹配不到小数，就进行整数匹配
+            p = Pattern.compile("(\\d+)");
+            m = p.matcher(str);
+            if (m.find()) {
+                //如果有整数相匹配
+                str = m.group(1) == null ? "" : m.group(1);
+            } else {
+                //如果没有小数和整数相匹配,即字符串中没有整数和小数，就设为空
+                str = "";
+            }
+        }
+        return str;
+    }
+
+
+    private static long extractDigit(String str) {
+        String num = getNumber(str);
+        if (num == null || num.equals("")){
+            return 0L;
+        }
+        if (str.contains("万")){
+            double temp = Double.parseDouble(num);
+            return  (long) (temp * Math.pow(10,4));
+        }else if(str.contains("亿")){
+            double temp = Double.parseDouble(num);
+            return  (long) (temp * Math.pow(10,8));
+        }
+        return (long)Double.parseDouble(num);
     }
 
     public static class T1{
@@ -83,25 +141,25 @@ public class Main {
 
     private void testSet(){
         Set<Integer> set1 = new HashSet<>();
-//        set1.add(1);
+        set1.add(1);
         set1.add(2);
         set1.add(3);
 
         Set<Integer> set2 = new HashSet<>();
-        set2.add(4);
         set2.add(2);
         set2.add(3);
+        set2.add(4);
         set2.add(null);
 
         Set<Integer> set3 = Sets.intersection(set1,set2);
         Set<Integer> set4 = Sets.difference(set1,set2);
         Set<Integer> set5 = Sets.difference(set2,set1);
 
-        System.out.println(set1);
-        System.out.println(set2);
-        System.out.println(set3);
-        System.out.println(set4);
-        System.out.println(set5);
+        System.out.println("set1 = " + set1);
+        System.out.println("set2 = " + set2);
+        System.out.println("set3 = " + set3);
+        System.out.println("set4 = " + set4);
+        System.out.println("set5 = " + set5);
 
         System.out.println("-----");
         System.out.println(set1);

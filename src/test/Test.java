@@ -31,7 +31,13 @@ public class Test {
 //
 //        System.out.println("比较结果：：：：：" + compStr(localTime,updateTime));
 
-        System.out.println(getFileName("/storage/emulated/0/DCIM/WeixinWork/mmexport1658281749617.mp4"));
+//        System.out.println(getFileName("/storage/emulated/0/DCIM/WeixinWork/mmexport1658281749617.mp4"));
+
+        String aaa = "    ";
+        System.out.println("length = " + aaa.length());
+
+        System.out.println("trim length = " + aaa.trim().length());
+
     }
 
     /**
