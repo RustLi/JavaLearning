@@ -5,6 +5,11 @@ import utils.Utils;
 import java.util.Arrays;
 
 public class SelectSort {
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        SelectSort selectSort = new SelectSort();
+        selectSort.selectSort(intput);
+    }
 
     //时间复杂度o(n*n)
     public void selectSort(int[] input){
@@ -25,11 +30,5 @@ public class SelectSort {
             }
         }
         System.out.println(Arrays.toString(input));
-    }
-
-    public  static void main(String[] args){
-        int[] intput = {9,2,3,5,1,6,7};
-        SelectSort selectSort = new SelectSort();
-        selectSort.selectSort(intput);
     }
 }

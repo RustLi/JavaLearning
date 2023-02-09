@@ -2,6 +2,12 @@ package algorithms.sorts;
 
 public class BubbleSort {
 
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        BubbleSort bubbleSort = new BubbleSort();
+        bubbleSort.sort(intput);
+    }
+
     //增加一个flag值，最好的情况下，o(n)，最坏的情况下o(n*n)
     private void sort(int[] input){
         int length = input.length;
@@ -29,9 +35,4 @@ public class BubbleSort {
         input[b] = temp;
     }
 
-    public  static void main(String[] args){
-        int[] intput = {9,2,3,5,1,6,7};
-        BubbleSort bubbleSort = new BubbleSort();
-        bubbleSort.sort(intput);
-    }
 }

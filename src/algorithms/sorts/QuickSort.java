@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 public class QuickSort {
 
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        QuickSort quickSort = new QuickSort();
+        quickSort.quickSort(intput);
+    }
+
     //时间复杂度，最好情况：不断均分，o(n*logn),最坏情况：第i次需要n-i次比较，o(n*n)，平均情况：o(n*logn)
     //空间复杂度，最好：o(logn),最坏o(n)，平均o(logn)
     public void quickSort(int[] input){
@@ -66,9 +72,4 @@ public class QuickSort {
         input[b] = temp;
     }
 
-    public  static void main(String[] args){
-        int[] intput = {9,2,3,5,1,6,7};
-        QuickSort quickSort = new QuickSort();
-        quickSort.quickSort(intput);
-    }
 }

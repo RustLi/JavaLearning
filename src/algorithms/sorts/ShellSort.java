@@ -4,6 +4,20 @@ import static algorithms.sorts.base.Utils.swap;
 
 public class ShellSort {
 
+    public static void main(String[] args) {
+        int[] intput = {9,2,3,5,1,6,7};
+        for (int i = 0; i < intput.length; i++) {
+            System.out.println(intput[i]);
+        }
+        System.out.println("=====");
+        ShellSort shellSort = new ShellSort();
+        shellSort.shellSort2(intput);
+        System.out.println("after");
+        for (int i = 0; i < intput.length; i++) {
+            System.out.println(intput[i]);
+        }
+    }
+
     private void shellSort(int[] array) {
         if (array == null) {
             return;
@@ -32,20 +46,6 @@ public class ShellSort {
             if(incre == 1){
                 break;
             }
-        }
-    }
-
-    public static void main(String[] args) {
-        int[] intput = {9,2,3,5,1,6,7};
-        for (int i = 0; i < intput.length; i++) {
-            System.out.println(intput[i]);
-        }
-        System.out.println("=====");
-        ShellSort shellSort = new ShellSort();
-        shellSort.shellSort2(intput);
-        System.out.println("after");
-        for (int i = 0; i < intput.length; i++) {
-            System.out.println(intput[i]);
         }
     }
 

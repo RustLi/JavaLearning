@@ -6,6 +6,11 @@ import java.util.Arrays;
 
 public class InsertSort {
 
+    public  static void main(String[] args){
+        int[] intput = {9,2,3,5,1,6,7};
+        InsertSort insertSort = new InsertSort();
+        insertSort.insertSort1(intput);
+    }
 
     //最好o(n),最差o(n*n),平均o(n*n)
     public void insertSort(int[] input){
@@ -43,9 +48,4 @@ public class InsertSort {
         System.out.println(Arrays.toString(inputArr));
     }
 
-    public  static void main(String[] args){
-        int[] intput = {9,2,3,5,1,6,7};
-        InsertSort insertSort = new InsertSort();
-        insertSort.insertSort1(intput);
-    }
 }

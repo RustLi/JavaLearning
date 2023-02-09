@@ -3,6 +3,7 @@ package test;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.sun.javafx.css.Size;
+import org.apache.commons.lang3.StringUtils;
 import test.beanutil.Person;
 
 import java.io.ByteArrayOutputStream;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -19,6 +21,8 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class LambdaTest {
+    private static final String SOP_NO_TEMPLATE = "<a href=\\\"{0}/sopRemind?mainNum={1}&user_id={2}\\\">>>客户名单</a>";
+
     public static void main(String[] args) {
         LambdaTest lambdaTest= new LambdaTest();
 
@@ -66,7 +70,6 @@ public class LambdaTest {
 //        });
 //        System.out.println("包含：" + aMap.containsKey("1"));
 //
-
     }
 
     private static void test111(int i){
@@ -257,18 +260,33 @@ public class LambdaTest {
 
         Apple apple1 =  new Apple(1,"111",new BigDecimal("3.25"),10,false);
         Apple apple12 = new Apple(2,"222",new BigDecimal("1.35"),20,false);
-        Apple apple2 =  new Apple(2,"333",new BigDecimal("2.89"),20,true);
+        Apple apple2 =  new Apple(2,"222",new BigDecimal("2.89"),20,true);
 
-        Apple apple3 =  new Apple(3,"444",new BigDecimal("9.99"),40,false);
+//        Apple apple3 =  new Apple(3,"444",new BigDecimal("9.99"),40,false);
 //        Apple apple5 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30);
-        Apple apple6 =  new Apple(4,"555",new BigDecimal("2.89"),30,true);
+//        Apple apple6 =  new Apple(4,"",new BigDecimal("2.89"),30,true);
 
         appleList.add(apple1);
         appleList.add(apple12);
         appleList.add(apple2);
-        appleList.add(apple3);
+//        appleList.add(apple3);
 //        appleList.add(apple5);
-        appleList.add(apple6);
+//        appleList.add(apple6);
+
+        Set<String> nameSet = appleList.stream()
+                .map(Apple::getName)
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.toSet());
+//        System.out.println("nameSet = " + nameSet);
+
+        Map<String,Integer> tMap = new HashMap<>();
+        tMap.put("111",10);
+        tMap.put("222",20);
+        long sum = tMap.values().stream().mapToLong(Integer::longValue).sum();
+        System.out.println("sum = " + sum);
+
+        Collection<Integer> tInts = Optional.ofNullable(tMap).map(Map::values).get();
+        System.out.println("tInts = " + tInts + ", tMap.values() = " + tMap.values());
 
 //        Map<Integer, List<Apple>> aMap = appleList.stream().collect(Collectors.groupingBy(a -> buildKey(a.getId(),a.getNum()));
 
@@ -277,7 +295,6 @@ public class LambdaTest {
         System.out.println("quitRoomMap = " + quitRoomMap);
 
         Map<String, Apple> contactId2Entity = appleList.stream().collect(Collectors.toMap(a -> a.getId() + "$$" + a.getName(), Function.identity()));
-
 
         List<Orange> orangeList = appleList.stream().filter(Objects::nonNull).map(it -> {
             Orange orange = new Orange();
@@ -637,5 +654,32 @@ public class LambdaTest {
     private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
         Set<Object> seen = ConcurrentHashMap.newKeySet();
         return t -> seen.add(keyExtractor.apply(t));
+    }
+
+    private static void groupbyTest111(){
+        List<Apple> appleList = Lists.newArrayList();
+        List<Apple> toNoticeList = Lists.newArrayList();
+        Map<Integer,List<Apple>> map1 = appleList.stream().collect(Collectors.groupingBy(Apple::getId));
+        System.out.println("map1 = " + map1);
+        for (Map.Entry<Integer,List<Apple>> entry: map1.entrySet()) {
+            Integer key = entry.getKey();
+            System.out.println("key = " + key);
+            List<Apple> remindList = entry.getValue();
+            System.out.println("remindList = " + remindList);
+            Map<String,List<Apple>> userIdRemindMap = remindList.stream().collect(Collectors.groupingBy(Apple::getName));
+            System.out.println("userIdRemindMap = " + userIdRemindMap);
+            for (Map.Entry<String,List<Apple>> userEntry: userIdRemindMap.entrySet()){
+                String userId = userEntry.getKey();
+                System.out.println("userId = " + userId);
+                List<Apple> useRemindList = userEntry.getValue();
+
+                System.out.println("useRemindList = " + useRemindList);
+                Apple apple111 = useRemindList.get(0);
+
+                System.out.println("apple111 = " + apple111);
+                toNoticeList.add(apple111);
+            }
+        }
+        System.out.println("toNoticeList = " + toNoticeList);
     }
 }

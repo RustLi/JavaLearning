@@ -6,6 +6,7 @@ package algorithms.sorts;
  * @date: 2019-03-12
  **/
 public class BinarySearch {
+
     public static void main(String[] args) {
         int[] intput = {1, 2, 3, 3, 6, 7, 7};
         int key = 3;
