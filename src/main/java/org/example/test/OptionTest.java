@@ -6,19 +6,43 @@ import java.util.Optional;
 public class OptionTest {
 
     public static void main(String[] args) {
-
-        String aa = null;
-
-        try {
-            System.out.println(111);
-            System.out.println(aa.length());
-        }catch(Exception e){
-
-        }finally {
-            System.out.println(111);
-        }
+//        orElseGet();
+        orElse();
     }
 
+    /**
+     * ofNullable有值的话orELseGet中的代码不会执行
+     **/
+    private static void orElseGet(){
+        Optional<Integer> optional1 = Optional.ofNullable(1);
+        Optional<Integer> optional2 = Optional.ofNullable(null);
+
+        int result1 = optional1.orElseGet(() -> {
+            // 生成默认值的代码
+            return 0;
+        });
+
+        int result2 = optional2.orElseGet(() -> {
+            // 生成默认值的代码
+            return 0;
+        });
+
+        System.out.println(result1); // 输出 1
+        System.out.println(result2); // 输出 0
+    }
+
+    private static void orElse(){
+        Optional<Integer> optional1 = Optional.ofNullable(1);
+        Optional<Integer> optional2 = Optional.ofNullable(null);
+
+        int result1 = optional1.orElse(0);
+
+        int result2 = optional2.orElse(0);
+
+        System.out.println(result1); // 输出 1
+        System.out.println(result2); // 输出 0
+
+    }
 
     private static void test(){
         User user = new User("ccc",111,null);

@@ -24,10 +24,46 @@ import java.util.concurrent.Executors;
  **/
 public class CompletedFuture {
     private static final Executor commonExecutor = Executors.newSingleThreadExecutor();
+    private static final Executor executorService = Executors.newFixedThreadPool(5);
+
 
     public static void main(String[] args) throws Exception {
-        test1(false);
+//        test1(false);
 //        test2();
+
+        test222();
+    }
+
+    private static int count = 0;
+
+    private static void test222(){
+        List<Long> list = Lists.newArrayList();
+        for (long i = 0; i < 10000; i++) {
+            list.add(i);
+        }
+
+        List<List<Long>> partition = Lists.partition(list, 1000);
+        ArrayList<CompletableFuture<Void>> resultFutureList = Lists.newArrayListWithExpectedSize(partition.size());
+        for (List<Long> part : partition) {
+            CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+                try {
+                    count++;
+                    System.out.println("count 111 = " + count + ", part = " + part);
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    System.out.println("e = "+ e);
+                }
+            }, executorService);
+            resultFutureList.add(completableFuture);
+        }
+        CompletableFuture.allOf(resultFutureList.toArray(new CompletableFuture[0])).whenComplete((r,t)->{
+            if (t != null) {
+                System.out.println("写跟进记录 error " + t);
+            }
+        }).join();
+
+        //发送kafka消息
+        System.out.println("发送kafka, count = " + count);
     }
 
     /**

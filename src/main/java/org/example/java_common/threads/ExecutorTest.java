@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author: lwl
@@ -18,24 +19,44 @@ public class ExecutorTest {
 
     private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
+    ExecutorService executor = new ThreadPoolExecutor(
+            1,  // corePoolSize
+            1,  // maximumPoolSize
+            0L, // keepAliveTime
+            java.util.concurrent.TimeUnit.MILLISECONDS,
+            new java.util.concurrent.LinkedBlockingQueue<>(1),
+            new ThreadPoolExecutor.CallerRunsPolicy()
+    );
+
     public static void main(String[] args) {
-        long cTime = System.currentTimeMillis();
-        Map<String,String> mMap = asyncFetchUserContactIds();
 
-//        mMap.forEach((k,v)->{
-//            System.out.println("map: key = " + k + ", value = " + v);
-//        });
+        ExecutorTest executorTest = new ExecutorTest();
+        for (int i = 0; i < 10; i++) {
+            executorTest.testCallRunsPolicy(i);
+        }
 
-        System.out.println("时间：" + (System.currentTimeMillis() - cTime));
+    }
 
-        long c1Time = System.currentTimeMillis();
-        Map<String,String> m1Map = asyncFetchUserContactIds();
 
-//        mMap.forEach((k,v)->{
-//            System.out.println("map: key = " + k + ", value = " + v);
-//        });
+    private void testCallRunsPolicy(int outer){
+        // 创建线程池，设置核心线程数和最大线程数为 1，
+        // 工作队列大小为 1，使用 CallerRunsPolicy 策略
 
-        System.out.println("时间1：" + (System.currentTimeMillis() - c1Time));
+        // 提交任务
+//            System.out.println(" is running in thread: " +
+//                    Thread.currentThread().getName() + " outer:" + outer);
+            executor.submit(() -> {
+                System.out.println(" is running in thread: " +
+                        Thread.currentThread().getName() + " outer:" + outer);
+                try {
+                    Thread.sleep(2000); // 模拟任务执行时间
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+
+        // 关闭线程池
+//        executor.shutdown();
     }
 
     /**

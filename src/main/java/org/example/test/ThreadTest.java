@@ -15,14 +15,30 @@ public class ThreadTest {
     }
 
     public void test(){
-        for (int i = 0; i < 3; i++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    intoClass();
-                }
-            }).start();
-        }
+//        for (int i = 0; i < 3; i++) {
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    intoClass();
+//                }
+//            }).start();
+//        }
+//
+
+        new Thread(new Runnable(){
+
+            @Override
+            public void run() {
+                System.out.println("当前线程111: " + Thread.currentThread().getName());
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("当前线程222: " + Thread.currentThread().getName());
+                    }
+                }).start();
+            }
+        }).start();
     }
 
     private void intoClass(){

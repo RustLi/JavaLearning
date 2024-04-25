@@ -31,10 +31,11 @@ public class DateTest {
 //        long aaa = 234200L;
 //        System.out.println("bbb = " + (float)aaa/10000);
 
-        String[] aaa = new String[2];
-        aaa[0] = "aa";
-        aaa[1] = "bb";
-        System.out.println(Arrays.stream(aaa).collect(Collectors.toList()));
+
+        String aaa = "aaa";
+        String bb = null;
+        boolean isQQ = aaa.equals(bb);
+        System.out.println(isQQ);
     }
 
     public static void testBetweenDays(){

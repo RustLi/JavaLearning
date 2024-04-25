@@ -6,14 +6,14 @@ import com.sun.javafx.css.Size;
 import org.apache.commons.lang3.StringUtils;
 import test.beanutil.Person;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
+import java.lang.instrument.Instrumentation;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -23,10 +23,11 @@ import java.util.stream.Stream;
 public class LambdaTest {
     private static final String SOP_NO_TEMPLATE = "<a href=\\\"{0}/sopRemind?mainNum={1}&user_id={2}\\\">>>客户名单</a>";
 
-    public static void main(String[] args) {
-        LambdaTest lambdaTest= new LambdaTest();
 
-        lambdaTest.lambdaTest();
+    public static void main(String[] args) {
+//        LambdaTest lambdaTest= new LambdaTest();
+//
+//        lambdaTest.lambdaTest();
 
 //        lambdaTest.sqList();
 
@@ -38,39 +39,325 @@ public class LambdaTest {
 
 //        lambdaTest.groupByTest();
 
-//        List<Integer> aa = new ArrayList<>();
-//        aa.add(1);
-//        aa.add(2);
-//        aa.add(3);
+//        sortTest();
 
-//        aa.forEach(e->{
-//            System.out.println(e);
-//        });
-//        List<Integer> dataList = aa.stream().distinct().collect(Collectors.toList());
-//        System.out.println(dataList);
+//        optionalMap();
 
-//        List<Integer> bb = aa.stream().filter(it ->{
-//                    return it > 2 ? true : false;
-//                }
-//                ).collect(Collectors.toList());
-//        System.out.println("aa = " + aa);
-//        System.out.println("bb = " + bb);
+//        lambdaTest();
+
+//        boolean isEqual = "".equals(null);
+//        System.out.println(isEqual);
+
+//        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//        int a = 6;
+//        int b = 10;
+////        double percentage = (double) a / b * 100;
+//        String cc = decimalFormat.format((double) a / b * 100) + "%";
+//        System.out.println(cc);
+
+//        rankTest();
+
+//        multiGroupBy();
+
+//        groupByTest();
 
 
-//        String bbb = "123";
-//        String ccc = null;
-//        System.out.println("isEqual = " + bbb.equals(ccc));
-
-//        Map<String,String> aMap = new HashMap<>();
-//        aMap.put("1",null);
-//        aMap.put("2",null);
-
-//        aMap.forEach((k,v)->{
-//            System.out.println("k = " + k + ", v = " + v);
-//        });
-//        System.out.println("包含：" + aMap.containsKey("1"));
-//
+//        System.out.println(getMoney(300));
+//        System.out.println(getMoney(0));
+//        System.out.println(getMoney(5));
     }
+
+    private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+
+    private static String getCompletePercent(Integer duration, Long meetingLength) {
+        String format = "0.0000";
+        if (Objects.isNull(duration) || Objects.isNull(meetingLength)) {
+            return format;
+        }
+        Double percent = (double) duration / meetingLength;
+        DecimalFormat df = new DecimalFormat(format);
+        return df.format(percent);
+    }
+
+    private static String getMoney(Integer money){
+        String prefix = "¥ ";
+        if (money == null){
+            return prefix;
+        }
+        double result = (double)money / 100;
+        DecimalFormat df = new DecimalFormat("0.00");
+        return prefix + df.format(result);
+    }
+
+    public static String getRate(Long totalCount, Long numCount) {
+        if (totalCount != null && numCount != null && totalCount > 0 && numCount <= totalCount) {
+            return (decimalFormat.format((double) numCount / totalCount * 100) + "%");
+        }
+        return "0.00%";
+    }
+
+    private static void multiGroupBy(){
+        System.out.println("111");
+        List<Apple> appleList = new ArrayList<>();//存放apple对象集合
+        Apple apple7 =  new Apple(8,"A",Collections.singletonList("3"),"1");
+        Apple apple8 = new Apple(8,null,Collections.singletonList("A"),"2");
+        Apple apple9 = new Apple(7,"C",Collections.singletonList("A"),"3");
+
+        appleList.add(apple7);
+        appleList.add(apple8);
+        appleList.add(apple9);
+
+        for (Apple apple : appleList) {
+            if (apple.getName() == null){
+                apple.setName("");
+            }
+        }
+
+        // 使用Lambda表达式进行分组
+        Map<Integer, Map<String, List<Apple>>> result = appleList.stream()
+                .collect(Collectors.groupingBy(Apple::getId, Collectors.groupingBy(Apple::getName)));
+
+        System.out.println("result = " + result);
+
+        // 打印结果
+        for (Map.Entry<Integer, Map<String, List<Apple>>> entry1 : result.entrySet()) {
+            System.out.println("Group: " + entry1.getKey());
+            for (Map.Entry<String, List<Apple>> entry2 : entry1.getValue().entrySet()) {
+                System.out.println("Subgroup: " + entry2.getKey());
+                for (Apple obj : entry2.getValue()) {
+                    System.out.println("obj = " + obj);
+                }
+            }
+        }
+    }
+
+
+    private static void rankTest() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("B", "90"));
+        users.add(new User("C", "90"));
+        users.add(new User("E", "80"));
+        users.add(new User("F", null));
+
+
+        List<String> scoreList = new ArrayList<>();
+        scoreList.add("90.5");
+        scoreList.add("");
+        scoreList.add("85.0");
+        scoreList.add("85.0");
+        scoreList.add("81.00");
+        scoreList.add(null);
+
+//        System.out.println(getRankByScore(scoreList));
+
+
+        System.out.println("111 = " + getRankMapForUser(users));
+
+//        List<Integer> scores = Arrays.asList(100,100,90);
+//
+//        Map<Integer, Integer> rankingMap = getRankMap(scores);
+//        System.out.println(rankingMap);
+
+//        for (User user : users) {
+//            String id = user.getId();
+//            int rank = rankingMap.get(id);
+//            System.out.println("ID: " + id + ", Rank: " + rank);
+//        }
+
+//        List<Integer> scores = Arrays.asList(100, 100, 90);
+//        Map<Integer, Integer> scoreRankMap = calculateRankings(scores);
+//        for (Map.Entry<Integer, Integer> entry : scoreRankMap.entrySet()) {
+//            int score = entry.getKey();
+//            int rank = entry.getValue();
+//            System.out.println("分数: " + score + ", 排名: " + rank);
+//        }
+
+//        List<String> scores = Arrays.asList("100", "100", "90");
+//        Map<String, Integer> scoreRankMap = calculateRankingsStr(scores);
+//        for (Map.Entry<String, Integer> entry : scoreRankMap.entrySet()) {
+//            String score = entry.getKey();
+//            int rank = entry.getValue();
+//            System.out.println("分数: " + score + ", 排名: " + rank);
+//        }
+    }
+
+    private static Map<String,Integer> getRankByScore(List<String> scoreList) {
+//        if (CollectionUtils.isEmpty(scoreList)){
+//            return Collections.emptyMap();
+//        }
+
+        List<String> sortList = scoreList.stream()
+                .filter(StringUtils::isNotBlank)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        Map<String, Integer> rankMap = Maps.newHashMap();
+        int rank = 1;
+        for (String score : sortList) {
+            if (!rankMap.containsKey(score)) {
+                rankMap.put(score,rank);
+            }
+            rank++;
+        }
+        return rankMap;
+    }
+
+
+    /**
+     * 计算分数，并列不算名次，[100,100,90] -->> [1,1,2]
+     **/
+    public static Map<String, Integer> getRankMapForUser(List<User> list) {
+
+//        list.forEach(user -> {
+//            if (user.getScore() == null) {
+//                user.setScore("0.00");
+//            }
+//        });
+
+
+        List<User> sortList = list.stream()
+                .sorted(Comparator.comparing(User::getScore).reversed())
+                .collect(Collectors.toList());
+
+        Map<String, Integer> rankMap = new HashMap<>();
+
+        System.out.println("list = " + list);
+        //人，分数
+        Map<String, Integer> userMap = new HashMap<>();
+
+        //分数，排名
+        int rank = 1;
+        for (User result : sortList) {
+            String score = result.getScore();
+            if (!rankMap.containsKey(score)) {
+                rankMap.put(score, rank);
+            }
+            rank++;
+        }
+
+        for (User result : sortList) {
+            String score = result.getScore();
+            if (rankMap.containsKey(score)) {
+                String stuId = result.getId();
+                userMap.put(stuId, rankMap.get(score));
+            }
+        }
+        return userMap;
+    }
+
+    public static Map<Integer, Integer> calculateRankings(List<Integer> scores) {
+        Map<Integer, Integer> scoreRankMap = new HashMap<>();
+        List<Integer> sortedScores = new ArrayList<>(scores);
+        Collections.sort(sortedScores, Collections.reverseOrder());
+
+        int rank = 1;
+        for (Integer score : sortedScores) {
+            if (!scoreRankMap.containsKey(score)) {
+                scoreRankMap.put(score, rank);
+                rank++;
+            }
+        }
+
+        return scoreRankMap;
+    }
+
+    public static Map<String, Integer> calculateRankingsStr(List<String> scores) {
+        Map<String, Integer> scoreRankMap = new HashMap<>();
+        List<String> sortedScores = new ArrayList<>(scores);
+        Collections.sort(sortedScores, Collections.reverseOrder());
+
+        int rank = 1;
+        for (String score : sortedScores) {
+            if (!scoreRankMap.containsKey(score)) {
+                scoreRankMap.put(score, rank);
+                rank++;
+            }
+        }
+
+        return scoreRankMap;
+    }
+
+    public static Map<Integer, Integer>getRankMap(List<Integer> scores) {
+        Map<Integer, Integer> scoreMap = new HashMap<>();
+        List<Integer> sortedScores = new ArrayList<>(scores);
+        Collections.sort(sortedScores, Collections.reverseOrder());
+
+        int rank = 1;
+        for (Integer score : sortedScores) {
+            if (!scoreMap.containsKey(score)) {
+                scoreMap.put(score, rank);
+                rank++;
+            }
+        }
+
+        return scoreMap;
+    }
+
+    public static Map<String, Integer> getRankingMap(List<User> users) {
+        List<User> sortedUsers = users.stream()
+                .sorted(Comparator.comparing(User::getScore).reversed())
+                .collect(Collectors.toList());
+
+        Map<String, Integer> rankingMap = new HashMap<>();
+        int rank = 1;
+        for (int i = 0; i < sortedUsers.size(); i++) {
+            User user = sortedUsers.get(i);
+            String id = user.getId();
+            if (!rankingMap.containsKey(id)) {
+                rankingMap.put(id, rank);
+            }
+            rank++;
+        }
+
+        return rankingMap;
+    }
+
+    public static class User {
+        private String id;
+        private String score;
+
+        public User(String id, String score) {
+            this.id = id;
+            this.score = score;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getScore() {
+            return score;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void setScore(String score) {
+            this.score = score;
+        }
+    }
+
+
+    public static void sortTest(){
+        List<Apple> appleList = new ArrayList<>();//存放apple对象集合
+        Apple apple7 =  new Apple(8,"A",Collections.singletonList("3"),"1");
+        Apple apple8 = new Apple(9,"A",Collections.singletonList("A"),"2");
+        Apple apple9 = new Apple(7,"A",Collections.singletonList("A"),"3");
+
+
+        appleList.add(apple7);
+        appleList.add(apple8);
+        appleList.add(apple9);
+
+        appleList.sort((r1, r2) -> r2.getId().compareTo(r1.getId()));
+        System.out.println("appleList1 = " + appleList);
+
+        appleList.sort((r1, r2) -> r1.getId().compareTo(r2.getId()));
+        System.out.println("appleList2 = " + appleList);
+
+    }
+
 
     private static void test111(int i){
         System.out.println(111);
@@ -187,13 +474,13 @@ public class LambdaTest {
         repeat(10, i -> System.out.println("countdown :: " + (9 - i)));
     }
 
-    private void groupByTest(){
+    private static void groupByTest(){
         List<Apple> appleList = new ArrayList<>();//存放apple对象集合
-        Apple apple7 =  new Apple(8,"A",Collections.singletonList("3"),"A");
-        Apple apple8 = new Apple(8,"A",Collections.singletonList("A"),"A");
-        Apple apple9 = new Apple(8,"a2",Collections.singletonList("B"),"A");
-        Apple apple10 = new Apple(8,"B",Collections.singletonList("A"),"B");
-        Apple apple11 = new Apple(8,"b1",Collections.singletonList("A"),"B");
+        Apple apple7 =  new Apple(1,"A",Collections.singletonList("3"),"1");
+        Apple apple8 = new Apple(2,null,Collections.singletonList("A"),"1");
+        Apple apple9 = new Apple(3,"A",Collections.singletonList("B"),"2");
+        Apple apple10 = new Apple(4,"B",Collections.singletonList("A"),"3");
+        Apple apple11 = new Apple(5,"B",Collections.singletonList("A"),"4");
 
 //        Apple apple9 =  new Apple(9,"香蕉",Collections.singletonList("5"));
         appleList.add(apple7);
@@ -202,12 +489,19 @@ public class LambdaTest {
         appleList.add(apple10);
         appleList.add(apple11);
 
-        Map<String,List<Apple>> mMap = appleList.stream().collect(Collectors.groupingBy(Apple::getbName));
-        mMap.forEach((k, v) -> System.out.println(k + "------" + v));
 
-        Map<String,List<Apple>> nMap = appleList.stream().collect(Collectors.groupingBy(it -> buildKey(it.id,it.name)));
-        System.out.println("nMap = " + nMap);
-        nMap.forEach((k, v) -> System.out.println("nMap = " + k + "------" + v));
+        Map<String,List<Apple>> existModelMap = appleList.stream().collect(Collectors.groupingBy(Apple::getName));
+        System.out.println("existModelMap = " + existModelMap);
+
+//        Map<String,List<Apple>> mMap = appleList.stream().collect(Collectors.groupingBy(Apple::getbName));
+//        mMap.forEach((k, v) -> System.out.println(k + "------" + v));
+
+        Map<String,List<Apple>> nMap = appleList.stream().collect(Collectors.groupingBy(it -> buildKey(it.name,it.bName)));
+//        System.out.println("nMap = " + nMap);
+//        nMap.forEach((k, v) -> System.out.println("nMap = " + k + "------" + v));
+
+        Map<String, Set<String>> leadsTagMap = appleList.stream().collect(Collectors.groupingBy(Apple::getName, Collectors.mapping(Apple::getbName, Collectors.toSet())));
+        System.out.println("leadsTagMap = " + leadsTagMap);
 
 //        List<Apple> targetList = mMap.getOrDefault("aaaa",new ArrayList<>());
 //        Set<Integer> dateSet = targetList.stream().map(Apple::getId).collect(Collectors.toSet());
@@ -215,12 +509,12 @@ public class LambdaTest {
 
 //        mMap.forEach((k, v) -> System.out.println(k + "------" + v));
 
-//        List<String> aaaList = new ArrayList<>();
-//        aaaList.add("222");
-//        aaaList.add("222");
-//        aaaList.add("333");
-//        Map<String, Long> map = aaaList.stream().collect(Collectors.groupingBy(p -> p,Collectors.counting()));
-//        map.forEach((k, v) -> System.out.println(k + ":" + v));
+        List<String> aaaList = new ArrayList<>();
+        aaaList.add("222");
+        aaaList.add("333");
+        aaaList.add("444");
+        Map<String, Long> map = aaaList.stream().collect(Collectors.groupingBy(p -> p,Collectors.counting()));
+        map.forEach((k, v) -> System.out.println(k + ":" + v));
 
         Map<String,String> aMap = new HashMap<>();
         List<String> aList = new ArrayList<>();
@@ -247,7 +541,30 @@ public class LambdaTest {
         aMap.put(c1,C);
         aList.add(C);
         aList.add(c1);
+    }
 
+    /**
+     * 将一个 List 集合中的元素按照 leadsLibId 属性值进行分组，并对每个分组内的元素取 id 属性值最大的 RawLeadsLib 对象。
+     * 最终返回一个以 leadsLibId 为键、RawLeadsLib 对象为值的 Map 集合。
+     **/
+    private static void optionalMap(){
+
+        List<Apple> appleList = new ArrayList<>();//存放apple对象集合
+        Apple apple7 =  new Apple(1,"A",Collections.singletonList("3"),"1");
+        Apple apple8 = new Apple(2,"A",Collections.singletonList("A"),"1");
+        Apple apple9 = new Apple(3,"A",Collections.singletonList("B"),"2");
+        Apple apple10 = new Apple(4,"B",Collections.singletonList("A"),"3");
+        Apple apple11 = new Apple(5,"B",Collections.singletonList("A"),"4");
+
+//        Apple apple9 =  new Apple(9,"香蕉",Collections.singletonList("5"));
+        appleList.add(apple7);
+        appleList.add(apple8);
+        appleList.add(apple9);
+        appleList.add(apple10);
+        appleList.add(apple11);
+
+        Map<String,Optional<Apple>> optionalMap = appleList.stream().collect(Collectors.groupingBy(Apple::getName, Collectors.reducing(BinaryOperator.maxBy(Comparator.comparing(Apple::getId)))));
+        System.out.println("optionalMap = " + optionalMap);
     }
 
     private static String buildKey(String value1,String value2){
@@ -258,9 +575,9 @@ public class LambdaTest {
 
         List<Apple> appleList = new ArrayList<>();//存放apple对象集合
 
-        Apple apple1 =  new Apple(1,"111",new BigDecimal("3.25"),10,false);
-        Apple apple12 = new Apple(2,"222",new BigDecimal("1.35"),20,false);
-        Apple apple2 =  new Apple(2,"222",new BigDecimal("2.89"),20,true);
+        Apple apple1 =  new Apple(3,"111",new BigDecimal("3.25"),10,false);
+        Apple apple12 = new Apple(1,"111",new BigDecimal("1.35"),20,false);
+        Apple apple2 =  new Apple(9,"222",new BigDecimal("2.89"),20,true);
 
 //        Apple apple3 =  new Apple(3,"444",new BigDecimal("9.99"),40,false);
 //        Apple apple5 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30);
@@ -272,6 +589,15 @@ public class LambdaTest {
 //        appleList.add(apple3);
 //        appleList.add(apple5);
 //        appleList.add(apple6);
+
+
+        Collections.sort(appleList, Comparator.comparing(Apple::getId));
+        System.out.println("排序后的: " + appleList);
+
+
+        Map<Integer, String> tel2RemarkMap = appleList.stream().collect(Collectors.toMap(Apple::getId, Apple::getName));
+
+        System.out.println("tel2RemarkMap = " + tel2RemarkMap);
 
         Set<String> nameSet = appleList.stream()
                 .map(Apple::getName)
@@ -309,7 +635,9 @@ public class LambdaTest {
 
         List<Apple> aList = appleList.stream().filter(a -> a.getName() != null && !a.getName().equals("香蕉")).collect(Collectors.toList());
 
-        System.out.println("lwl:  size = " + aList.size());
+        System.out.println("adsjaslkdja: aList = " + aList);
+
+        System.out.println("lwl11112:  size = " + aList.size());
 
         List<Apple> bList = appleList.stream().filter(a -> !a.isDraft).collect(Collectors.toList());
 
