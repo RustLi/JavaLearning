@@ -9,13 +9,25 @@ import java.util.*;
 public class SetTest {
 
     public static void main(String[] args) {
-        testSet();
+//        testSet();
 
 //        test1();
 
 //        allocTest();
 
-//        retainAllTest();
+        retainAllTest();
+//        test222();
+    }
+
+    private static void test222(){
+        Set<Long> set1 = Sets.newHashSet(1L,2L);
+        Set<Long> set2 = Sets.newHashSet(2L,3L);
+        Set<Long> set3 = Sets.newHashSet(2L,4L);
+
+        Set<Long> set4 = Sets.intersection(set1,set2);
+        System.out.println("set4 = " + set4);
+        Set<Long> set5 = Sets.intersection(set4, set3);
+        System.out.println("set5 = " + set5);
     }
 
     private static void listDiffTest(){

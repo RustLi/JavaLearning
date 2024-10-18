@@ -20,9 +20,9 @@ public class LambdaTest {
 
 
     public static void main(String[] args) {
-//        LambdaTest lambdaTest= new LambdaTest();
+        LambdaTest lambdaTest= new LambdaTest();
 //
-//        lambdaTest.lambdaTest();
+        lambdaTest.lambdaTest();
 
 //        lambdaTest.sqList();
 
@@ -570,9 +570,10 @@ public class LambdaTest {
 
         List<Apple> appleList = new ArrayList<>();//存放apple对象集合
 
-        Apple apple1 =  new Apple(3,"111",new BigDecimal("3.25"),10,false);
-        Apple apple12 = new Apple(1,"111",new BigDecimal("1.35"),20,false);
-        Apple apple2 =  new Apple(9,"222",new BigDecimal("2.89"),20,true);
+        Apple apple1 =  new Apple(3,"",new BigDecimal("3.25"),10,false);
+        Apple apple12 = new Apple(1,"",new BigDecimal("1.35"),20,false);
+        Apple apple2 =  new Apple(9,"",new BigDecimal("2.89"),20,true);
+
 
 //        Apple apple3 =  new Apple(3,"444",new BigDecimal("9.99"),40,false);
 //        Apple apple5 =  new Apple(4,"香蕉",new BigDecimal("2.89"),30);
@@ -584,6 +585,9 @@ public class LambdaTest {
 //        appleList.add(apple3);
 //        appleList.add(apple5);
 //        appleList.add(apple6);
+
+        int weworkCount = (int) appleList.stream().filter(resp -> StringUtils.isNotBlank(resp.getName())).count();
+        System.out.println("排序后的: weworkCount = " + weworkCount);
 
 
         Collections.sort(appleList, Comparator.comparing(Apple::getId));

@@ -33,11 +33,30 @@ public class Test {
 
 //        System.out.println(getFileName("/storage/emulated/0/DCIM/WeixinWork/mmexport1658281749617.mp4"));
 
-        String aaa = "    ";
-        System.out.println("length = " + aaa.length());
+//        String aaa = "    ";
+//        System.out.println("length = " + aaa.length());
+//
+//        System.out.println("trim length = " + aaa.trim().length());
 
-        System.out.println("trim length = " + aaa.trim().length());
+        testWhile();
+    }
 
+    private static void testWhile(){
+        while (true){
+            int m = 0;
+            try {
+                for (int i = 0; i < 10; i++) {
+                    m = i;
+                }
+                System.out.println(m);
+                if(m == 9){
+                    System.out.println("return...");
+                    return;
+                }
+            }catch (Throwable e){
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

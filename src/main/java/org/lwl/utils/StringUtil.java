@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class StringUtil {
@@ -13,13 +14,25 @@ public class StringUtil {
 
 
         //0x4235AC1
-        int so = Integer.parseInt("0xbb1e6000", 16);
-//        Integer so = 0xbb1e6000;
+//        int so = Integer.parseInt("0xbb1e6000", 16);
+////        Integer so = 0xbb1e6000;
+//
+//        System.out.println("so = " + so);
+//        int n_addr_func_offset = 0x4235AC1;         //要hook的函数在函数里面的偏移
+//        int n_addr_func = so + n_addr_func_offset;
+//        System.out.println("lwl: 333 func addr is ---" + n_addr_func);
 
-        System.out.println("so = " + so);
-        int n_addr_func_offset = 0x4235AC1;         //要hook的函数在函数里面的偏移
-        int n_addr_func = so + n_addr_func_offset;
-        System.out.println("lwl: 333 func addr is ---" + n_addr_func);
+        String aa = null;
+        String bb = null;
+//        if (aa.equals(bb)){
+//            System.out.println(1241241414);
+//        }else {
+//            System.out.println(1241);
+//        }
+
+
+        boolean c = Objects.equals(aa,bb);
+        System.out.println("c = " + c);
     }
 
 

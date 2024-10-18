@@ -38,7 +38,22 @@ public class StringTest {
 
 //        formatTest();
 
-        allocColor();
+//        allocColor();
+
+        String originalString = "这是一个超过二十个字符的长字符串，需要被截断。";
+        String truncatedString = truncateString1(originalString, 5);
+        System.out.println(truncatedString);
+    }
+
+    public static String truncateString1(String input, int maxLength) {
+        if (input == null) {
+            return "";
+        }
+        if (input.length() <= maxLength) {
+            return input;
+        } else {
+            return input.substring(0, maxLength - 3) + "...";
+        }
     }
 
     private static void allocColor(){
