@@ -1,4 +1,4 @@
-package design_patterns.strategy.enums;
+package org.lwl.designpatterns.strategy.enums;
 
 
 public class SyncVideo extends BaseSyncAttach {

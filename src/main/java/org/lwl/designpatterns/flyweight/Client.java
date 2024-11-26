@@ -1,4 +1,4 @@
-package design_patterns.flyweight;
+package org.lwl.designpatterns.flyweight;
 
 /**
  * @program: javaProjects

@@ -1,4 +1,4 @@
-package data_structure.tree;
+package org.lwl.datastructure.tree;
 
 import java.util.*;
 
@@ -35,11 +35,13 @@ public class BinTree {
     private static void binTreeTest(){
         BinTree binTree = new BinTree();
 //        int[] array = {3,5,1,6,7,9,2,3};
-        int[] array = {3,5,1};
+//        int[] array = {3,5,1};
+        int[] array = {1, 2, 3, 4, 5, 6, 7};
+
         BinTree.TreeNode root = binTree.createBinTree(array);
 
         System.out.println("先序遍历：");
-        binTree.preOrderReaverse(root);
+        binTree.preOrderReverse(root);
         System.out.println();
 
         System.out.println("中序遍历：");
@@ -87,35 +89,41 @@ public class BinTree {
     }
 
 
-    //先序遍历
-    public void preOrderReaverse(TreeNode node){
+    /**
+     *  先序遍历: root -- left -- right
+     **/
+    public void preOrderReverse(TreeNode node){
         if (node == null){
             return;
         }
-        System.out.println(node.data);
-        preOrderReaverse(node.leftChild);
-        preOrderReaverse(node.rightChild);
+        System.out.println(node.data + "");
+        preOrderReverse(node.leftChild);
+        preOrderReverse(node.rightChild);
     }
 
 
-    //中序遍历
+    /**
+     * 中序遍历 left -- root -- right
+     **/
     public void inOrderTraverse(TreeNode node){
         if (node == null){
             return;
         }
         inOrderTraverse(node.leftChild);
-        System.out.println(node.data);
+        System.out.println(node.data + "");
         inOrderTraverse(node.rightChild);
     }
 
-    //后序遍历
+    /**
+     * 后序遍历 left -- right -- root
+     **/
     public void postOrderTraverse(TreeNode node){
         if (node == null){
             return;
         }
         postOrderTraverse(node.leftChild);
         postOrderTraverse(node.rightChild);
-        System.out.println(node.data);
+        System.out.println(node.data + "");
     }
 
 

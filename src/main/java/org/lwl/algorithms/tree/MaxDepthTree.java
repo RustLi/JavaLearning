@@ -1,6 +1,7 @@
-package algorithms.tree;
+package org.lwl.algorithms.tree;
 
-import data_structure.tree.BinTree;
+
+import org.lwl.datastructure.tree.BinTree;
 
 /**
  * @author: lwl

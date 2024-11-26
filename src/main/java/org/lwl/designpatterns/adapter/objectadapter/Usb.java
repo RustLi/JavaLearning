@@ -1,4 +1,4 @@
-package design_patterns.adapter.object_adapter;
+package org.lwl.designpatterns.adapter.objectadapter;
 
 /**
  * @program: javaProjects

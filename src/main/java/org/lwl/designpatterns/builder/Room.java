@@ -1,4 +1,4 @@
-package design_patterns.builder;
+package org.lwl.designpatterns.builder;
 
 import javafx.util.Builder;
 

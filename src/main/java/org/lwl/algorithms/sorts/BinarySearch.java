@@ -1,4 +1,4 @@
-package algorithms.sorts;
+package org.lwl.algorithms.sorts;
 
 /**
  * @description: 折半查找必须保证数组本身是有序的

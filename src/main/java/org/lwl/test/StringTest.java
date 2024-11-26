@@ -40,9 +40,60 @@ public class StringTest {
 
 //        allocColor();
 
-        String originalString = "这是一个超过二十个字符的长字符串，需要被截断。";
-        String truncatedString = truncateString1(originalString, 5);
-        System.out.println(truncatedString);
+//        String originalString = "这是一个超过二十个字符的长字符串，需要被截断。";
+//        String truncatedString = truncateString1(originalString, 5);
+//        System.out.println(truncatedString);
+
+
+//        String bbb = "dada ";
+//        String wildcard = test111(bbb);
+//        System.out.println("wildcard = " + wildcard);
+
+//        List<String> list = Lists.newArrayList();
+//        list.add("a");
+//        list.add("b");
+//        list.add("c");
+//
+//        String result = buildOrCondition(list);
+//        System.out.println(result); // 输出: (a > 0 or b > 0 or c > 0)
+
+//        String url = "https://e45805187.test-at.baijiayun.com/web/room/quickenter?code=r6tj3s${customstr}";
+        String url = "https://e45805187.test-at.baijiayun.com/web/room/quickenter?code=r6tj3s";
+        System.out.println(removeCustomer(url));
+
+        String url1 = "https://test-dxb.baijiayun.com/s/KNmJKqF3WU";
+        int index = url1.lastIndexOf("/");
+        System.out.println(url1.substring(index + 1));
+
+        Integer isAutoTrans = null;
+        if (!Objects.equals(isAutoTrans,1) ){
+            System.out.println(313221);
+        }
+    }
+
+    public static String removeCustomer(String url){
+        return url.replace("${customstr}", "");
+    }
+
+    public static String buildOrCondition(List<String> list) {
+        if (list == null || list.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder("(");
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i)).append(" > 0");
+            if (i < list.size() - 1) {
+                sb.append(" or ");
+            }
+        }
+        sb.append(")");
+        return sb.toString();
+    }
+
+    private static String test111(String aaa){
+        String wildcard = "*" + aaa.trim().replace("*", "\\*").replace("?", "\\?") + "*";
+        return wildcard;
     }
 
     public static String truncateString1(String input, int maxLength) {

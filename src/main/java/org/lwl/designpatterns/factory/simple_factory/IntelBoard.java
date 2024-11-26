@@ -1,4 +1,4 @@
-package design_patterns.factory.simple_factory;
+package org.lwl.designpatterns.factory.simple_factory;
 
 /**
  * @program: javaProjects

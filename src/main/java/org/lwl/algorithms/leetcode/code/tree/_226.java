@@ -1,6 +1,7 @@
-package algorithms.leetcode.code.tree;
+package org.lwl.algorithms.leetcode.code.tree;
 
-import data_structure.tree.BinTree;
+
+import org.lwl.datastructure.tree.BinTree;
 
 /**
  * @date: 2021/4/10

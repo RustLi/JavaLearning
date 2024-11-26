@@ -1,4 +1,4 @@
-package design_patterns.factory.AbstractFactory;
+package org.lwl.designpatterns.factory.AbstractFactory;
 
 public interface Cpu {
     void installCpu();

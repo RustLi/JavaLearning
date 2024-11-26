@@ -1,4 +1,4 @@
-package design_patterns.proxy.proxy_dynamic;
+package org.lwl.designpatterns.proxy.proxy_dynamic;
 
 /**
  * @program: javaProjects

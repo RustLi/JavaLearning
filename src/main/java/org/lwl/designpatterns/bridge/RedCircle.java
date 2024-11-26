@@ -1,4 +1,4 @@
-package design_patterns.bridge;
+package org.lwl.designpatterns.bridge;
 
 /**
  * @program: javaProjects

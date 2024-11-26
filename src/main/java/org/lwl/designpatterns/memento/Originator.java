@@ -1,4 +1,4 @@
-package design_patterns.memento;
+package org.lwl.designpatterns.memento;
 
 public class Originator {
     private String state;

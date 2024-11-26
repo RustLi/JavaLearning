@@ -1,7 +1,6 @@
-package algorithms.sorts;
+package org.lwl.algorithms.sorts;
 
-import algorithms.sorts.base.Utils;
-
+import org.lwl.algorithms.sorts.base.Utils;
 import java.util.Arrays;
 
 public class InsertSort {

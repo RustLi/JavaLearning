@@ -1,4 +1,4 @@
-package data_structure.array;
+package org.lwl.datastructure.array;
 
 import java.util.*;
 

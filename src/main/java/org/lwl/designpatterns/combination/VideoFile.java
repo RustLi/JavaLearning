@@ -1,4 +1,4 @@
-package design_patterns.combination;
+package org.lwl.designpatterns.combination;
 
 /**
  * @program: javaProjects

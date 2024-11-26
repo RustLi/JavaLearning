@@ -1,4 +1,4 @@
-package design_patterns.combination;
+package org.lwl.designpatterns.combination;
 
 import java.util.ArrayList;
 import java.util.List;

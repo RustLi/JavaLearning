@@ -1,4 +1,4 @@
-package algorithms.sorts;
+package org.lwl.algorithms.sorts;
 
 import java.util.Arrays;
 

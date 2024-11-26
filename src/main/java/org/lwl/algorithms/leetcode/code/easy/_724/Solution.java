@@ -1,4 +1,4 @@
-package algorithms.leetcode.code.easy._724;
+package org.lwl.algorithms.leetcode.code.easy._724;
 
 
 public class Solution {

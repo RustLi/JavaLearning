@@ -1,4 +1,4 @@
-package design_patterns.proxy.proxy_static;
+package org.lwl.designpatterns.proxy.proxy_static;
 
 /**
  * @program: javaProjects

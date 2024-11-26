@@ -1,4 +1,4 @@
-package data_structure.listnode;
+package org.lwl.datastructure.listnode;
 /**
  * @date: 2019/12/17
  * @author: lwl

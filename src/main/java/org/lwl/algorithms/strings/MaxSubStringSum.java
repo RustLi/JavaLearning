@@ -1,4 +1,4 @@
-package algorithms.strings;
+package org.lwl.algorithms.strings;
 
 /**
  * @date: 2019/12/18

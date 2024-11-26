@@ -1,8 +1,8 @@
-package design_patterns.strategy;
+package org.lwl.designpatterns.strategy;
 
-import design_patterns.strategy.enums.ISyncAttachMsg;
-import design_patterns.strategy.enums.MsgAttachType;
-import design_patterns.strategy.enums.Type2Obj;
+import org.lwl.designpatterns.strategy.enums.ISyncAttachMsg;
+import org.lwl.designpatterns.strategy.enums.MsgAttachType;
+import org.lwl.designpatterns.strategy.enums.Type2Obj;
 
 /**
  * @program: javaProjects

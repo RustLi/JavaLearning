@@ -1,4 +1,4 @@
-package algorithms.sorts.base;
+package org.lwl.algorithms.sorts.base;
 
 public class Utils {
     public static void swap(int[] input,int a ,int b){

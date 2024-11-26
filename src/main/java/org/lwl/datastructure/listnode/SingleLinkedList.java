@@ -1,4 +1,4 @@
-package data_structure.listnode;
+package org.lwl.datastructure.listnode;
 
 import java.util.LinkedList;
 

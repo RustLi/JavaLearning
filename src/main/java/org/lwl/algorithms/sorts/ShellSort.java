@@ -1,6 +1,6 @@
-package algorithms.sorts;
+package org.lwl.algorithms.sorts;
 
-import static algorithms.sorts.base.Utils.swap;
+import org.lwl.algorithms.sorts.base.Utils;
 
 public class ShellSort {
 
@@ -35,7 +35,7 @@ public class ShellSort {
 
                     for(int j=i;j>k;j-=incre){
                         if(array[j]<array[j-incre]){
-                            swap(array, j, j-1);
+                            Utils.swap(array, j, j-1);
                         }else{
                             break;
                         }

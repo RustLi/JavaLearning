@@ -1,4 +1,4 @@
-package design_patterns.strategy.enums;
+package org.lwl.designpatterns.strategy.enums;
 
 /**
  * Created by ljc on 2022/1/4

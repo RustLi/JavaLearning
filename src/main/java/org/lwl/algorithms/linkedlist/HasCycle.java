@@ -1,6 +1,6 @@
-package algorithms.linkedlist;
+package org.lwl.algorithms.linkedlist;
 
-import data_structure.listnode.ListNode;
+import org.lwl.datastructure.listnode.ListNode;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class HasCycle {
         System.out.println(hasCycle(head));
     }
 
-    private static boolean hasCycle(data_structure.listnode.ListNode head) {
+    private static boolean hasCycle(ListNode head) {
         ListNode fast, slow;
         fast = slow = head;
         while (fast != null && fast.next != null) {

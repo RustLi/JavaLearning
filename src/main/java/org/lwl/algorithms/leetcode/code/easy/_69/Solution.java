@@ -1,4 +1,4 @@
-package algorithms.leetcode.code.easy._69;
+package org.lwl.algorithms.leetcode.code.easy._69;
 
 /**
  * @date: 2019/12/20

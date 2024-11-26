@@ -1,4 +1,4 @@
-package design_patterns.strategy;
+package org.lwl.designpatterns.strategy;
 
 import java.util.ArrayList;
 import java.util.List;

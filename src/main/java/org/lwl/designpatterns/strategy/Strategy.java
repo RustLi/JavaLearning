@@ -1,4 +1,4 @@
-package design_patterns.strategy;
+package org.lwl.designpatterns.strategy;
 
 /**
  * @program: javaProjects

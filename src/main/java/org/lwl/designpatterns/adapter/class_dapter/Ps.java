@@ -1,4 +1,4 @@
-package design_patterns.adapter.class_dapter;
+package org.lwl.designpatterns.adapter.class_dapter;
 
 public interface Ps {
     void isPs();

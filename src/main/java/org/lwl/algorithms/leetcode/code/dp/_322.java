@@ -1,4 +1,4 @@
-package algorithms.leetcode.code.dp;
+package org.lwl.algorithms.leetcode.code.dp;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package algorithms.strings;
+package org.lwl.algorithms.strings;
 
 public class ReplaceBlank {
 

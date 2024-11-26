@@ -1,4 +1,4 @@
-package design_patterns.decorator;
+package org.lwl.designpatterns.decorator;
 
 public interface Shape {
     void draw();

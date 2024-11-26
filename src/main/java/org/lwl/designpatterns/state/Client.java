@@ -1,4 +1,4 @@
-package design_patterns.state;
+package org.lwl.designpatterns.state;
 
 /**
  * @program: javaProjects

@@ -1,6 +1,6 @@
-package data_structure.array;
+package org.lwl.datastructure.array;
 
-import data_structure.listnode.ListNode;
+import org.lwl.datastructure.listnode.ListNode;
 
 /**
  * @author: lwl

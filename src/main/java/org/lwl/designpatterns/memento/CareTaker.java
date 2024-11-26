@@ -1,4 +1,4 @@
-package design_patterns.memento;
+package org.lwl.designpatterns.memento;
 
 import java.util.ArrayList;
 import java.util.HashMap;

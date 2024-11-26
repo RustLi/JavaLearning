@@ -1,4 +1,4 @@
-package design_patterns.facade;
+package org.lwl.designpatterns.facade;
 
 /**
  * @program: javaProjects
