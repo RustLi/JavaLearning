@@ -1,4 +1,4 @@
-package java_common.generic;
+package org.lwl.javacommon.generic;
 
 public class ArrayAlg {
 

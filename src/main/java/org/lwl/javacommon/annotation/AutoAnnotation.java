@@ -1,4 +1,4 @@
-package java_common.annotation;
+package org.lwl.javacommon.annotation;
 
 
 import java.lang.reflect.Field;

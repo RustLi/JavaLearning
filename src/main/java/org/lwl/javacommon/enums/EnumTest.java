@@ -1,4 +1,4 @@
-package java_common.enums;
+package org.lwl.javacommon.enums;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package utils;
+package org.lwl.utils;
 
 public class Utils {
     public static void swap(int[] input,int a ,int b){

@@ -1,9 +1,15 @@
 package org.lwl.test;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegTest {
+
+    public static final String DESC_HEAD = "#wr";
+    public static final String DESC_SUFFIX = "#";
+    public static final Pattern DESC_REGEX = Pattern.compile(DESC_HEAD + "([0-9a-zA-Z]+)" + DESC_SUFFIX);
 
     public static void main(String[] args) {
 //        String a = "aaa3.5万asfafaf";
@@ -30,6 +36,18 @@ public class RegTest {
 
         int index = path.indexOf('\u0000');
         System.out.println("index = " + index);
+
+        String desc = "2986；王彦彦1986年5月11日早4点；赵儆非1980年2月17日下午5点40；女婿100万转银行半年收不回来；#wrYAd0pPhD75#";
+        Matcher matcher = DESC_REGEX.matcher(desc);
+        while (matcher.find()) {
+            String num = matcher.group(1);
+            System.out.println("num = " + num);
+        }
+
+        String flag = DESC_HEAD + "YAd0pPhD75" + DESC_SUFFIX;
+        String description = desc;
+        description = description.replace(flag, StringUtils.EMPTY);
+        System.out.println("description = " + description);
     }
 
 

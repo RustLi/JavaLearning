@@ -1,4 +1,4 @@
-package java_common.producer_consumer;
+package org.lwl.javacommon.producer_consumer;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

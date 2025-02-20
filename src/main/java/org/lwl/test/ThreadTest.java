@@ -2,15 +2,15 @@ package org.lwl.test;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import kotlin.Result;
+import org.apache.commons.collections4.CollectionUtils;
 import org.lwl.utils.NamedThreadFactory;
+import org.lwl.utils.ThreadPoolMonitorUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 public class ThreadTest {
 
@@ -28,13 +28,51 @@ public class ThreadTest {
                 new ArrayBlockingQueue<>(100000),
                 new NamedThreadFactory(EXECUTOR_NAME),
                 new ThreadPoolExecutor.CallerRunsPolicy());
+
+    private ExecutorService syncHistoryExecutorService;
+    private final int SIZE = Runtime.getRuntime().availableProcessors();
+    private ExecutorService createThreadPool(){
+        return new ThreadPoolExecutor(SIZE, SIZE * 2, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<>(2048),
+                new NamedThreadFactory("syncHistoryExecutorService"), new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
     public static void main(String[] args) {
         ThreadTest test = new ThreadTest();
 //        test.test();
 
-        Map<String,String> result = test.testGetResultMap();
-        System.out.println("result = " + result);
+//        Map<String,String> result = test.testGetResultMap();
+//        System.out.println("result = " + result);
+
+        test.syncLiveGlobalStatisticForHistory();
     }
+
+    public void syncLiveGlobalStatisticForHistory(){
+        // 检查线程池是否已经关闭，如果是则重新初始化
+        if (syncHistoryExecutorService == null || syncHistoryExecutorService.isShutdown()) {
+            syncHistoryExecutorService = createThreadPool();
+//            ThreadPoolMonitorUtils.addToMonitor("syncHistoryExecutorService", syncHistoryExecutorService);
+        }
+        for (int i = 0; i < 100; i++) {
+            System.out.println("i = " + i);
+            int finalI = i;
+            syncHistoryExecutorService.execute(() -> {
+                try {
+                    //180个日期，1个长期直播，每个500-900ms, 平均800ms, 算180s
+                    if (finalI % 2 == 0) {
+                        System.out.println("finalI = " + finalI);
+                        Thread.sleep(3 * 60 * 1000L);
+                    }else {
+                        System.out.println("finalI = " + finalI);
+                        Thread.sleep(1000L);
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        syncHistoryExecutorService.shutdown();
+    }
+
 
     private Map<String,String> testGetResultMap() {
         List<String> unionidList = Arrays.asList("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15");

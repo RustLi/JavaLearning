@@ -1,5 +1,6 @@
 package org.lwl.algorithms.strings;
 
+
 public class ReplaceBlank {
 
     /**
@@ -53,7 +54,7 @@ public class ReplaceBlank {
 
     //由于java的字符数组没有结束符，所以需要多传入个原始长度
     //先计算好替换后的位置，从后向前替换，时间复杂度o(n)
-    public  static void replaceBlank(char[] data,int length){
+    public static void replaceBlank(char[] data,int length){
         int newLength = length;
         for(int i=0;i<length;i++){
             if(data[i]==' ')

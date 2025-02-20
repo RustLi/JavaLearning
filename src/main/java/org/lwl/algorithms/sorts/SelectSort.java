@@ -1,6 +1,7 @@
 package org.lwl.algorithms.sorts;
 
-import utils.Utils;
+
+import org.lwl.algorithms.sorts.base.Utils;
 
 import java.util.Arrays;
 

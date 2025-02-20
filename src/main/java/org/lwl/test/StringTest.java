@@ -14,61 +14,47 @@ import java.util.stream.Collectors;
 public class StringTest {
     private static final String[] COLORS = {"a", "b", "c"};
 
+    private static final String APPLET_LINK_STR = "{小程序授权链接}";
+    private static final String TEMPLATE_APPLET_STR = "${20,30}";
+    private static final String CUSTOMER_NAME_STR = "{客户名称}";
+    private static final String CUSTOMER_PHONE_STR = "{手机号}";
+    private static final String TEMPLATE_NAME_STR = "${0,20}";
+    private static final String TEMPLATE_PHONE_STR = "${10,11}";
+
     public static void main(String[] args) {
-//        toStrWithPattern();
 
-//        String tCellStr = "t1";
-//        int i = 4;
-//       boolean isEqual =  !tCellStr.equals("t" + i);
-//        System.out.println("isEqual: " + isEqual);
+    }
 
-
-//        List<Integer> scoreList = Arrays.asList(3,3);
-//        Map<Integer,Integer> map = getRankByScoreInt(scoreList);
-//        System.out.println(map);
-
-//        toStrWithPattern();
-
-
-//        testImportDtoList();
-
-//        compareTest();
-
-//        test11("E");
-
-//        formatTest();
-
-//        allocColor();
-
-//        String originalString = "这是一个超过二十个字符的长字符串，需要被截断。";
-//        String truncatedString = truncateString1(originalString, 5);
-//        System.out.println(truncatedString);
-
-
-//        String bbb = "dada ";
-//        String wildcard = test111(bbb);
-//        System.out.println("wildcard = " + wildcard);
-
-//        List<String> list = Lists.newArrayList();
-//        list.add("a");
-//        list.add("b");
-//        list.add("c");
-//
-//        String result = buildOrCondition(list);
-//        System.out.println(result); // 输出: (a > 0 or b > 0 or c > 0)
-
-//        String url = "https://e45805187.test-at.baijiayun.com/web/room/quickenter?code=r6tj3s${customstr}";
-        String url = "https://e45805187.test-at.baijiayun.com/web/room/quickenter?code=r6tj3s";
-        System.out.println(removeCustomer(url));
-
-        String url1 = "https://test-dxb.baijiayun.com/s/KNmJKqF3WU";
-        int index = url1.lastIndexOf("/");
-        System.out.println(url1.substring(index + 1));
-
-        Integer isAutoTrans = null;
-        if (!Objects.equals(isAutoTrans,1) ){
-            System.out.println(313221);
+    private static void testTry(String test){
+        System.out.println("start");
+        try {
+            System.out.println(1111);
+            if (test.equals("a")){
+                System.out.println(412412);
+                return;
+            }
+        }catch (Exception e){
+            System.out.println("e = " + e);
+        }finally {
+            System.out.println(2222);
         }
+        System.out.println("end");
+    }
+
+    private static String prefixedFormat(String prefix, Object... args) {
+        return prefix + String.format("live_big_screen_room", args);
+    }
+
+    private static String replaceContent(String content, String phone, String name) {
+        if (StringUtils.isBlank(content)) {
+            return StringUtils.EMPTY;
+        }
+        name = StringUtils.isBlank(name) ? StringUtils.EMPTY : name;
+        content = content.replace(CUSTOMER_NAME_STR, name);
+        content = content.replace(CUSTOMER_PHONE_STR, phone);
+        content = content.replace(TEMPLATE_NAME_STR, name);
+        content = content.replace(TEMPLATE_PHONE_STR, phone);
+        return content;
     }
 
     public static String removeCustomer(String url){

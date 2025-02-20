@@ -1,4 +1,4 @@
-package java_common.reflect;
+package org.lwl.javacommon.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -26,7 +26,7 @@ public class ReflectObject {
     // 创建对象
     private static void reflectNewInstance() {
         try {
-            Class<?> classBook = Class.forName("java_common.reflect.Book");
+            Class<?> classBook = Class.forName("org.lwl.javacommon.reflect.Book");
             Object objectBook = classBook.newInstance();
             Book book = (Book) objectBook;
             book.setName("Android进阶之光");
@@ -39,7 +39,7 @@ public class ReflectObject {
     // 反射私有的构造方法
     private static void reflectPrivateConstructor() {
         try {
-            Class<?> classBook = Class.forName("java_common.reflect.Book");
+            Class<?> classBook = Class.forName("org.lwl.javacommon.reflect.Book");
             Constructor<?> declaredConstructorBook = classBook.getDeclaredConstructor(String.class,String.class);
             declaredConstructorBook.setAccessible(true);
             Object objectBook = declaredConstructorBook.newInstance("Android开发艺术探索","任玉刚");
@@ -53,7 +53,7 @@ public class ReflectObject {
     // 反射私有属性
     private static void reflectPrivateField() {
         try {
-            Class<?> classBook = Class.forName("java_common.reflect.Book");
+            Class<?> classBook = Class.forName("org.lwl.javacommon.reflect.Book");
             Object objectBook = classBook.newInstance();
             Field fieldTag = classBook.getDeclaredField("TAG");
             fieldTag.setAccessible(true);
@@ -67,7 +67,7 @@ public class ReflectObject {
     // 反射私有方法
     private static void reflectPrivateMethod() {
         try {
-            Class<?> classBook = Class.forName("java_common.reflect.Book");
+            Class<?> classBook = Class.forName("org.lwl.javacommon.reflect.Book");
             Method methodBook = classBook.getDeclaredMethod("declaredMethod",int.class);
             methodBook.setAccessible(true);
             Object objectBook = classBook.newInstance();

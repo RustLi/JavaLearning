@@ -6,8 +6,8 @@ public class BinTree {
 
     //定义二叉树节点
     public static class TreeNode{
-        public TreeNode leftChild;
-        public TreeNode rightChild;
+        public TreeNode left;
+        public TreeNode right;
         public Object data;
         public TreeNode(Object data){
             this.data = data;
@@ -38,7 +38,7 @@ public class BinTree {
 //        int[] array = {3,5,1};
         int[] array = {1, 2, 3, 4, 5, 6, 7};
 
-        BinTree.TreeNode root = binTree.createBinTree(array);
+        BinTree.TreeNode root = binTree.createBinTree(array,0);
 
         System.out.println("先序遍历：");
         binTree.preOrderReverse(root);
@@ -53,39 +53,16 @@ public class BinTree {
     }
     
     //构建二叉树，返回根节点
-    public static TreeNode createBinTree(int[] arr){
-        if (arr == null){
+    public static TreeNode createBinTree(int[] values, int index){
+        if (index >= values.length || values[index] == -1) { // 假设-1表示空节点
             return null;
         }
-        if (arr.length == 1){
-            return new TreeNode(arr[0]);
-        }
-        List<TreeNode> nodeList = new ArrayList<>();
 
-        for (int i = 0; i < arr.length; i++){
-            nodeList.add(new TreeNode(arr[i]));
-        }
+        TreeNode node = new TreeNode(values[index]);
+        node.left = createBinTree(values, 2 * index + 1); // 左子节点索引
+        node.right = createBinTree(values, 2 * index + 2); // 右子节点索引
 
-        // 对前lastParentIndex-1个父节点按照父节点与孩子节点的数字关系建立二叉树
-        for (int parentIndex = 0; parentIndex < arr.length / 2 - 1; parentIndex++) {
-            // 左孩子
-            nodeList.get(parentIndex).leftChild = nodeList
-                    .get(parentIndex * 2 + 1);
-            // 右孩子
-            nodeList.get(parentIndex).rightChild = nodeList
-                    .get(parentIndex * 2 + 2);
-        }
-        // 最后一个父节点:因为最后一个父节点可能没有右孩子，所以单独拿出来处理
-        int lastParentIndex = arr.length / 2 - 1;
-        // 左孩子
-        nodeList.get(lastParentIndex).leftChild = nodeList
-                .get(lastParentIndex * 2 + 1);
-        // 右孩子,如果数组的长度为奇数才建立右孩子
-        if (arr.length % 2 == 1) {
-            nodeList.get(lastParentIndex).rightChild = nodeList
-                    .get(lastParentIndex * 2 + 2);
-        }
-        return nodeList.get(0);
+        return node;
     }
 
 
@@ -97,8 +74,8 @@ public class BinTree {
             return;
         }
         System.out.println(node.data + "");
-        preOrderReverse(node.leftChild);
-        preOrderReverse(node.rightChild);
+        preOrderReverse(node.left);
+        preOrderReverse(node.right);
     }
 
 
@@ -109,9 +86,9 @@ public class BinTree {
         if (node == null){
             return;
         }
-        inOrderTraverse(node.leftChild);
+        inOrderTraverse(node.left);
         System.out.println(node.data + "");
-        inOrderTraverse(node.rightChild);
+        inOrderTraverse(node.right);
     }
 
     /**
@@ -121,8 +98,8 @@ public class BinTree {
         if (node == null){
             return;
         }
-        postOrderTraverse(node.leftChild);
-        postOrderTraverse(node.rightChild);
+        postOrderTraverse(node.left);
+        postOrderTraverse(node.right);
         System.out.println(node.data + "");
     }
 
@@ -138,10 +115,10 @@ public class BinTree {
         while (!stack.isEmpty()) {
             currentNode = stack.pop();
             System.out.print(currentNode.data + " ");
-            if (currentNode.rightChild != null)
-                stack.push(currentNode.rightChild);
-            if (currentNode.leftChild != null)
-                stack.push(currentNode.leftChild);
+            if (currentNode.right != null)
+                stack.push(currentNode.right);
+            if (currentNode.left != null)
+                stack.push(currentNode.left);
         }
     }
 
@@ -156,11 +133,11 @@ public class BinTree {
             // 一直循环到二叉排序树最左端的叶子结点（currentNode是null）
             while (currentNode != null) {
                 stack.push(currentNode);
-                currentNode = currentNode.leftChild;
+                currentNode = currentNode.left;
             }
             currentNode = stack.pop();
             System.out.print(currentNode.data + " ");
-            currentNode = currentNode.rightChild;
+            currentNode = currentNode.right;
         }
     }
 
@@ -176,11 +153,11 @@ public class BinTree {
             // 一直循环到二叉排序树最左端的叶子结点（currentNode是null）
             while (currentNode != null) {
                 stack.push(currentNode);
-                currentNode = currentNode.leftChild;
+                currentNode = currentNode.left;
             }
             currentNode = stack.pop();
             // 当前结点没有右结点或上一个结点（已经输出的结点）是当前结点的右结点，则输出当前结点
-            while (currentNode.rightChild == null || currentNode.rightChild == rightNode) {
+            while (currentNode.right == null || currentNode.right == rightNode) {
                 System.out.print(currentNode.data + " ");
                 rightNode = currentNode;
                 if (stack.isEmpty()) {
@@ -189,7 +166,7 @@ public class BinTree {
                 currentNode = stack.pop();
             }
             stack.push(currentNode); //还有右结点没有遍历
-            currentNode = currentNode.rightChild;
+            currentNode = currentNode.right;
         }
     }
 
@@ -203,10 +180,10 @@ public class BinTree {
         while (!queue.isEmpty()) {
             currentNode = queue.poll();
             System.out.print(currentNode.data + " ");
-            if (currentNode.leftChild != null)
-                queue.offer(currentNode.leftChild);
-            if (currentNode.rightChild != null)
-                queue.offer(currentNode.rightChild);
+            if (currentNode.left != null)
+                queue.offer(currentNode.left);
+            if (currentNode.right != null)
+                queue.offer(currentNode.right);
         }
     }
 
@@ -214,7 +191,7 @@ public class BinTree {
     /**
      * 深度优先遍历，采用栈，后进先出
      */
-    public void depthFirstTraverse(TreeNode root) {
+    public static void depthFirstTraverse(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         TreeNode currentNode;
         if (root == null){
@@ -224,10 +201,10 @@ public class BinTree {
         while (!stack.isEmpty()) {
             currentNode = stack.pop();
             System.out.print(currentNode.data + " ");
-            if (currentNode.rightChild != null)
-                stack.push(currentNode.rightChild);
-            if (currentNode.leftChild != null)
-                stack.push(currentNode.leftChild);
+            if (currentNode.right != null)
+                stack.push(currentNode.right);
+            if (currentNode.left != null)
+                stack.push(currentNode.left);
         }
     }
 

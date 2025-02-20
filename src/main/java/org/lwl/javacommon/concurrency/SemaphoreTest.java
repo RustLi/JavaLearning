@@ -1,4 +1,4 @@
-package java_common.concurrency;
+package org.lwl.javacommon.concurrency;
 
 import com.google.common.collect.Lists;
 

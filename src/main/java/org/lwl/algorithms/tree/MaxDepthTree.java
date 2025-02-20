@@ -36,12 +36,12 @@ public class MaxDepthTree {
         }
         // 前序位置
         depth++;
-        if (root.leftChild == null && root.rightChild == null) {
+        if (root.left == null && root.right == null) {
             // 到达叶子节点，更新最大深度
             res = Math.max(res, depth);
         }
-        traverse(root.leftChild);
-        traverse(root.rightChild);
+        traverse(root.left);
+        traverse(root.right);
         // 后序位置
         depth--;
     }
@@ -55,8 +55,8 @@ public class MaxDepthTree {
             return 0;
         }
         // 利用定义，计算左右子树的最大深度
-        int leftMax = maxDepth1(root.leftChild);
-        int rightMax = maxDepth1(root.rightChild);
+        int leftMax = maxDepth1(root.left);
+        int rightMax = maxDepth1(root.right);
         // 整棵树的最大深度等于左右子树的最大深度取最大值，
         // 然后再加上根节点自己
         int res = Math.max(leftMax, rightMax) + 1;

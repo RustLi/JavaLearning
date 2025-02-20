@@ -24,18 +24,18 @@ import org.lwl.datastructure.tree.BinTree;
  * 9   6 3   1
  *
  */
-public class _226 {
+public class TraverseTree {
 
     public static void main(String[] args) {
         int[] array = {4,2,7,1,3,6,9};
-        BinTree.TreeNode root = BinTree.createBinTree(array);
+        BinTree.TreeNode root = BinTree.createBinTree(array,0);
 
         System.out.println("before..");
         BinTree.breadthFirstTraverse(root);
 
         BinTree.TreeNode newRoot = traverse(root);
         System.out.println("after...");
-        BinTree.breadthFirstTraverse(newRoot);
+        BinTree.depthFirstTraverse(newRoot);
     }
 
 
@@ -49,12 +49,12 @@ public class _226 {
         //前序遍历
 
         //交换root节点的左右节点
-        BinTree.TreeNode temp = root.leftChild;
-        root.leftChild = root.rightChild;
-        root.rightChild = temp;
+        BinTree.TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
 
-        traverse(root.leftChild);
-        traverse(root.rightChild);
+        traverse(root.left);
+        traverse(root.right);
         return root;
     }
 }

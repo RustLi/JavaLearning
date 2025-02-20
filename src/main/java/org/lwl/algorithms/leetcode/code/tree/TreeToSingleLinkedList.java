@@ -28,9 +28,9 @@
 
   import org.lwl.datastructure.tree.TreeNode;
 
-  public class BinodeLcci{
+  public class TreeToSingleLinkedList {
       public static void main(String[] args) {
-           Solution solution = new BinodeLcci().new Solution();
+           Solution solution = new TreeToSingleLinkedList().new Solution();
            TreeNode root = TreeNode.createTree(new Integer[]{4,2,5,1,3,null,6,0});
            TreeNode head = solution.convertBiNode(root);
            TreeNode.bfsTraversal(head);
@@ -76,8 +76,6 @@ class Solution {
         convertBiNode(root.left);
         root.left = null;
         return minNode;
-    }
+      }
+   }
 }
-//leetcode submit region end(Prohibit modification and deletion)
-
-  }

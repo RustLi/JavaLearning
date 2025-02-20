@@ -31,14 +31,14 @@ public class CompletedFuture {
 //        test1(false);
 //        test2();
 
-//        test222();
+        test222();
 //        test3();
-        test4();
+//        test4();
     }
 
     private static int count = 0;
 
-    private static void test222(){
+    private static String test222(){
         List<Long> list = Lists.newArrayList();
         for (long i = 0; i < 10000; i++) {
             list.add(i);
@@ -52,20 +52,41 @@ public class CompletedFuture {
                     count++;
                     System.out.println("count 111 = " + count + ", part = " + part);
                     Thread.sleep(1000);
+                    if (count == 9) {
+                        System.out.println(214121);
+                        throw new RuntimeException("error");
+                    }
                 } catch (Exception e) {
                     System.out.println("e = "+ e);
+//                    throw new RuntimeException(e);
                 }
+
+//                count++;
+//                System.out.println("count 111 = " + count + ", part = " + part);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                if (count == 9) {
+//                    System.out.println(214121);
+//                    throw new RuntimeException("error");
+//                }
+
             }, executorService);
             resultFutureList.add(completableFuture);
         }
         CompletableFuture.allOf(resultFutureList.toArray(new CompletableFuture[0])).whenComplete((r,t)->{
             if (t != null) {
                 System.out.println("写跟进记录 error " + t);
+//                throw new RuntimeException("error1");
             }
         }).join();
 
         //发送kafka消息
         System.out.println("发送kafka, count = " + count);
+
+        return "success";
     }
 
     /**

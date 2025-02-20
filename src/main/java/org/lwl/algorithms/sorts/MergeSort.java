@@ -11,50 +11,72 @@ import java.util.Arrays;
  **/
 public class MergeSort {
 
-    public static void main(String[] args) {
-        int[] intput = {9,2,3,5,1,6,7};
-        MergeSort mergeSort = new MergeSort();
-        mergeSort.mergeSort(intput,0,intput.length-1);
-        System.out.println(Arrays.toString(intput));
+    public static void mergeSort(int[] arr) {
+        if (arr == null || arr.length <= 1) return;
+        int[] temp = new int[arr.length]; // 临时数组用于合并操作
+        sort(arr, temp, 0, arr.length - 1);
     }
 
-    /**
-     * @description: 归并排序，递归
-     **/
-    private void mergeSort(int[] inArr,int low, int high){
-        int middle = low + (high - low)/2;
-        if (low < high){
-            mergeSort(inArr,low,middle);
-            mergeSort(inArr,middle+1,high);
-            merge(inArr,low,middle,high);
+    // 递归分割
+    private static void sort(int[] arr, int[] temp, int left, int right) {
+        if (left >= right) return;
+        int mid = left + (right - left) / 2; // 防溢出写法
+        sort(arr, temp, left, mid);      // 左半部分排序
+        sort(arr, temp, mid + 1, right); // 右半部分排序
+        merge(arr, temp, left, mid, right); // 合并有序子数组
+    }
+
+    // 合并有序区间 [left, mid] 和 [mid+1, right]
+    private static void merge1(int[] arr, int[] temp, int left, int mid, int right) {
+        System.arraycopy(arr, left, temp, left, right - left + 1); // 复制到临时数组
+
+        int i = left;      // 左子数组起始指针
+        int j = mid + 1;   // 右子数组起始指针
+        int k = left;      // 合并目标指针
+
+        while (i <= mid && j <= right) {
+            arr[k++] = (temp[i] <= temp[j]) ? temp[i++] : temp[j++];
         }
+
+        // 处理剩余元素
+        while (i <= mid) arr[k++] = temp[i++];
+        while (j <= right) arr[k++] = temp[j++];
     }
 
-    /**
-     * @description: 合并两个有序数组
-     **/
-    private void merge(int[] inArr, int low, int middle, int high){
-        int j = middle+1,i = low,k = 0;
-        int[] temp = new int[high-low+1];
-        //合并两个有序，选取两个指针，每次比较两个序列的第一个数，小的放入k中
-        while (i <= middle && j <= high){
-            if (inArr[i] <= inArr[j]){
-                temp[k++] = inArr[i++];
+
+    private static void merge(int[] arr, int[] temp, int left, int mid, int right) {
+        //复制到临时数组
+        for (int i = left; i <= right ; i++) {
+            temp[i] = arr[i];
+        }
+        //双指针合并两个有序数组
+        int i = left;      // 左子数组起始指针
+        int j = mid + 1;   // 右子数组起始指针
+        for (int k = left; k <= right ; k++) {
+            if (i == mid + 1){
+                //左边已合并完成
+                arr[k] = temp[j++];
+            }else if (j == right + 1){
+                //右边已合并完成
+                arr[k] = temp[i++];
+            }else if (temp[i] > temp[j]){
+                //比较左右两个数组的元素，将较小的元素放入目标数组中
+                arr[k] = temp[j++];
             }else {
-                temp[k++] = inArr[j++];
+                arr[k] = temp[i++];
             }
         }
-        //左边的数移入数组
-        while (i <= middle){
-            temp[k++] = inArr[i++];
+    }
+
+
+    // 测试
+    public static void main(String[] args) {
+        int[] arr = {10, 7, 8, 9, 1, 5};
+        mergeSort(arr);
+        System.out.println("Sorted array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
         }
-        //右边剩余的数移入数组
-        while (j <= high){
-            temp[k++] = inArr[j++];
-        }
-        //复制新数组数据到inArr数组中
-        for (int p = 0;p < temp.length; p++){
-            inArr[low + p] = temp[p];
-        }
+        // 输出: 1 5 7 8 9 10
     }
 }

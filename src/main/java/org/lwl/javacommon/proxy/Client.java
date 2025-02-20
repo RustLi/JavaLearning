@@ -1,4 +1,4 @@
-package java_common.proxy;
+package org.lwl.javacommon.proxy;
 
 import java.lang.reflect.Proxy;
 

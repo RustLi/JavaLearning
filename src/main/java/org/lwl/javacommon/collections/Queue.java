@@ -1,4 +1,4 @@
-package java_common.collections;
+package org.lwl.javacommon.collections;
 
 import java.util.concurrent.LinkedBlockingQueue;
 

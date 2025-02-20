@@ -1,4 +1,4 @@
-package java_common.reflect;
+package org.lwl.javacommon.reflect;
 
 public class Book {
 

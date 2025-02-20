@@ -2,37 +2,42 @@ package org.lwl.algorithms.sorts;
 
 public class BubbleSort {
 
-    public  static void main(String[] args){
-        int[] intput = {9,2,3,5,1,6,7};
-        BubbleSort bubbleSort = new BubbleSort();
-        bubbleSort.sort(intput);
-    }
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        boolean swapped; // 用于标记是否发生交换
 
-    //增加一个flag值，最好的情况下，o(n)，最坏的情况下o(n*n)
-    private void sort(int[] input){
-        int length = input.length;
-        if (length == 0){
-            return;
-        }
-        boolean isFlag = true;//如果没有交换，表示数据已经排好序，直接退出
-        for (int i = 0; i < length-1 && isFlag; i++){//比较length-1趟
-            isFlag = false;
-            for (int j = length -1; j > i; j--){
-                if (input[j] < input[j-1]){
-                    swap(input,j,j-1);
-                    isFlag = true;
+        // 外层循环控制遍历次数
+        for (int i = 0; i < n - 1; i++) {
+            swapped = false; // 每次遍历前重置标记
+
+            // 内层循环比较相邻元素并交换
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1); // 交换相邻元素
+                    swapped = true; // 标记发生交换
                 }
             }
-        }
-        for (int m = 0; m < input.length -1; m++){
-            System.out.println(input[m]);
+
+            // 如果未发生交换，说明数组已经有序，提前退出
+            if (!swapped) {
+                break;
+            }
         }
     }
 
-    private void swap(int[] input,int a ,int b){
-        int temp = input[a];
-        input[a] = input[b];
-        input[b] = temp;
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 7, 8, 9, 1, 5};
+        bubbleSort(arr);
+        System.out.println("Sorted array:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
     }
 
 }

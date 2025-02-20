@@ -9,22 +9,29 @@ import java.util.stream.Collectors;
 public class MapTest {
     public static void main(String[] args) {
 
-        Map<Integer, School> aMap = new HashMap<>();
-        School s1 = new School();
-        User u1 = new User();
-        u1.setId(1);
-        s1.setUser(u1);
+//        Map<Integer, School> aMap = new HashMap<>();
+//        School s1 = new School();
+//        User u1 = new User();
+//        u1.setId(1);
+//        s1.setUser(u1);
+//
+//        School s2 = new School();
+//        User u2 = new User();
+//        u2.setId(2);
+//        s2.setUser(u2);
+//
+//        aMap.put(2,s2);
+//        aMap.put(1,s1);
+//        List<School> list = aMap.values().stream().collect(Collectors.toList());
+//        list.sort((o1, o2) -> Integer.compare(o2.getUser().getId(), o1.getUser().getId()));
+//        System.out.println("list = " + list);
 
-        School s2 = new School();
-        User u2 = new User();
-        u2.setId(2);
-        s2.setUser(u2);
-
-        aMap.put(2,s2);
-        aMap.put(1,s1);
-        List<School> list = aMap.values().stream().collect(Collectors.toList());
-        list.sort((o1, o2) -> Integer.compare(o2.getUser().getId(), o1.getUser().getId()));
-        System.out.println("list = " + list);
+        String a = null;
+        Map<String, String> map = new HashMap<>();
+        map.put(a,"a");
+        map.put(null, null);
+        String b = map.get(a);
+        System.out.println("b = " + b);
     }
 
 

@@ -1,4 +1,4 @@
-package java_common.generic;
+package org.lwl.javacommon.generic;
 
 import java.util.ArrayList;
 import java.util.List;

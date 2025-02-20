@@ -1,4 +1,4 @@
-package org.lwl.algorithms.leetcode.code.dp;
+package org.lwl.algorithms.dp;
 
 import java.util.Arrays;
 
@@ -42,11 +42,22 @@ import java.util.Arrays;
  * 1 <= coins[i] <= 231 - 1
  * 0 <= amount <= 104
  *
+ *
+ * 状态转移方程
+ *
+ *  dp(n) =
+ *
+ *   if (n < 0), -1;
+ *   else if(n=0), 0;
+ *   else
+ *      for(int coin: coins){
+ *         res = min(res, dp(n-coin) + 1)
+ *      }
  */
-public class _322 {
+public class CoinChange {
 
     public static void main(String[] args) {
-        _322 mm = new _322();
+        CoinChange mm = new CoinChange();
         int[] coins = {1,2,5};
         int ret = mm.coinChange(coins,11);
         System.out.println(ret);
@@ -54,23 +65,24 @@ public class _322 {
 
     int[] memo;
     public int coinChange(int[] coins, int amount) {
-        memo = new int[amount + 1];
-//        Arrays.fill(memo, -2);
-        for (int i = 0, length = memo.length; i < length; i++) {
-            memo[i] = -2;
-        }
-//        return dp(coins,amount);
-
-        return  dp2(coins,amount);
+        return dp2(coins, amount);
     }
 
-    //带备忘录
+    public int coinChange1(int[] coins, int amount) {
+        memo = new int[amount + 1];
+        Arrays.fill(memo, -2);
+        return dp(coins,amount);
+    }
+
+    //带备忘录，自顶向下
     private int dp(int[] coins, int amount){
         if(amount == 0) return 0;
         if(amount < 0) return -1;
 
         //如果计算过，不再计算，降低时间复杂度o(n)；
-        if(memo[amount] != -2) return memo[amount];
+        if(memo[amount] != -2) {
+            return memo[amount];
+        }
 
         int ret = Integer.MAX_VALUE;
         for(int coin : coins){
@@ -80,21 +92,20 @@ public class _322 {
             if(subProblem == -1) continue;
             ret = Math.min(ret, subProblem + 1);
         }
-        memo[amount] =  (ret == Integer.MAX_VALUE) ? -1 : ret;
+        memo[amount] = (ret == Integer.MAX_VALUE) ? -1 : ret;
         return memo[amount];
     }
 
     /**
      * des: 自底而上
-     * @param
      */
-    public int dp2(int[] coins ,int amount){
+    public int dp2(int[] coins, int amount){
         int[] dp = new int[amount + 1];
         Arrays.fill(dp, amount + 1);
 
         dp[0] = 0;
-        //所有状态取值
-        for (int i = 0, length = dp.length; i < length; i++) {
+        //外层 for 循环遍历所有状态的所有取值
+        for (int i = 0; i < dp.length; i++) {
             for (int coin: coins) {
                 //子问题无解
                 if (i - coin < 0) continue;
@@ -103,6 +114,6 @@ public class _322 {
             }
         }
 
-        return (dp[amount] == amount + 1) ? -1 : dp[amount];
+        return dp[amount] == amount + 1 ? -1 : dp[amount];
     }
 }

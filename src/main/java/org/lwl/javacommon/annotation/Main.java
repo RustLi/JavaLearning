@@ -1,4 +1,4 @@
-package java_common.annotation;
+package org.lwl.javacommon.annotation;
 
 @FetchHandle(tableName="test")
 @FetchList(tableList = {"test1","test2"})

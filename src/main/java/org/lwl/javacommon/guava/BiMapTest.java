@@ -1,4 +1,4 @@
-package java_common.guava;
+package org.lwl.javacommon.guava;
 
 
 import com.google.common.collect.BiMap;
