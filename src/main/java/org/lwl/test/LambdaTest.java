@@ -22,7 +22,7 @@ public class LambdaTest {
     public static void main(String[] args) {
         LambdaTest lambdaTest= new LambdaTest();
 //
-        lambdaTest.lambdaTest();
+//        lambdaTest.lambdaTest();
 
 //        lambdaTest.sqList();
 
@@ -60,10 +60,26 @@ public class LambdaTest {
 //        System.out.println(getMoney(300));
 //        System.out.println(getMoney(0));
 //        System.out.println(getMoney(5));
+
+        List<Apple> appleList = new ArrayList<>();//存放apple对象集合
+
+        Apple apple1 =  new Apple(3,"",new BigDecimal("3.25"),10,false);
+        Apple apple12 = new Apple(1,"",new BigDecimal("1.35"),20,false);
+        Apple apple2 =  new Apple(1,"",new BigDecimal("2.89"),20,true);
+
+        appleList.add(apple1);
+        appleList.add(apple12);
+        appleList.add(apple2);
+
+
+        List<Apple> uniquePeople = appleList.stream()
+                .filter(distinctByKey(Apple::getId)) // 根据id去重
+                .collect(Collectors.toList());
+
+        System.out.println("uniquePeople = " + uniquePeople);
     }
 
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
 
     private static String getCompletePercent(Integer duration, Long meetingLength) {
         String format = "0.0000";
@@ -572,7 +588,7 @@ public class LambdaTest {
 
         Apple apple1 =  new Apple(3,"",new BigDecimal("3.25"),10,false);
         Apple apple12 = new Apple(1,"",new BigDecimal("1.35"),20,false);
-        Apple apple2 =  new Apple(9,"",new BigDecimal("2.89"),20,true);
+        Apple apple2 =  new Apple(1,"",new BigDecimal("2.89"),20,true);
 
 
 //        Apple apple3 =  new Apple(3,"444",new BigDecimal("9.99"),40,false);

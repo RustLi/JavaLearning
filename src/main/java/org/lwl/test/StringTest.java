@@ -22,7 +22,22 @@ public class StringTest {
     private static final String TEMPLATE_PHONE_STR = "${10,11}";
 
     public static void main(String[] args) {
+//        Date now = new Date();
+//        String key = buildKey(1L, "123", null,now);
+//        System.out.println("key = " + key);
 
+        Integer a = 1;
+        Integer b = null;
+        boolean c = a == b;
+        System.out.println(c);
+    }
+
+    private static String buildKey(Long liveId, String bjyUserNumber, String customerNum){
+        return liveId + "_" + bjyUserNumber + "_" + customerNum;
+    }
+
+    private static String buildKey(Long liveId, String bjyUserNumber, String customerNum, Date date){
+        return liveId + "_" + bjyUserNumber + "_" + customerNum + "_" + date;
     }
 
     private static void testTry(String test){

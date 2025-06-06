@@ -27,7 +27,7 @@ public class MergeSort {
     }
 
     // 合并有序区间 [left, mid] 和 [mid+1, right]
-    private static void merge1(int[] arr, int[] temp, int left, int mid, int right) {
+    private static void merge(int[] arr, int[] temp, int left, int mid, int right) {
         System.arraycopy(arr, left, temp, left, right - left + 1); // 复制到临时数组
 
         int i = left;      // 左子数组起始指针
@@ -44,7 +44,7 @@ public class MergeSort {
     }
 
 
-    private static void merge(int[] arr, int[] temp, int left, int mid, int right) {
+    private static void merge1(int[] arr, int[] temp, int left, int mid, int right) {
         //复制到临时数组
         for (int i = left; i <= right ; i++) {
             temp[i] = arr[i];

@@ -24,11 +24,12 @@ import java.util.List;
 public class Permutations {
     public static void main(String[] args) {
         int[] nums = {1, 2, 3};
+        //全排列
         List<List<Integer>> result = permute(nums);
         for (List<Integer> permutation : result) {
             System.out.println(permutation);
         }
-
+        //子序列
         List<List<Integer>> result1 = subsets(nums);
         for (List<Integer> subset : result1) {
             System.out.println(subset);
