@@ -1,15 +1,23 @@
 package org.lwl.test;
 
+import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.http.util.TextUtils;
+import org.lwl.utils.DateUtil;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class StringTest {
     private static final String[] COLORS = {"a", "b", "c"};
@@ -21,15 +29,189 @@ public class StringTest {
     private static final String TEMPLATE_NAME_STR = "${0,20}";
     private static final String TEMPLATE_PHONE_STR = "${10,11}";
 
-    public static void main(String[] args) {
-//        Date now = new Date();
-//        String key = buildKey(1L, "123", null,now);
-//        System.out.println("key = " + key);
+    public static final String NET_SCHOOL_CONFIG_ERROR = "该校区未配置支付商户，请先配置后，再录入订单:1:15";
 
-        Integer a = 1;
-        Integer b = null;
-        boolean c = a == b;
-        System.out.println(c);
+    public static void main(String[] args) {
+//        System.out.println(test1111(""));
+
+//       String liveUrl= "https://e45805187.test-at.kuaikeguanjia.com/web/room/enter" +
+//               "?room_id=25120249835556&user_avatar=&user_name=&user_role=0&sign=61a7b64d14c963fd6c6102d664852d1c&meeti" +
+//               "ng_id=mCgt3eXbGh&pay_channel=1&customstr=_mCgt3PQafs&share_url=https%3A%2F%2Fa.kuaikeguanjia.com%2Fs%2Fm6Udzc32jM&dxbTicket=mCgt3PQafs&dxbDomain=https%3A%2F%2Fa.kuaikeguan" +
+//               "jia.com&nope_sense=m6UdzpKinc";
+//
+
+       String liveUrl = "https://e54131384.at.juvox.com.cn/web/room/enter?room_id=25111495675116&user_avatar=&user_name=&user_role=0&sign=448533c7b823c93fc8eedf4af04911cb&meeting_id=MGkzfCBkI1&pay_channel=1&customstr=_MyDPZtRQJ5&share_url=https%3A%2F%2Fdxb.juvox.com.cn%2Fs%2Fm62iM2GRI0&dxbTicket=MyDPZtRQJ5&dxbDomain=https%3A%2F%2Fdxb.juvox.com.cn&inviteUserId=trQz8nv0ND&inviteUserName=%E9%99%B6%E6%98%9F%E7%BE%BD-%E4%BA%91%E5%B8%8C%E7%A7%91%E6%8A%80&nope_sense=m62iMaNSbz";
+       System.out.println(getQueryParams(liveUrl));
+    }
+
+    public static Map<String, String> getQueryParams(String url) {
+        Map<String, String> result = new HashMap<>();
+
+        int start = url.indexOf('?');
+        System.out.println("start = " + start);
+        if (start < 0) {// 无参数
+            return result;
+        }
+
+        int end = url.lastIndexOf('#',start);
+//        int end = url.lastIndexOf(start, '#');
+        System.out.println("end 1 = " + end);
+        if (end < 0) {
+            end = url.length();
+        }
+        System.out.println("end 2 = " + end);
+
+        if (start > 0) {
+            String queryString = url.substring(start + 1, end);
+            String[] pairs = queryString.split("&");// 分解成 key-value 键值对
+            for (String s : pairs) {
+                int index2 = s.indexOf('=');
+                if (index2 < 0) {
+                    result.put(s, "");
+                } else {
+                    String key = s.substring(0, index2);
+                    String value = s.substring(index2 + 1);
+                    result.put(key, value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+
+    private static String test1111(String goodsId){
+        return  "/shopClient/shopOrder?roomId=1" + "&payChannel=1&productId=" + goodsId;
+    }
+
+    private static String checkConflict() {
+        String filePath = "/storage/emulated/0/Android/data/com.tencent.wework/skyeye";
+        int offset = filePath.lastIndexOf(".");
+        if (offset == -1) {
+            offset = filePath.length();
+        }
+        //去掉扩展名
+        String noExtension = filePath.substring(0, offset);
+        String extension = filePath.substring(offset);
+
+        System.out.println("noExtension = " +  noExtension + " extension = " + extension);
+
+        int num = 1;
+        String newMainFile = filePath;
+        String cfgFile;
+
+        while (true) {
+            cfgFile = newMainFile + "~cfg";
+
+            if (new File(newMainFile).exists()) {
+                //主文件存在，需要重命名
+                System.out.println("main file exist " + newMainFile);
+            } else if (new File(cfgFile).exists()) {
+                //配置文件存在，且正在下载，需要重命名
+                //配置文件存在，且不一致，需要重命名
+            } else {
+                //否则，此名可用
+                break;
+            }
+            newMainFile = noExtension + "(" + num + ")" + extension;
+            num++;
+        }
+
+        System.out.println("newMainFile = " + newMainFile);
+        return newMainFile;
+    }
+
+
+    public static boolean isNumeric(CharSequence cs) {
+        if (isEmpty(cs)) {
+            return false;
+        } else {
+            int sz = cs.length();
+            for(int i = 0; i < sz; ++i) {
+                if (!Character.isDigit(cs.charAt(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+    public static String d(List list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (list != null && list.size() > 0) {
+            int size = list.size();
+            for (int i = 0; i < size; i++) {
+                stringBuilder.append((String) list.get(i));
+                if (i < size - 1) {
+                    stringBuilder.append(",");
+                }
+            }
+            stringBuilder.append("\u0000");
+        }
+        return stringBuilder.toString();
+    }
+
+    public static Integer getGoodsType(String productId) {
+        return Integer.parseInt(productId.substring(6, 8));
+    }
+
+
+    public static Integer getSchoolId(String productId) {
+        if (productId.length() == 16) {
+            return 2;
+        }
+
+        try {
+            return  Integer.parseInt(productId.substring(16, 20));
+        } catch (Exception e) {
+            System.out.println("error:" + e);
+            return 2;
+        }
+    }
+
+    private static boolean isErrorDomain(int errType, int errCode, String respUrl){
+        return errType != 0 || errCode != 0 || (!TextUtils.isEmpty(respUrl) && respUrl.contains("weixin110.qq.com"));
+    }
+
+    private static String getMessage(String url, int errType, int errCode) {
+        String now = DateUtil.dateTimeFormat();
+        StringBuilder builder = new StringBuilder();
+        builder.append("###域名异常提醒(").append("test").append(")\n");
+        builder.append("**域名:** ").append(url).append("\n");
+        builder.append("**检测时间:** ").append(now).append("\n");
+        builder.append("**错误码:** (").append(errType).append(",").append(errCode).append(")\n");
+        return builder.toString();
+    }
+
+    private static String replaceUrl(String url){
+        if (!url.startsWith("http")){
+            return url;
+        }
+        // 查找 "//" 后的第一个 '/' 位置
+        int start = url.indexOf("//");
+        if (start != -1) {
+            int pathStart = url.indexOf('/', start + 2);
+            System.out.println("pathStart = " + pathStart);
+            if (pathStart != -1) {
+                return url.substring(pathStart);
+            }
+        }
+        return url;
+    }
+
+    private static String splitUrl(String url){
+        if (!url.startsWith("http")){
+            return url;
+        }
+        String[] partsAfterDoubleSlash = url.split("//");
+        if (partsAfterDoubleSlash.length > 1) {
+            String domainAndPath = partsAfterDoubleSlash[1];
+            String[] pathParts = domainAndPath.split("/", 2);
+            if (pathParts.length > 1) {
+                return  "/" + pathParts[1];
+            }
+        }
+        return url;
     }
 
     private static String buildKey(Long liveId, String bjyUserNumber, String customerNum){

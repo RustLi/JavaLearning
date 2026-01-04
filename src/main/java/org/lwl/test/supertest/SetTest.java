@@ -3,6 +3,7 @@ package org.lwl.test.supertest;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.kuaike.common.utils.HttpClientUtils;
 
 import java.util.*;
 
@@ -15,19 +16,26 @@ public class SetTest {
 
 //        allocTest();
 
-        retainAllTest();
+//        retainAllTest();
 //        test222();
+
+
     }
 
     private static void test222(){
         Set<Long> set1 = Sets.newHashSet(1L,2L);
         Set<Long> set2 = Sets.newHashSet(2L,3L);
-        Set<Long> set3 = Sets.newHashSet(2L,4L);
+        Set<Long> set3 = Sets.newHashSet(5L,4L);
 
-        Set<Long> set4 = Sets.intersection(set1,set2);
-        System.out.println("set4 = " + set4);
-        Set<Long> set5 = Sets.intersection(set4, set3);
-        System.out.println("set5 = " + set5);
+
+        set1.retainAll(set2);
+        set1.retainAll(set3);
+        System.out.println("set1 = " + set1);
+
+//        Set<Long> set4 = Sets.intersection(set1,set2);
+//        System.out.println("set4 = " + set4);
+//        Set<Long> set5 = Sets.intersection(set4, set3);
+//        System.out.println("set5 = " + set5);
     }
 
     private static void listDiffTest(){

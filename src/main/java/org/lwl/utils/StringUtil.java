@@ -1,4 +1,4 @@
-package utils;
+package org.lwl.utils;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -22,7 +22,7 @@ public class StringUtil {
 //        int n_addr_func = so + n_addr_func_offset;
 //        System.out.println("lwl: 333 func addr is ---" + n_addr_func);
 
-        String aa = null;
+        String aa = "aa";
         String bb = null;
 //        if (aa.equals(bb)){
 //            System.out.println(1241241414);
@@ -31,7 +31,8 @@ public class StringUtil {
 //        }
 
 
-        boolean c = Objects.equals(aa,bb);
+//        boolean c = Objects.equals(aa,bb);
+        boolean c = "aa".equals(bb);
         System.out.println("c = " + c);
     }
 

@@ -26,12 +26,16 @@ public class MapTest {
 //        list.sort((o1, o2) -> Integer.compare(o2.getUser().getId(), o1.getUser().getId()));
 //        System.out.println("list = " + list);
 
-        String a = null;
+//        String a = null;
         Map<String, String> map = new HashMap<>();
-        map.put(a,"a");
-        map.put(null, null);
-        String b = map.get(a);
-        System.out.println("b = " + b);
+        Map<String, String> map2 = new HashMap<>();
+//        map2.putAll(map);
+
+        System.out.println(map2);
+//        map.put(a,"a");
+//        map.put(null, null);
+//        String b = map.get(a);
+//        System.out.println("b = " + b);
     }
 
 
