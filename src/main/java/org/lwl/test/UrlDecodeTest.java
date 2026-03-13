@@ -1,6 +1,10 @@
 package org.lwl.test;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 
 public class UrlDecodeTest {
@@ -23,6 +27,25 @@ public class UrlDecodeTest {
 //        dtoTest.msg = decodeStr;
 //        System.out.println(dtoTest);
 
+//        String manualPlaybackUrl = "/web/playback/index?classid=26030271070269&token=zuaHCDGrk4jU_UVg9IrqapYi2OvV9_vwS9drJfcVrxBPXjZllkJfkcfGEXqeJGTtCqdH1zJ1Si0";
+        String manualPlaybackUrl1 = "https://e45805187.test-at.baijiayun.com/web/playback/index?classid=26030271070269&token=zuaHCDGrk4jU_UVg9IrqapYi2OvV9_vwS9drJfcVrxBPXjZllkJfkcfGEXqeJGTtCqdH1zJ1Si0";
+        System.out.println(extractManualPlaybackUrl(manualPlaybackUrl1));
+    }
+
+    private static String extractManualPlaybackUrl(String manualPlaybackFullUrl) {
+        if (StringUtils.isBlank(manualPlaybackFullUrl)) {
+            return "";
+        }
+        try {
+            URI uri = new URI(manualPlaybackFullUrl);
+            String path = uri.getPath();
+            String query = uri.getQuery();
+            System.out.println("path = " + path + " query = " + query + ", uri = " + uri);
+            return path + (query != null ? "?" + query : "");
+        } catch (URISyntaxException e) {
+//            log.error("extractManualPlaybackUrl, 提取指定的回放跳转链接异常", e);
+            return "";
+        }
     }
 
     private static String decode(String msg){

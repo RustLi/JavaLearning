@@ -90,7 +90,7 @@ public final class MobileCipher {
 
     public static void main(String[] args) {
         try {
-            String encryptMobile = "p0PMlQ6oWSgsh3RnANwgOQ==";
+            String encryptMobile = "CNPp/GIOjFb/MZBZ6GblNg==";
             System.out.println("解密后 = " + mobileCipher.decryptMobile(encryptMobile));
         }catch (Exception e){
             e.printStackTrace();
@@ -101,8 +101,8 @@ public final class MobileCipher {
 //        String secret =  "~Aq%8Wu3+2aUetxvZi#n`b{yd0TSo4N[";
 //        String privateSalt =  "eshop";
 //        int expireInDays = 30;
-//        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil("secret", privateSalt, expireInDays);
-//        String encryptPassword = jwtTokenUtil.encryptPassword("tsyjs2DxL9", "768025");
+//        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil(secret, privateSalt, expireInDays);
+//        String encryptPassword = jwtTokenUtil.encryptPassword("msivvaHXBU", "768025");
 //        System.out.println(encryptPassword);
 //    }
 }

@@ -59,8 +59,6 @@ public class MaxDepthTree {
         int rightMax = maxDepth1(root.right);
         // 整棵树的最大深度等于左右子树的最大深度取最大值，
         // 然后再加上根节点自己
-        int res = Math.max(leftMax, rightMax) + 1;
-
-        return res;
+        return Math.max(leftMax, rightMax) + 1;
     }
 }

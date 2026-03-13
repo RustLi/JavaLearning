@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.kuaike.common.errorcode.CommonErrorCode;
+import com.kuaike.common.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.http.util.TextUtils;
@@ -40,8 +42,30 @@ public class StringTest {
 //               "jia.com&nope_sense=m6UdzpKinc";
 //
 
-       String liveUrl = "https://e54131384.at.juvox.com.cn/web/room/enter?room_id=25111495675116&user_avatar=&user_name=&user_role=0&sign=448533c7b823c93fc8eedf4af04911cb&meeting_id=MGkzfCBkI1&pay_channel=1&customstr=_MyDPZtRQJ5&share_url=https%3A%2F%2Fdxb.juvox.com.cn%2Fs%2Fm62iM2GRI0&dxbTicket=MyDPZtRQJ5&dxbDomain=https%3A%2F%2Fdxb.juvox.com.cn&inviteUserId=trQz8nv0ND&inviteUserName=%E9%99%B6%E6%98%9F%E7%BE%BD-%E4%BA%91%E5%B8%8C%E7%A7%91%E6%8A%80&nope_sense=m62iMaNSbz";
-       System.out.println(getQueryParams(liveUrl));
+//       String liveUrl = "https://e54131384.at.juvox.com.cn/web/room/enter?room_id=25111495675116&user_avatar=&user_name=&user_role=0&sign=448533c7b823c93fc8eedf4af04911cb&meeting_id=MGkzfCBkI1&pay_channel=1&customstr=_MyDPZtRQJ5&share_url=https%3A%2F%2Fdxb.juvox.com.cn%2Fs%2Fm62iM2GRI0&dxbTicket=MyDPZtRQJ5&dxbDomain=https%3A%2F%2Fdxb.juvox.com.cn&inviteUserId=trQz8nv0ND&inviteUserName=%E9%99%B6%E6%98%9F%E7%BE%BD-%E4%BA%91%E5%B8%8C%E7%A7%91%E6%8A%80&nope_sense=m62iMaNSbz";
+//       System.out.println(getQueryParams(liveUrl));
+
+       Boolean aa = null;
+        System.out.println(Boolean.TRUE.equals(aa));
+
+        try {
+            test1();
+        }catch (Exception e){
+            System.out.println("e.getMessage() = " + e.getMessage());
+            throw new BusinessException(CommonErrorCode.PARAM_ERROR, e.getMessage());
+        }
+    }
+
+    private static void test1(){
+        try {
+            throw new BusinessException(CommonErrorCode.BUSINESS_ERROR, "订单号：" + "111" + "状态无法编辑");
+        }catch (BusinessException businessException){
+            System.out.println("businessException.getMessage() = " + businessException.getMessage() + ", businessException = " + businessException);
+            businessException.setStackTrace(new StackTraceElement[0]);
+            throw businessException;
+        } catch (Exception e){
+            throw e;
+        }
     }
 
     public static Map<String, String> getQueryParams(String url) {

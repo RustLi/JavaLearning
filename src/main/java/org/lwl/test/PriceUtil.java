@@ -18,10 +18,10 @@ public class PriceUtil {
 //        System.out.println(totalMount);
 
 
-//        System.out.println(priceToYuan(-1L));
-//        System.out.println(priceToYuan(4740L));
-//        System.out.println(priceToYuan(1004763L));
-//        System.out.println(priceToYuan(99L));
+        System.out.println(priceToYuan(-1L));
+        System.out.println(priceToYuan(4740L));
+        System.out.println(priceToYuan(1004763L));
+        System.out.println(priceToYuan(99L));
 
 
         // 给定条件：每3元获取10个积分，总金额56元

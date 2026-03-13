@@ -1,4 +1,4 @@
-package utils;
+package org.lwl.utils;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

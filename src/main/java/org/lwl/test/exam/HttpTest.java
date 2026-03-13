@@ -1,10 +1,13 @@
 package org.lwl.test.exam;
 
+import cn.hutool.http.body.RequestBody;
 import com.google.common.collect.Lists;
+import com.google.common.net.MediaType;
 import com.kuaike.common.utils.HttpClientUtils;
 import com.kuaike.common.utils.JacksonUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.lwl.designpatterns.chainofresponsibility.Request;
 import org.lwl.test.Md5Util;
 
 import java.io.FileOutputStream;

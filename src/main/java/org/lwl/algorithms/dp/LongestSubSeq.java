@@ -40,8 +40,9 @@ import java.util.Arrays;
  *  举例：
  *   nums = [1,4,3,4,2,3]
  *   dp = [1,2,2,3,2,?]
- *  已知dp[0..4]的值，要求求解dp[5]的值，dp[5]表示以num[5]=3结尾的最长子序列长度。
- *   找出小于nums[5]的元素为dp[0]和dp[4]，对比dp[0]和dp[4], dp[5]等于dp[0]或者dp[4]的较大值+1, 代码如下:
+ *  已知dp[0..4]的值，要求求解dp[5]的值，dp[5]表示以num[5]=3结尾的最长递增子序列长度。
+ *   找出小于nums[5]的元素为num[0]和num[4]，必须是小于的num[5]的num[i]
+ *   对比对应的dp[0]和dp[4], dp[5]等于dp[0]或者dp[4]的较大值+1, 代码如下:
  *
  *   for (int j = 0; j < i; j++) {
  *     if (nums[i] > nums[j]) {
@@ -54,8 +55,21 @@ public class LongestSubSeq {
     public static void main(String[] args) {
         LongestSubSeq mm = new LongestSubSeq();
         int[] nums = {1,4,3,4,2,3};
-        int ret = mm.lengthOfLIS(nums);
+//        int ret = mm.lengthOfLIS(nums);
+//        System.out.println(ret);
+        int ret = mm.lengthOfLIS1(nums);
         System.out.println(ret);
+//        int ret = mm.lengthOfLISBinarySearch(nums);
+//        System.out.println(ret);
+
+//        int aaa = 0;
+//        for (int i = 0; i < 5; i++) {
+//            int right = aaa;
+//            if (i % 2 == 0){
+//                aaa++;
+//            }
+//            System.out.println("aaa = " + aaa + ", right = " + right);
+//        }
     }
 
     /**
@@ -80,4 +94,82 @@ public class LongestSubSeq {
         }
         return res;
     }
+
+    
+    /**
+     * O(n log n) 解法：贪心 + 二分
+     * tails[i] = 长度为 i+1 的递增子序列的最小结尾元素
+     * 
+     * 思路简述
+        维护数组 tails：tails[i] = 当前见过的、长度为 i+1 的递增子序列里，最小的结尾元素。
+        tails 严格递增，因此可以对「要插入/替换的位置」做二分。
+        对每个 num：
+        在 tails[0..len) 中二分出第一个 tails[i] >= num 的位置 pos；
+        若 pos == len，说明可以接成更长的序列，则 tails[len++] = num；
+        否则用 num 覆盖 tails[pos]，保持「同样长度下结尾尽量小」的贪心。
+        最终 LIS 长度 = len。
+
+
+
+        在你给的例子上跑一遍
+        nums = [1, 4, 3, 4, 2, 3]：
+
+       步骤 num	tails (len)	说明
+        1	1	[1] (1)	空序列，直接放
+        2	4	[1, 4] (2)	4 > 1，接在后面
+        3	3	[1, 3] (2)	替换 4，保持长度 2 结尾更小
+        4	4	[1, 3, 4] (3)	接在后面
+        5	2	[1, 2, 4] (3)	替换 3
+        6	3	[1, 2, 3] (3)	替换 4
+        得到长度为 3，与 O(n²) DP 一致。
+
+     */
+    public int lengthOfLISBinarySearch(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        int[] tails = new int[nums.length];
+        int len = 0;
+        for (int num : nums) {
+            int pos = firstGte(tails, len, num);
+            tails[pos] = num;
+            if (pos == len) len++;
+        }
+        return len;
+    }
+
+    /** 在 tails[0..len) 中二分找第一个 >= target 的下标 */
+    private int firstGte(int[] tails, int len, int target) {
+        int lo = 0, hi = len;
+        while (lo < hi) {
+            int mid = (lo + hi) >>> 1;
+            if (tails[mid] < target) lo = mid + 1;
+            else hi = mid;
+        }
+        return lo;
+    }
+
+
+    private int lengthOfLIS1(int[] nums) {
+        int[] top = new int[nums.length];
+        int piles = 0; // 0 为化始初数堆牌
+        for (int i = 0; i < nums.length; i++) {
+            int poker = nums[i];
+            int left = 0, right = piles;
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (top[mid] > poker) {
+                    right = mid;
+                } else if (top[mid] < poker) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+
+            if (left == piles) {
+                piles++;
+            }
+            top[left] = poker;
+        }
+        return piles;
+    }   
 }

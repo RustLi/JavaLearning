@@ -1,4 +1,4 @@
-package utils;
+package org.lwl.utils;
 
 import java.io.File;
 import java.io.FileInputStream;

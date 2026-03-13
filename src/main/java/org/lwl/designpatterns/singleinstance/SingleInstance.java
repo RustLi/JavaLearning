@@ -1,4 +1,4 @@
-package org.lwl.designpatterns.single_instance;
+package org.lwl.designpatterns.singleinstance;
 
 /**
  * @program: javaProjects

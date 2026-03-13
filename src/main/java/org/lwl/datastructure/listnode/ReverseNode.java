@@ -41,7 +41,10 @@ public class ReverseNode {
      * 递归反转法
      *  反转头节点，先反转其下一个节点，一直到尾节点，从尾到头逆向反转
      *
-     *  a-b-c-d-e-null
+     *  a->b->c->d->e->null // head=a
+     *  a-> (null<-b<-c<-d<-e)
+     *  a <-  b <- c <- d <- e
+     *  null <- a <-  b <- c <- d <- e
      */
     public static ListNode<Integer> reverseList(ListNode<Integer> head){
         //head为null表示空链表，head.next为null表示尾节点
@@ -49,13 +52,15 @@ public class ReverseNode {
             return head;
         }
         //反转当前节点的后续节点（原尾，现在头部）
-        //a -> (b <- c <- d <- e)
+        //a -> (null <- b <- c <- d <- e)
         ListNode<Integer> newNode = reverseList(head.next);
         //当前节点（尾部开始的节点）的指针域指向前一个节点
         //b === head.next, b.next -->> head
+        //将上面的null变成a，结果变成 a <-  b <- c <- d <- e
         head.next.next = head;
         //前一个节点的指针域为null
         // a --->> null
+        //结果变成 null <- a <-  b <- c <- d <- e
         head.next = null;
         return newNode;
     }
