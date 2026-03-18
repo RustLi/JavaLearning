@@ -1,18 +1,10 @@
 package org.lwl.datastructure.tree;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class BinTree {
-
-    //定义二叉树节点
-    public static class TreeNode{
-        public TreeNode left;
-        public TreeNode right;
-        public Object data;
-        public TreeNode(Object data){
-            this.data = data;
-        }
-    }
 
     public static void main(String[] args){
         binTreeTest();
@@ -38,7 +30,7 @@ public class BinTree {
 //        int[] array = {3,5,1};
         int[] array = {1, 2, 3, 4, 5, 6, 7};
 
-        BinTree.TreeNode root = binTree.createBinTree(array,0);
+        TreeNode root = binTree.createBinTree(array,0);
 
         System.out.println("先序遍历：");
         binTree.preOrderReverse(root);
@@ -73,7 +65,7 @@ public class BinTree {
         if (node == null){
             return;
         }
-        System.out.println(node.data + "");
+        System.out.println(node.val + "");
         preOrderReverse(node.left);
         preOrderReverse(node.right);
     }
@@ -87,7 +79,7 @@ public class BinTree {
             return;
         }
         inOrderTraverse(node.left);
-        System.out.println(node.data + "");
+        System.out.println(node.val + "");
         inOrderTraverse(node.right);
     }
 
@@ -100,7 +92,7 @@ public class BinTree {
         }
         postOrderTraverse(node.left);
         postOrderTraverse(node.right);
-        System.out.println(node.data + "");
+        System.out.println(node.val + "");
     }
 
 
@@ -114,7 +106,7 @@ public class BinTree {
         stack.push(root);
         while (!stack.isEmpty()) {
             currentNode = stack.pop();
-            System.out.print(currentNode.data + " ");
+            System.out.print(currentNode.val + " ");
             if (currentNode.right != null)
                 stack.push(currentNode.right);
             if (currentNode.left != null)
@@ -136,7 +128,7 @@ public class BinTree {
                 currentNode = currentNode.left;
             }
             currentNode = stack.pop();
-            System.out.print(currentNode.data + " ");
+            System.out.print(currentNode.val + " ");
             currentNode = currentNode.right;
         }
     }
@@ -158,7 +150,7 @@ public class BinTree {
             currentNode = stack.pop();
             // 当前结点没有右结点或上一个结点（已经输出的结点）是当前结点的右结点，则输出当前结点
             while (currentNode.right == null || currentNode.right == rightNode) {
-                System.out.print(currentNode.data + " ");
+                System.out.print(currentNode.val + " ");
                 rightNode = currentNode;
                 if (stack.isEmpty()) {
                     return; //root以输出，则遍历结束
@@ -179,7 +171,7 @@ public class BinTree {
         queue.offer(root);
         while (!queue.isEmpty()) {
             currentNode = queue.poll();
-            System.out.print(currentNode.data + " ");
+            System.out.print(currentNode.val + " ");
             if (currentNode.left != null)
                 queue.offer(currentNode.left);
             if (currentNode.right != null)
@@ -200,7 +192,7 @@ public class BinTree {
         stack.push(root);
         while (!stack.isEmpty()) {
             currentNode = stack.pop();
-            System.out.print(currentNode.data + " ");
+            System.out.print(currentNode.val + " ");
             if (currentNode.right != null)
                 stack.push(currentNode.right);
             if (currentNode.left != null)

@@ -1,7 +1,7 @@
 package org.lwl.algorithms.tree;
 
 
-import org.lwl.datastructure.tree.BinTree;
+import org.lwl.datastructure.tree.TreeNode;
 
 /**
  * @author: lwl
@@ -24,13 +24,13 @@ public class MaxDepthTree {
      * 方法一：前序遍历
      **/
     // 主函数
-    int maxDepth(BinTree.TreeNode root) {
+    int maxDepth(TreeNode root) {
         traverse(root);
         return res;
     }
 
     // 二叉树遍历框架
-    void traverse(BinTree.TreeNode root) {
+    void traverse(TreeNode root) {
         if (root == null) {
             return;
         }
@@ -50,7 +50,7 @@ public class MaxDepthTree {
      * 方法二：构造子树遍历
      **/
     // 定义：输入根节点，返回这棵二叉树的最大深度
-    int maxDepth1(BinTree.TreeNode root) {
+    int maxDepth1(TreeNode root) {
         if (root == null) {
             return 0;
         }

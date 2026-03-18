@@ -1,7 +1,7 @@
 package org.lwl.algorithms.leetcode.code.tree;
 
-
 import org.lwl.datastructure.tree.BinTree;
+import org.lwl.datastructure.tree.TreeNode;
 
 /**
  * @date: 2021/4/10
@@ -28,12 +28,12 @@ public class TraverseTree {
 
     public static void main(String[] args) {
         int[] array = {4,2,7,1,3,6,9};
-        BinTree.TreeNode root = BinTree.createBinTree(array,0);
+        TreeNode root = BinTree.createBinTree(array,0);
 
         System.out.println("before..");
         BinTree.breadthFirstTraverse(root);
 
-        BinTree.TreeNode newRoot = traverse(root);
+        TreeNode newRoot = traverse(root);
         System.out.println("after...");
         BinTree.depthFirstTraverse(newRoot);
     }
@@ -43,13 +43,13 @@ public class TraverseTree {
      * des: 翻转二叉树
      * @param
      */
-    private static BinTree.TreeNode traverse(BinTree.TreeNode root){
+    private static TreeNode traverse(TreeNode root){
         if (root == null) return null;
 
         //前序遍历
 
         //交换root节点的左右节点
-        BinTree.TreeNode temp = root.left;
+        TreeNode temp = root.left;
         root.left = root.right;
         root.right = temp;
 
