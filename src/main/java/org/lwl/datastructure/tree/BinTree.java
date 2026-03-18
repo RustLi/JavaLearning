@@ -30,7 +30,7 @@ public class BinTree {
 //        int[] array = {3,5,1};
         int[] array = {1, 2, 3, 4, 5, 6, 7};
 
-        TreeNode root = binTree.createBinTree(array,0);
+        TreeNode root = BinTree.createBinTree(array,0);
 
         System.out.println("先序遍历：");
         binTree.preOrderReverse(root);
