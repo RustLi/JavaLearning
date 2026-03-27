@@ -68,6 +68,7 @@ public class Solution {
      * des: 牛顿迭代法
      * @param
      */
+    @SuppressWarnings("unused")
     private int sqrtWithIterator(int x){
         long n = x;
         while (n * n > x) {

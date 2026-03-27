@@ -119,7 +119,7 @@ public class Fibonacci {
 
 
     //使用哈希map，充当备忘录的作用
-    Map<Integer, Integer> tempMap = new HashMap();
+    Map<Integer, Integer> tempMap = new HashMap<>();
     public int numWays(int n) {
         // n = 0 也算1种
         if (n == 1 || n == 2) {
