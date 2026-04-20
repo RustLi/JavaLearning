@@ -1,5 +1,6 @@
 package org.lwl.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,8 +55,32 @@ public class DateUtil {
 //        }
 //        System.out.println(getTimestampBeforeDays());
 
-        boolean isInTimeInterval = isInTimeInterval1(7, 3);
-        System.out.println("isInTimeInterval  11 = " + isInTimeInterval);
+//        boolean isInTimeInterval = isInTimeInterval1(7, 3);
+//        System.out.println("isInTimeInterval  11 = " + isInTimeInterval);
+
+        // 示例：按月周期计算日期
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            // Date start1 = sdf.parse("2025-01-31");
+            // Date result1 = addMonthCycle(start1, 1);
+            // System.out.println("2025-01-31 +1个月 = " + sdf.format(result1));
+
+            // Date start2 = sdf.parse("2025-01-01");
+            // Date result2 = addMonthCycle(start2, 6);
+            // System.out.println("2025-01-01 +6个月 = " + sdf.format(result2));
+
+            // Date rangeStart = sdf.parse("2025-03-22");
+            // Date rangeEnd = sdf.parse("2026-03-24");
+            // int coveredMonths = countCoveredMonths(rangeStart, rangeEnd);
+            // System.out.println("2025-03-22~2026-03-24 覆盖月份数 = " + coveredMonths);
+
+
+            Date date = sdf.parse("2026-01-01");
+            Date result3 = addMonthsToDate(date, 0);
+            System.out.println("2026-01-01 1个月 = " + sdf.format(result3));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Date getEndOfDay(Date date) {
@@ -96,6 +121,135 @@ public class DateUtil {
         // 1个月前的时间戳
         long oneMonthAgoInSeconds = nowInSeconds - 30 * 24 * 60 * 60;
         return timestampInSeconds < oneMonthAgoInSeconds;
+    }
+
+
+    /**
+     * 按月周期计算日期：先在日历上向后平移 {@code months} 个月，
+     * 若目标月份没有与起始日相同的日，则取该月最后一天，然后再减去 1 天。
+     * <p>
+     * 例如：
+     * 2025-01-31 + 1 个月 → 2025-02-27
+     * 2025-01-01 + 6 个月 → 2025-06-30
+     *
+     * @param startDate 起始日期，不能为空
+     * @param months    月份偏移量，可为负数或 0
+     * @return 计算后的日期
+     * @throws IllegalArgumentException 当 startDate 为空时抛出
+     */
+    public static Date addMonthCycle(Date startDate, int months) {
+        if (startDate == null) {
+            throw new IllegalArgumentException("startDate must not be null");
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+
+        int originDay = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.MONTH, months);
+        System.out.println("calendar = " + calendar.getTime());
+
+        int maxDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        if (originDay > maxDayOfMonth) {
+            calendar.set(Calendar.DAY_OF_MONTH, maxDayOfMonth);
+        }
+
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        return calendar.getTime();
+    }
+    
+    public static Date addMonthsToDate(Date date, Integer months) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, months);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        return calendar.getTime();
+    }
+
+    /**
+     * 字符串版本的按月周期计算日期。
+     *
+     * @param startDateStr 起始日期字符串
+     * @param months       月份偏移量
+     * @param pattern      日期格式，例如 yyyy-MM-dd、yyyyMMdd
+     * @return 计算后的日期字符串
+     * @throws IllegalArgumentException 当参数非法或解析失败时抛出
+     */
+    public static String addMonthCycle(String startDateStr, int months, String pattern) {
+        if (startDateStr == null || pattern == null) {
+            throw new IllegalArgumentException("startDateStr and pattern must not be null");
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
+        try {
+            Date startDate = sdf.parse(startDateStr);
+            if (startDate == null) {
+                throw new IllegalArgumentException("startDateStr could not be parsed: " + startDateStr);
+            }
+            Date targetDate = addMonthCycle(startDate, months);
+            return sdf.format(targetDate);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Failed to parse startDateStr: " + startDateStr, e);
+        }
+    }
+
+    /**
+     * 计算开始时间和结束时间覆盖到的自然月份数（含首尾月）。
+     * 同一个月内返回 1。
+     *
+     * @param startDate 开始时间，不能为空
+     * @param endDate   结束时间，不能为空
+     * @return 覆盖月份数（含首尾月）
+     */
+    public static int countCoveredMonths(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("startDate and endDate must not be null");
+        }
+
+        Date realStart = startDate;
+        Date realEnd = endDate;
+        if (realStart.after(realEnd)) {
+            realStart = endDate;
+            realEnd = startDate;
+        }
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(realStart);
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(realEnd);
+
+        int startYear = startCal.get(Calendar.YEAR);
+        int startMonth = startCal.get(Calendar.MONTH);
+        int endYear = endCal.get(Calendar.YEAR);
+        int endMonth = endCal.get(Calendar.MONTH);
+
+        return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+    }
+
+    /**
+     * 字符串版本的区间覆盖月份数计算。
+     *
+     * @param startDateStr 开始时间字符串
+     * @param endDateStr   结束时间字符串
+     * @param pattern      日期格式，例如 yyyy-MM-dd、yyyyMMdd
+     * @return 覆盖月份数（含首尾月）
+     */
+    public static int countCoveredMonths(String startDateStr, String endDateStr, String pattern) {
+        if (startDateStr == null || endDateStr == null || pattern == null) {
+            throw new IllegalArgumentException("startDateStr, endDateStr and pattern must not be null");
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
+        try {
+            Date startDate = sdf.parse(startDateStr);
+            Date endDate = sdf.parse(endDateStr);
+            if (startDate == null || endDate == null) {
+                throw new IllegalArgumentException("Date string could not be parsed");
+            }
+            return countCoveredMonths(startDate, endDate);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Failed to parse date string", e);
+        }
     }
 
 
