@@ -48,12 +48,15 @@ public class StringTest {
        Boolean aa = null;
         System.out.println(Boolean.TRUE.equals(aa));
 
-        try {
-            test1();
-        }catch (Exception e){
-            System.out.println("e.getMessage() = " + e.getMessage());
-            throw new BusinessException(CommonErrorCode.PARAM_ERROR, e.getMessage());
-        }
+//        try {
+//            test1();
+//        }catch (Exception e){
+//            System.out.println("e.getMessage() = " + e.getMessage());
+//            throw new BusinessException(CommonErrorCode.PARAM_ERROR, e.getMessage());
+//        }
+
+        List<Integer> res = new ArrayList<>();
+        res.set(0, res.get(0) + 1);
     }
 
     private static void test1(){

@@ -2,6 +2,10 @@ package org.lwl.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -75,12 +79,38 @@ public class DateUtil {
             // System.out.println("2025-03-22~2026-03-24 覆盖月份数 = " + coveredMonths);
 
 
-            Date date = sdf.parse("2026-01-01");
-            Date result3 = addMonthsToDate(date, 0);
+            Date date = sdf.parse("2026-01-02");
+            Date result3 = addMonthsToDate(date, 1);
             System.out.println("2026-01-01 1个月 = " + sdf.format(result3));
+
+            Date startDate = sdf.parse("2026-01-02");
+            Date endDate = sdf.parse("2026-02-01");
+            Integer period = calcCourseValidatePeriod(startDate, endDate);
+            System.out.println("period = " + period);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * 计算课程有效期
+     *
+     - 同一个月内开始和结束，结果是 1
+     - 跨到下一个月，结果是 2
+     - 跨一年零一个月，结果是 13
+     */
+    private static Integer calcCourseValidatePeriod(Date validateDateBegin, Date validateDateEnd) {
+        if (validateDateBegin == null || validateDateEnd == null) {
+            return null;
+        }
+        LocalDate beginDate = validateDateBegin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = validateDateEnd.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        if (endDate.isBefore(beginDate)) {
+            return 0;
+        }
+        long monthCount = ChronoUnit.MONTHS.between(YearMonth.from(beginDate), YearMonth.from(endDate)) + 1;
+        return Math.toIntExact(monthCount);
     }
 
     public static Date getEndOfDay(Date date) {

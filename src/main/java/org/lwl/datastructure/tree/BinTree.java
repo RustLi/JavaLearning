@@ -1,6 +1,8 @@
 package org.lwl.datastructure.tree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -177,6 +179,34 @@ public class BinTree {
             if (currentNode.right != null)
                 queue.offer(currentNode.right);
         }
+    }
+
+    /**
+     * 层序遍历二叉树（递归）：按深度将节点归入对应层，再逐层输出
+     */
+    public void levelOrderTraverseRecursive(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        List<List<Integer>> levels = new ArrayList<>();
+        levelOrderHelper(root, 0, levels);
+        for (List<Integer> level : levels) {
+            for (Integer val : level) {
+                System.out.print(val + " ");
+            }
+        }
+    }
+
+    private void levelOrderHelper(TreeNode node, int level, List<List<Integer>> levels) {
+        if (node == null) {
+            return;
+        }
+        if (levels.size() <= level) {
+            levels.add(new ArrayList<>());
+        }
+        levels.get(level).add(node.val);
+        levelOrderHelper(node.left, level + 1, levels);
+        levelOrderHelper(node.right, level + 1, levels);
     }
 
 

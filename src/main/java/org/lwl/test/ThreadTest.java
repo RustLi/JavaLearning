@@ -2,15 +2,9 @@ package org.lwl.test;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import kotlin.Result;
-import org.apache.commons.collections4.CollectionUtils;
 import org.lwl.utils.NamedThreadFactory;
-import org.lwl.utils.ThreadPoolMonitorUtils;
-
 import java.util.*;
 import java.util.concurrent.*;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 public class ThreadTest {
 

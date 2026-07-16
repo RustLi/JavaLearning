@@ -1,4 +1,4 @@
-package org.lwl.algorithms.leetcode.code.str;
+package org.lwl.leetcode.code.str;
 
 import java.util.Arrays;
 

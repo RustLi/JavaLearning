@@ -1,6 +1,5 @@
 package org.lwl.designpatterns.builder;
 
-import javafx.util.Builder;
 
 /**
  * @program: javaProjects

@@ -24,7 +24,7 @@
 
 */
 
-  package org.lwl.algorithms.leetcode.code.tree;
+  package org.lwl.leetcode.code.tree;
 
   import org.lwl.datastructure.tree.TreeNode;
 
