@@ -6,11 +6,11 @@ package org.lwl.datastructure.listnode;
  */
 public class ListNode<T> {
     //定义数据域和指针域
-    public T data;
+    public T val;
     public ListNode next;
 
-    public ListNode(T data) {
-        this.data = data;
+    public ListNode(T val) {
+        this.val = val;
     }
 
     public ListNode() {
@@ -19,7 +19,7 @@ public class ListNode<T> {
     public static void printNode(ListNode head){
         ListNode p = head;
         while (p != null){
-            System.out.println(p.data);
+            System.out.println(p.val);
             p = p.next;
         }
     }

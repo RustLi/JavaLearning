@@ -43,7 +43,7 @@ public class DupArray {
         }
         ListNode slow = head, fast = head;
         while (fast != null) {
-            if (fast.data != slow.data) {
+            if (fast.val != slow.val) {
                 // nums[slow] = nums[fast];
                 slow.next = fast;
                 // slow++;

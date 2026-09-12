@@ -41,7 +41,7 @@ public class Palindrome {
         ListNode left = head;
         ListNode right = reverse(slow);
         while (right != null) {
-            if (left.data != right.data)
+            if (left.val != right.val)
                 return false;
             left = left.next;
             right = right.next;

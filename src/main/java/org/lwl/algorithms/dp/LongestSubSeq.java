@@ -55,10 +55,10 @@ public class LongestSubSeq {
     public static void main(String[] args) {
         LongestSubSeq mm = new LongestSubSeq();
         int[] nums = {1,4,3,4,2,3};
-//        int ret = mm.lengthOfLIS(nums);
-//        System.out.println(ret);
-        int ret = mm.lengthOfLIS1(nums);
+        int ret = mm.lengthOfLIS(nums);
         System.out.println(ret);
+//        int ret = mm.lengthOfLIS1(nums);
+//        System.out.println(ret);
 //        int ret = mm.lengthOfLISBinarySearch(nums);
 //        System.out.println(ret);
 

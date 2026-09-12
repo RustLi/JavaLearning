@@ -24,7 +24,7 @@ public class ReverseNode {
 
         ListNode<Integer> h = head;
         while (null != h){
-            System.out.println(h.data);
+            System.out.println(h.val);
             h = h.next;
         }
 //        head = reverseList(head);
@@ -32,7 +32,7 @@ public class ReverseNode {
 
         System.out.println("反转以后的：：：：");
         while (null != head){
-            System.out.println(head.data);
+            System.out.println(head.val);
             head = head.next;
         }
     }
@@ -198,6 +198,6 @@ public class ReverseNode {
         }
         traverse(head.next);
         // 后序位置
-        System.out.println(head.data);
+        System.out.println(head.val);
     }
 }

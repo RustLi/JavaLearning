@@ -1,7 +1,5 @@
 package org.lwl.datastructure.listnode;
 
-import java.util.Stack;
-
 /**
  * @date: 2019/12/17
  * @author: lwl
@@ -48,7 +46,7 @@ public class BasicNode {
     private static void printNode(ListNode head){
         ListNode p = head;
         while (p != null){
-            System.out.println(p.data);
+            System.out.println(p.val);
             p = p.next;
         }
     }
@@ -67,7 +65,7 @@ public class BasicNode {
         if (p == null || j > i){
             return -1;
         }
-        return (int)p.data;
+        return (int)p.val;
     }
 
     /**
@@ -117,7 +115,7 @@ public class BasicNode {
         head.next = null;
         for (int i = 0; i < n; i++) {
             ListNode p = new ListNode();
-            p.data = Math.random();
+            p.val = Math.random();
             p.next = head.next;
             head.next = p;
         }
@@ -130,7 +128,7 @@ public class BasicNode {
     private void createNodeTail(ListNode head, int n){
         for (int i = 0; i < n; i++) {
             ListNode p = new ListNode();
-            p.data = Math.random();
+            p.val = Math.random();
             head.next = p;
             head = p;
         }

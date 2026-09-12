@@ -26,16 +26,41 @@ public class MergeSort {
         merge(arr, temp, left, mid, right); // 合并有序子数组
     }
 
+    /**
+     *
+     * 举例：合并 [2, 4, 6] 和 [1, 3, 5]
+     * ┌─────┬─────────────────────────┬───────┬─────────────┬──────────┬────────────────────┐
+     * │ 轮  │ 比较 temp[i] vs temp[j] │ 结果  │ 写入 arr[k] │ 指针变化 │    arr 当前状态    │
+     * ├─────┼─────────────────────────┼───────┼─────────────┼──────────┼────────────────────┤
+     * │  1  │    2(i=0) vs 1(j=3)     │ 2 > 1 │      1      │   j→4    │ [1, ·, ·, ·, ·, ·] │
+     * ├─────┼─────────────────────────┼───────┼─────────────┼──────────┼────────────────────┤
+     * │  2  │    2(i=0) vs 3(j=4)     │ 2 < 3 │      2      │   i→1    │ [1, 2, ·, ·, ·, ·] │
+     * ├─────┼─────────────────────────┼───────┼─────────────┼──────────┼────────────────────┤
+     * │  3  │    4(i=1) vs 3(j=4)     │ 4 > 3 │      3      │   j→5    │ [1, 2, 3, ·, ·, ·] │
+     * ├─────┼─────────────────────────┼───────┼─────────────┼──────────┼────────────────────┤
+     * │  4  │    4(i=1) vs 5(j=5)     │ 4 < 5 │      4      │   i→2    │ [1, 2, 3, 4, ·, ·] │
+     * ├─────┼─────────────────────────┼───────┼─────────────┼──────────┼────────────────────┤
+     * │  5  │    6(i=2) vs 5(j=5)     │ 6 > 5 │      5      │   j→6    │ [1, 2, 3, 4, 5, ·] │
+     * └─────┴─────────────────────────┴───────┴─────────────┴──────────┴────────────────────┘
+     */
     // 合并有序区间 [left, mid] 和 [mid+1, right]
     private static void merge(int[] arr, int[] temp, int left, int mid, int right) {
-        System.arraycopy(arr, left, temp, left, right - left + 1); // 复制到临时数组
+//        System.arraycopy(arr, left, temp, left, right - left + 1); // 复制到临时数组
+        for (int i = left; i <= right ; i++) {
+            temp[i] = arr[i];
+        }
 
         int i = left;      // 左子数组起始指针
         int j = mid + 1;   // 右子数组起始指针
         int k = left;      // 合并目标指针
 
         while (i <= mid && j <= right) {
-            arr[k++] = (temp[i] <= temp[j]) ? temp[i++] : temp[j++];
+//            arr[k++] = (temp[i] <= temp[j]) ? temp[i++] : temp[j++];
+            if(temp[i] <= temp[j]){
+                arr[k++] = temp[i++];
+            }else {
+                arr[k++] = temp[j++];
+            }
         }
 
         // 处理剩余元素
@@ -44,29 +69,32 @@ public class MergeSort {
     }
 
 
-    private static void merge1(int[] arr, int[] temp, int left, int mid, int right) {
-        //复制到临时数组
-        for (int i = left; i <= right ; i++) {
-            temp[i] = arr[i];
-        }
-        //双指针合并两个有序数组
-        int i = left;      // 左子数组起始指针
-        int j = mid + 1;   // 右子数组起始指针
-        for (int k = left; k <= right ; k++) {
-            if (i == mid + 1){
-                //左边已合并完成
-                arr[k] = temp[j++];
-            }else if (j == right + 1){
-                //右边已合并完成
-                arr[k] = temp[i++];
-            }else if (temp[i] > temp[j]){
-                //比较左右两个数组的元素，将较小的元素放入目标数组中
-                arr[k] = temp[j++];
-            }else {
-                arr[k] = temp[i++];
-            }
-        }
-    }
+    /**
+     * 合并 [2, 4, 6] 和 [1, 3, 5]
+     */
+//    private static void merge1(int[] arr, int[] temp, int left, int mid, int right) {
+//        //复制到临时数组
+//        for (int i = left; i <= right ; i++) {
+//            temp[i] = arr[i];
+//        }
+//        //双指针合并两个有序数组
+//        int i = left;      // 左子数组起始指针
+//        int j = mid + 1;   // 右子数组起始指针
+//        for (int k = left; k <= right ; k++) {
+//            if (i == mid + 1){
+//                //左边已合并完成
+//                arr[k] = temp[j++];
+//            }else if (j == right + 1){
+//                //右边已合并完成
+//                arr[k] = temp[i++];
+//            }else if (temp[i] > temp[j]){
+//                //比较左右两个数组的元素，将较小的元素放入目标数组中
+//                arr[k] = temp[j++];
+//            }else {
+//                arr[k] = temp[i++];
+//            }
+//        }
+//    }
 
 
     // 测试
