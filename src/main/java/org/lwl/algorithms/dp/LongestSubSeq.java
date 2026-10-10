@@ -82,7 +82,10 @@ public class LongestSubSeq {
         Arrays.fill(dp, 1);
         for (int i = 0; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
+                // 寻找 nums[0..j-1] 中⽐ nums[i] ⼩的元素
                 if (nums[i] > nums[j]) {
+                    // 把 nums[i] 接在后⾯，即可形成⻓度为 dp[j] + 1，
+                    // 且以 nums[i] 为结尾的递增⼦序列
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }

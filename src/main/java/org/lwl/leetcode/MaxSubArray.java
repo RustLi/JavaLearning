@@ -32,6 +32,29 @@ public class MaxSubArray {
         return max;
     }
 
+    int maxSubArray1(int[] nums) {
+        int n = nums.length;
+        if (n == 0) return 0;
+// 定义：dp[i] 记录以 nums[i] 为结尾的
+//「
+//        最⼤⼦数组和
+//」
+        int[] dp = new int[n];
+// base case
+// 第⼀个元素前⾯没有⼦数组
+        dp[0] = nums[0];
+// 状态转移⽅程
+        for (int i = 1; i < n; i++) {
+            dp[i] = Math.max(nums[i], nums[i] + dp[i - 1]);
+        }
+// 得到 nums 的最⼤⼦数组
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
     // 测试用例
     public static void main(String[] args) {
         MaxSubArray solution = new MaxSubArray();
